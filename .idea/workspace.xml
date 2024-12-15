@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="34195466-5030-4d0f-980b-6627a53c464d" name="默认的" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\a-share\apache-maven-3.5.4\repository" />
+        <option name="mavenHome" value="$PROJECT_DIR$/../apache-maven-3.5.4" />
+        <option name="userSettingsFile" value="D:\a-share\apache-maven-3.5.4\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2qFAhMAHIgozbrzDceyG4dlAkwU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client_fujian_one/src/main/resources" />
+    <property name="project.structure.last.edited" value="模块" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.29583803" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RebelAgentSelection">
+    <selection>jr</selection>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\a-share\Client\client_fujian_one\src\main\resources" />
+      <recent name="D:\a-share\Client\client_fujian_one\src\main\java\com\yunting" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FJOneApplication">
+    <configuration name="FJOneApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="pay_appID" value="2021005102666099" />
+        <env name="pay_privateKey" value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWaoxBkk8/8PxdDAsODfToC91aIFpQEIweKYxovGeTWQqC7z42NsTGoTDNBjyP9D034oqv+SHsmtL4Qq1wuJ3insqN3gD67RZ86MKu/y7DdZQI8M1Aw/VDOtGTFX+mtApRXXrmDQh80MXn0yujmYrT/bWnNFGbu7x+EzJcw430DuZxA9n7vhlbrpMV5aZzkT5lpc9xw1JBx38HdQqHq/h3LKsTVWAqA9vvTe1rdKTp371GivKtkA8DgxnMnM+jhO4oz8Hcp0b99ENlnvKpZh6hV1Z6nCg7mJjYE9vpyprRc1seC71Juovrmb96cYt1B0VXLDR9Gs4Qez/ozY56sG5LAgMBAAECggEAI17MuoKgNiYCAhNZ6iUoCQT5OT9QXXF2sYUNqndbV8/hY+bEV1VLsnWnFx83UJabaq/P8w9/hbbmk1CCnnYbUnYKpY+l5VupJRhK54HESlw0wmF1spwh6XxEWfT9PoMpxfZYdw5rh4ZEc345zc/GUJFhjP8Fjbx416DGAABQOiqGGC5xiXnQ+4FKWu4wc1pgq4VcV5v70IUzQnCWgSAPu4yil3Xnfb/wT7E+m8rs4GCJa2T4T47buX2DPkK8tu5k59hOxJsQRD6abMrTxnblq8vUi17LrEhA+LoHKSAjFyhOCRAAZq3Tofuof0txAybw6tVp7GC5394MpRg1UsFgwQKBgQDYFWutWKadRF1lBHhQW8uu1Zy/vr2tknJ+VYwqiP66ki1s3kPbvGNNyYPjBQI4eCoeqA1/thvF0+CyRsC3+1TE8SXEhItEwB3YsxdMvmrPxFr8U7Okpsg4TuqloFtcO12rQ85hVPdUHdiIYEeGyqnLKMU41GF4URN2AMUbSteYawKBgQCyM7fGLbm9BSf8WJ1v2SpxLo78UG1kSlEzzEZQzvFErbDzWq9tWA7rzzenrWcImp3imDRUgkpajlDpqUabF7/Nrx0lpSgJoOko+cW/xvTtTxT2+lm8wb/T629IAj/QpXod7k5HVHUsA0FueBpueJCKNxFnkiedVVvaZjMq9e15oQKBgA2C+WKzgmefGL/yUZukwc3C6bRLtwydda9Uphkay+LatSBznYal9wesLCUL8SGa0fdsxrtPpdju8MP1DKP0gU53TcdGCndYFAWy3SgdWAx52L6idT88dpSeyqlkp5HS3H6TFNqdN4H5A8szSgWxsoBTolF1ZkrhtvfQAIM+YNDVAoGAKZrjjDR+yf/bLxJtZ4C3ZQduwL/yWljzjnlh7VnzgIpg5uBEVu4ZRbryjoZwqNSYih/pD9X/kBbsEzG/V1R7JoV8854Us/LKnRN7tOO5qXIuPd+DdgtyQwMTzycfSRJpaXWK9yJj3OvBqg4GdcZWUL68pIa+EwCr2ljEF4KleCECgYEAkuUG9m0vuHI1dpIqgrTui+WkF5Fc0RuGu8M/JD12lQbMgnaCK6zHZW+1Hq03RyRO1ZYztyFBNK8CTIYN6aeODWQk4gltdsry8pR1BbNdt5Fbll6MqfbLQim8V7SSvqvpClIsiKrMPqE07MfkB5qbpmtdDpByIjtFL7hBikt/bpY=" />
+        <env name="pay_serverUrl" value="https://openapi.alipay.com/gateway.do" />
+        <env name="pay_RootCertPath" value="D:\Users\file\alipayRootCert.crt" />
+        <env name="pay_AlipayPublicCertPath" value="D:\\Users\\file\\alipayCertPublicKey_RSA2.crt" />
+        <env name="pay_AppCertPath" value="D:\\Users\\file\\appCertPublicKey_2021005102666099.crt" />
+        <env name="instance_Record_port" value="6388" />
+        <env name="host" value="127.0.0.1" />
+        <env name="instance_wifi_port" value="6379" />
+        <env name="instance_websocket_port" value="6380" />
+        <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="com.yunting.FJOneApplication" />
+      <module name="client_fujian_one" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yunting.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AlgorithemTest.test2" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="client_fujian_one" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="AlgorithemTest" />
+      <option name="METHOD_NAME" value="test2" />
+      <option name="TEST_OBJECT" value="method" />
+      <envs>
+        <env name="pay_appID" value="2021005102666099" />
+        <env name="pay_privateKey" value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWaoxBkk8/8PxdDAsODfToC91aIFpQEIweKYxovGeTWQqC7z42NsTGoTDNBjyP9D034oqv+SHsmtL4Qq1wuJ3insqN3gD67RZ86MKu/y7DdZQI8M1Aw/VDOtGTFX+mtApRXXrmDQh80MXn0yujmYrT/bWnNFGbu7x+EzJcw430DuZxA9n7vhlbrpMV5aZzkT5lpc9xw1JBx38HdQqHq/h3LKsTVWAqA9vvTe1rdKTp371GivKtkA8DgxnMnM+jhO4oz8Hcp0b99ENlnvKpZh6hV1Z6nCg7mJjYE9vpyprRc1seC71Juovrmb96cYt1B0VXLDR9Gs4Qez/ozY56sG5LAgMBAAECggEAI17MuoKgNiYCAhNZ6iUoCQT5OT9QXXF2sYUNqndbV8/hY+bEV1VLsnWnFx83UJabaq/P8w9/hbbmk1CCnnYbUnYKpY+l5VupJRhK54HESlw0wmF1spwh6XxEWfT9PoMpxfZYdw5rh4ZEc345zc/GUJFhjP8Fjbx416DGAABQOiqGGC5xiXnQ+4FKWu4wc1pgq4VcV5v70IUzQnCWgSAPu4yil3Xnfb/wT7E+m8rs4GCJa2T4T47buX2DPkK8tu5k59hOxJsQRD6abMrTxnblq8vUi17LrEhA+LoHKSAjFyhOCRAAZq3Tofuof0txAybw6tVp7GC5394MpRg1UsFgwQKBgQDYFWutWKadRF1lBHhQW8uu1Zy/vr2tknJ+VYwqiP66ki1s3kPbvGNNyYPjBQI4eCoeqA1/thvF0+CyRsC3+1TE8SXEhItEwB3YsxdMvmrPxFr8U7Okpsg4TuqloFtcO12rQ85hVPdUHdiIYEeGyqnLKMU41GF4URN2AMUbSteYawKBgQCyM7fGLbm9BSf8WJ1v2SpxLo78UG1kSlEzzEZQzvFErbDzWq9tWA7rzzenrWcImp3imDRUgkpajlDpqUabF7/Nrx0lpSgJoOko+cW/xvTtTxT2+lm8wb/T629IAj/QpXod7k5HVHUsA0FueBpueJCKNxFnkiedVVvaZjMq9e15oQKBgA2C+WKzgmefGL/yUZukwc3C6bRLtwydda9Uphkay+LatSBznYal9wesLCUL8SGa0fdsxrtPpdju8MP1DKP0gU53TcdGCndYFAWy3SgdWAx52L6idT88dpSeyqlkp5HS3H6TFNqdN4H5A8szSgWxsoBTolF1ZkrhtvfQAIM+YNDVAoGAKZrjjDR+yf/bLxJtZ4C3ZQduwL/yWljzjnlh7VnzgIpg5uBEVu4ZRbryjoZwqNSYih/pD9X/kBbsEzG/V1R7JoV8854Us/LKnRN7tOO5qXIuPd+DdgtyQwMTzycfSRJpaXWK9yJj3OvBqg4GdcZWUL68pIa+EwCr2ljEF4KleCECgYEAkuUG9m0vuHI1dpIqgrTui+WkF5Fc0RuGu8M/JD12lQbMgnaCK6zHZW+1Hq03RyRO1ZYztyFBNK8CTIYN6aeODWQk4gltdsry8pR1BbNdt5Fbll6MqfbLQim8V7SSvqvpClIsiKrMPqE07MfkB5qbpmtdDpByIjtFL7hBikt/bpY=" />
+        <env name="pay_serverUrl" value="https://openapi.alipay.com/gateway.do" />
+        <env name="pay_RootCertPath" value="D:\Users\file\alipayRootCert.crt" />
+        <env name="pay_AlipayPublicCertPath" value="D:\\Users\\file\\alipayCertPublicKey_RSA2.crt" />
+        <env name="pay_AppCertPath" value="D:\\Users\\file\\appCertPublicKey_2021005102666099.crt" />
+        <env name="instance_Record_port" value="6388" />
+        <env name="host" value="127.0.0.1" />
+        <env name="instance_wifi_port" value="6379" />
+        <env name="instance_websocket_port" value="6380" />
+        <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FJOneApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="client_fujian_one" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yunting.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yunting.FJOneApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <envs>
+        <env name="pay_appID" value="2021005102666099" />
+        <env name="pay_privateKey" value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWaoxBkk8/8PxdDAsODfToC91aIFpQEIweKYxovGeTWQqC7z42NsTGoTDNBjyP9D034oqv+SHsmtL4Qq1wuJ3insqN3gD67RZ86MKu/y7DdZQI8M1Aw/VDOtGTFX+mtApRXXrmDQh80MXn0yujmYrT/bWnNFGbu7x+EzJcw430DuZxA9n7vhlbrpMV5aZzkT5lpc9xw1JBx38HdQqHq/h3LKsTVWAqA9vvTe1rdKTp371GivKtkA8DgxnMnM+jhO4oz8Hcp0b99ENlnvKpZh6hV1Z6nCg7mJjYE9vpyprRc1seC71Juovrmb96cYt1B0VXLDR9Gs4Qez/ozY56sG5LAgMBAAECggEAI17MuoKgNiYCAhNZ6iUoCQT5OT9QXXF2sYUNqndbV8/hY+bEV1VLsnWnFx83UJabaq/P8w9/hbbmk1CCnnYbUnYKpY+l5VupJRhK54HESlw0wmF1spwh6XxEWfT9PoMpxfZYdw5rh4ZEc345zc/GUJFhjP8Fjbx416DGAABQOiqGGC5xiXnQ+4FKWu4wc1pgq4VcV5v70IUzQnCWgSAPu4yil3Xnfb/wT7E+m8rs4GCJa2T4T47buX2DPkK8tu5k59hOxJsQRD6abMrTxnblq8vUi17LrEhA+LoHKSAjFyhOCRAAZq3Tofuof0txAybw6tVp7GC5394MpRg1UsFgwQKBgQDYFWutWKadRF1lBHhQW8uu1Zy/vr2tknJ+VYwqiP66ki1s3kPbvGNNyYPjBQI4eCoeqA1/thvF0+CyRsC3+1TE8SXEhItEwB3YsxdMvmrPxFr8U7Okpsg4TuqloFtcO12rQ85hVPdUHdiIYEeGyqnLKMU41GF4URN2AMUbSteYawKBgQCyM7fGLbm9BSf8WJ1v2SpxLo78UG1kSlEzzEZQzvFErbDzWq9tWA7rzzenrWcImp3imDRUgkpajlDpqUabF7/Nrx0lpSgJoOko+cW/xvTtTxT2+lm8wb/T629IAj/QpXod7k5HVHUsA0FueBpueJCKNxFnkiedVVvaZjMq9e15oQKBgA2C+WKzgmefGL/yUZukwc3C6bRLtwydda9Uphkay+LatSBznYal9wesLCUL8SGa0fdsxrtPpdju8MP1DKP0gU53TcdGCndYFAWy3SgdWAx52L6idT88dpSeyqlkp5HS3H6TFNqdN4H5A8szSgWxsoBTolF1ZkrhtvfQAIM+YNDVAoGAKZrjjDR+yf/bLxJtZ4C3ZQduwL/yWljzjnlh7VnzgIpg5uBEVu4ZRbryjoZwqNSYih/pD9X/kBbsEzG/V1R7JoV8854Us/LKnRN7tOO5qXIuPd+DdgtyQwMTzycfSRJpaXWK9yJj3OvBqg4GdcZWUL68pIa+EwCr2ljEF4KleCECgYEAkuUG9m0vuHI1dpIqgrTui+WkF5Fc0RuGu8M/JD12lQbMgnaCK6zHZW+1Hq03RyRO1ZYztyFBNK8CTIYN6aeODWQk4gltdsry8pR1BbNdt5Fbll6MqfbLQim8V7SSvqvpClIsiKrMPqE07MfkB5qbpmtdDpByIjtFL7hBikt/bpY=" />
+        <env name="pay_serverUrl" value="https://openapi.alipay.com/gateway.do" />
+        <env name="pay_RootCertPath" value="D:\Users\file\alipayRootCert.crt" />
+        <env name="pay_AlipayPublicCertPath" value="D:\\Users\\file\\alipayCertPublicKey_RSA2.crt" />
+        <env name="pay_AppCertPath" value="D:\\Users\\file\\appCertPublicKey_2021005102666099.crt" />
+        <env name="instance_Record_port" value="6388" />
+        <env name="host" value="127.0.0.1" />
+        <env name="instance_wifi_port" value="6379" />
+        <env name="instance_websocket_port" value="6380" />
+        <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.FJOneApplication" />
+      <item itemvalue="应用程序.FJOneApplication" />
+      <item itemvalue="JUnit.AlgorithemTest.test2" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.FJOneApplication" />
+        <item itemvalue="应用程序.FJOneApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="34195466-5030-4d0f-980b-6627a53c464d" name="默认的" comment="" />
+      <created>1734248070004</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734248070004</updated>
+      <workItem from="1734248071330" duration="14980000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.client.mapper.admin.AdminMenurightMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.client.entity.AdminMenuright">
+        <id column="menu_id" property="menuId" jdbcType="INTEGER"/>
+        <result column="menu_title" property="menuTitle" jdbcType="VARCHAR"/>
+        <result column="menu_router" property="menuRouter" jdbcType="VARCHAR"/>
+        <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectMenuByRole" resultType="com.yunting.client.entity.AdminMenuright">
+        select menu_id, menu_title, menu_router, menu_icon
+        from admin_menuright
+                 left join admin_role_menu rm on rm.menuId = admin_menuright.menu_id
+        where rm.roleId = #{roleID}
+    </select>
+
+</mapper>

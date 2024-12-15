@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.client.mapper.ExceptionRecordlsitMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.client.entity.ExceptionRecordlsit">
+        <id column="exception_id" property="exceptionId" jdbcType="BIGINT"/>
+        <result column="player_id" property="playerId" jdbcType="CHAR"/>
+        <result column="wx_nick_name" property="wxNickName" jdbcType="VARCHAR"/>
+        <result column="game_id" property="gameId" jdbcType="CHAR"/>
+        <result column="oaid" property="oaid" jdbcType="VARCHAR"/>
+        <result column="android_id" property="androidId" jdbcType="VARCHAR"/>
+        <result column="device_type" property="deviceType" jdbcType="VARCHAR"/>
+        <result column="device_detail" property="deviceDetail" jdbcType="VARCHAR"/>
+        <result column="except_type" property="exceptType" jdbcType="VARCHAR"/>
+        <result column="except_info" property="exceptInfo" jdbcType="VARCHAR"/>
+        <result column="exception_time" property="exceptionTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertExceptionRecord">
+        INSERT INTO exception_recordlsit(player_id, wx_nick_name, game_id, oaid, android_id, device_type, device_detail,
+                                         except_type, except_info, exception_time)
+        VALUES (#{playerId}, #{wxNickName}, #{gameId},
+                #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail},
+                #{exceptType}, #{exceptInfo}, #{exceptionTime})
+    </insert>
+
+
+    <select id="getAllExceptionRecord" resultType="com.yunting.client.entity.ExceptionRecordlsit">
+        SELECT exception_id, player_id, wx_nick_name, game_id, oaid, android_id, device_type, device_detail,
+        except_type, except_info, exception_time
+        FROM exception_recordlsit
+        where exception_id = exception_id and game_id=#{appid}
+        <!--        <where>-->
+        <!--            <if test="openId != null">-->
+        <!--                AND open_id = #{openId}-->
+        <!--            </if>-->
+        <!--            <if test="playerId != null">-->
+        <!--                AND player_id = #{playerId}-->
+        <!--            </if>-->
+        <!--            <if test="gameId != null">-->
+        <!--                AND game_id = #{gameId}-->
+        <!--            </if>-->
+        <!--            <if test="packageName != null">-->
+        <!--                AND package_name = #{packageName}-->
+        <!--            </if>-->
+        <!--            <if test="exceptType!= null"></if>-->
+        <!--        </where>-->
+        order by exception_id desc
+    </select>
+
+</mapper>

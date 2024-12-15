@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.client.mapper.GameSettingMapper">
+
+    <select id="getGameSettingByPackageName" resultType="com.yunting.client.entity.setting.GameSetting">
+        select adv_watch_interval,
+               user_reward_setting_id,
+               user_gathering_setting_id,
+               screenshot_setting_id,
+               device_System_Condition,
+               retain_way,
+               click_limit,
+               prohibt_see_adv_start,
+               prohibt_see_adv_end,
+               is_enable_prohibt,
+               is_anchor_weekend,
+               active_standard,
+               notice_msg
+        from behind_manage.game_setting
+        where package_name = #{packageName}
+    </select>
+
+    <select id="getScreenshotSettingByPk"
+            resultType="java.lang.Double">
+        select screenshot_setting_val
+        from behind_manage.screenshot_setting
+        where screenshot_setting_id = #{screenshotSettingID}
+    </select>
+    <select id="getUserRewardSetting" resultType="com.yunting.client.entity.setting.UserRewardSetting">
+        select user_reward_setting_id, get_reward_max_val, user_adv_percentage
+        from behind_manage.user_reward_setting
+        where user_reward_setting_id = #{userRewardSettingId}
+    </select>
+    <select id="getRiskControlSetting" resultType="com.yunting.client.entity.setting.RiskControlSetting">
+        select root_enable,
+               no_barrier,
+               usb,
+               otg,
+               adb,
+               simulator,
+               bluetooth,
+               charge,
+               vpn,
+               sim,
+               hotdot
+        from behind_manage.risk_control_setting
+        where package_name = #{packageName}
+    </select>
+
+</mapper>

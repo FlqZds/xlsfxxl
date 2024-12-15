@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.client.mapper.Client.DeviceRecordlistMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.client.entity.DeviceRecordlist">
+        <id column="device_id" jdbcType="BIGINT" property="deviceId"/>
+        <result column="player_id" jdbcType="BIGINT" property="playerId"/>
+        <result column="wx_nickname" jdbcType="VARCHAR" property="wxNickname"/>
+        <result column="oaid" jdbcType="VARCHAR" property="oaid"/>
+        <result column="android_id" jdbcType="VARCHAR" property="androidId"/>
+        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
+        <result column="device_detail" jdbcType="VARCHAR" property="deviceDetail"/>
+        <result column="firstLoginTime" jdbcType="TIMESTAMP" property="firstlogintime"/>
+        <result column="identifiction" jdbcType="CHAR" property="identifiction"/>
+    </resultMap>
+
+    <insert id="insertDeviceRecord">
+        INSERT INTO device_recordlist(player_id, wx_nickname, oaid, android_id, device_type, device_detail,firstLoginTime,identifiction)
+        VALUES (#{playerId}, #{wxNickname}, #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail},#{firstlogintime},#{identifiction})
+    </insert>
+
+    <select id="getDeviceRecordByPlayerId" resultType="com.yunting.client.entity.DeviceRecordlist">
+        SELECT device_id,
+               player_id,
+               wx_nickname,
+               oaid,
+               android_id,
+               device_type,
+               device_detail,
+               firstLoginTime,
+               identifiction
+        FROM device_recordlist
+        WHERE player_id = #{playerId} and identifiction != 'a'
+    </select>
+
+    <select id="getLastDeviceRecordByPlayerId" resultType="com.yunting.client.entity.DeviceRecordlist">
+        SELECT device_id,
+               device_recordlist.player_id,
+               device_recordlist.wx_nickname,
+               oaid,
+               android_id,
+               device_type,
+               device_detail,
+               firstLoginTime,
+               identifiction
+        FROM device_recordlist left join player p on device_recordlist.player_id = p.player_id
+        WHERE device_recordlist.player_id = #{playerId}
+        order by device_id desc limit 1
+    </select>
+
+</mapper>

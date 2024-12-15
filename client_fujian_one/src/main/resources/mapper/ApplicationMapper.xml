@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.client.mapper.ApplicationMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.client.entity.Application">
+        <id column="application_id" property="applicationId" jdbcType="BIGINT"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <result column="application_name" property="applicationName" jdbcType="VARCHAR"/>
+        <result column="application_desc" property="applicationDesc" jdbcType="VARCHAR"/>
+        <result column="download_location" property="downloadLocation" jdbcType="VARCHAR"/>
+        <result column="application_create_time" property="applicationCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="info" property="info" jdbcType="VARCHAR"/>
+        <result column="qq_group" property="qqGroup" jdbcType="VARCHAR"/>
+        <result column="appid" property="appid" jdbcType="VARCHAR"/>
+        <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAll" resultType="com.yunting.client.entity.Application">
+        select application_name, download_location, application_create_time, application_desc
+        from behind_manage.application;
+    </select>
+
+</mapper>
