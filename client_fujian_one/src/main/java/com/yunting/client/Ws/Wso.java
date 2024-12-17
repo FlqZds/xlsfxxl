@@ -4,21 +4,16 @@ import com.google.gson.Gson;
 import com.yunting.SpringBeanContext;
 import com.yunting.client.common.config.redis.RedisMessageListener;
 import com.yunting.client.common.config.websocket.MyConfigurator;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.client.common.utils.RedisUtil_session;
 import com.yunting.client.common.utils.sessionUtils;
-import com.yunting.client.entity.setting.GameSetting;
 import com.yunting.client.entity.setting.UserGatheringSetting;
 import com.yunting.client.mapper.DayBehaveRecordlistMapper;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -28,8 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.yunting.client.common.utils.FS.heartBeatMsg;
-import static com.yunting.client.common.utils.FS.heartBeatRespMsg;
+import static com.yunting.common.utils.FS.heartBeatMsg;
+import static com.yunting.common.utils.FS.heartBeatRespMsg;
 
 @Component("Wso")
 @Slf4j
@@ -177,28 +172,5 @@ public class Wso {
 //        log.info("池子的人:" + SESSION_POOL.values());
 
     }
-
-
-    /**
-     * 获取用户聚集设置
-     *
-     * @param sessionInfo
-     * @return
-     * @throws IOException
-     */
-    /*
-    private UserGatheringSetting getUserLocationSetting(UserSession userSession) throws IOException {
-        //拿到聚集设置
-        String UserGatheringSetting_json = forest.getUserGatheringSetting(userSession.gameID);
-        ResultMessage resultMessage = JSONObject.parseObject(UserGatheringSetting_json, ResultMessage.class);
-        UserGatheringSetting gathering = JSON.to(UserGatheringSetting.class, resultMessage.getData());
-//        log.info("游戏{>" + gameId + "<}的聚集设置已读取:" + gathering);
-        if (Objects.isNull(gathering)) {
-            log.error("聚集设置读取失败,请检查" + userSession.gameID + "的gameID是否正确");
-            throw new AppException(ResponseEnum.GET_USER_GATHERING_SETTING_FAILED);
-        }
-        return gathering;
-    }
-     */
 
 }

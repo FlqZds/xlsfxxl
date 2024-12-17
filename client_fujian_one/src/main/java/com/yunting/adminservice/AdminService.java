@@ -3,7 +3,7 @@ package com.yunting.adminservice;
 import com.github.pagehelper.PageInfo;
 import com.yunting.client.DTO.RetainActive;
 import com.yunting.client.DTO.incondition;
-import com.yunting.client.common.results.ResultMessage;
+import com.yunting.common.results.ResultMessage;
 
 import java.io.IOException;
 
@@ -57,6 +57,7 @@ public interface AdminService {
 
     /***
      * 操作用户  (封禁 解封  设置特殊用户 解除特殊用户)
+     * @return
      */
     public ResultMessage changeUserPower(incondition incondition) throws IOException;
 

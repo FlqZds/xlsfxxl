@@ -12,10 +12,17 @@
         <result column="player_id" property="playerId" jdbcType="CHAR"/>
     </resultMap>
 
+    <insert id="insertWithTrans">
+        insert into behind_manage.image_mapping(directory, fileHash, fileName, img_type, player_id, uploadTime,img_money,img_business,img_business_id,img_trans,img_pay_time)
+        values (#{directory}, #{fileHash}, #{fileName}, #{imgType}, #{playerId}, #{uploadTime},#{imgMoney},#{imgBusiness},#{imgBusinessId},#{imgTrans},#{imgPayTime})
+    </insert>
+
+
     <insert id="insert">
         insert into behind_manage.image_mapping(directory, fileHash, fileName, img_type, player_id, uploadTime)
         values (#{directory}, #{fileHash}, #{fileName}, #{imgType}, #{playerId}, #{uploadTime})
     </insert>
+
 
     <update id="updateByPrimaryKey">
         update behind_manage.image_mapping
@@ -38,6 +45,14 @@
         from behind_manage.image_mapping
         where directory = #{dir}
           and fileName = #{fileName}
+    </select>
+
+    <select id="selectImgByImgTypeAndTransidAndUploadTime" resultType="java.lang.Integer">
+        select count(img_id)
+        from behind_manage.image_mapping
+        where img_type = #{imgType}
+          and img_trans = #{transID}
+          and uploadTime between #{startTime} and #{endTime}
     </select>
 
 </mapper>

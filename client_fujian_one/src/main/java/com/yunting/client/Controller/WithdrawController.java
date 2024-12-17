@@ -1,10 +1,10 @@
 package com.yunting.client.Controller;
 
 import com.alibaba.fastjson2.JSON;
-import com.yunting.client.DTO.PlayerDTO;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.clientservice.ClientImpl;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.yunting.client.common.utils.FS.Pay_Order_Header;
-
 @SpringBootTest(classes = FJOneApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
 public class AlgorithemTest {

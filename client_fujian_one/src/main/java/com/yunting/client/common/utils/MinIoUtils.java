@@ -1,8 +1,8 @@
 package com.yunting.client.common.utils;
 
 import com.yunting.client.common.config.minio.Fileinfo;
-import com.yunting.client.common.exception.AppException;
-import com.yunting.client.common.results.ResponseEnum;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
@@ -25,7 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.yunting.client.common.utils.FS.IMG_TYPE;
+import static com.yunting.common.utils.FS.IMG_TYPE;
+
 
 @Component("MinIoUtils")
 @Slf4j

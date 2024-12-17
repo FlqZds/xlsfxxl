@@ -1,16 +1,15 @@
 package com.yunting.client.Controller;
 
 import com.github.pagehelper.PageInfo;
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.DTO.VO.WithdrawVo;
+import com.yunting.client.DTO.img.ImgContainer;
 import com.yunting.client.DTO.img.ImgShow;
-import com.yunting.client.DTO.img.ImgVo;
-import com.yunting.client.common.exception.AppException;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.client.entity.Application;
 import com.yunting.clientservice.service.PlayerService;
-import com.yunting.clientservice.service.RedundantService;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +30,6 @@ public class PlayerController {
 
     @Resource(name = "PlayerService")
     private PlayerService playerService;
-
-    @Resource(name = "RedundantService")
-    private RedundantService redundantService;
 
 
     @ApiOperation(value = "十二点的时候发位置信息记录用户行为")
@@ -128,10 +124,6 @@ public class PlayerController {
             return new ResultMessage(ResponseEnum.UPLOAD_FILE_TOO_MUCH, null);
         }
 
-
-//        PlayerDTO playerDTO = new PlayerDTO();
-//        playerDTO.setPlayerId(1000028L);
-//        playerDTO.setGameId(12419L);
         ResultMessage resultMessage = playerService.uploadImgByPlayerAndAddOrder(playerDTO, androidID, files);
 
         return resultMessage;
@@ -153,12 +145,11 @@ public class PlayerController {
             @ApiResponse(code = 419901, message = "图片已存在,请重新选择"),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
     })
-    @PostMapping("/upnmhsh/{itp}")
+    @PostMapping("/upnmhsh")
     public ResultMessage uploadFile(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO,
-                                    @ApiParam(name = "要上传的图片类型") @PathVariable("itp") String itp,
                                     @ApiParam(name = "文件信息,其中的file字段可忽略")
-                                    @RequestBody List<ImgVo> imgVos) throws IOException {
-        playerService.preUploadFileNameAndHashVal(playerDTO, imgVos, itp);
+                                    @RequestBody ImgContainer imgContainer) throws IOException {
+        playerService.preUploadFileNameAndHashVal(playerDTO, imgContainer);
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 
@@ -170,8 +161,8 @@ public class PlayerController {
     })
     @PutMapping("/rdtetmt")
     public ResultMessage manIdentify() {
-        List moreEntertainment = redundantService.getMoreEntertainment();
-        return new ResultMessage(ResponseEnum.SUCCESS, moreEntertainment);
+       ;
+        return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 
     @ApiOperation(value = "立即下载")
@@ -189,7 +180,7 @@ public class PlayerController {
     })
     @PutMapping("/ckdwl")
     public ResultMessage clickDownload(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @RequestBody String info) {
-        redundantService.download(playerDTO);
+
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 

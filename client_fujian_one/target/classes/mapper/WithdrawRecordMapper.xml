@@ -14,7 +14,7 @@
     </resultMap>
 
     <insert id="insertWithdrawRecord">
-        insert into withdraw_record
+        insert into yunting_app_test.withdraw_record
         (withdraw_record_id, player_id,
          wx_nickname, package_name,
          withdraw_status, withdraw_money,
@@ -26,7 +26,7 @@
     </insert>
 
     <update id="updatePayStatus">
-        update withdraw_record
+        update yunting_app_test.withdraw_record
         set withdraw_status = #{status}
         where withdraw_record_id = #{id}
     </update>
@@ -39,7 +39,7 @@
 
     <select id="getTodayWithdrawCount" resultType="java.lang.Integer">
         select count(withdraw_record_id)
-        from withdraw_record
+        from yunting_app_test.withdraw_record
         where package_name = #{pakcageName}
           and player_id = #{playerId}
           and withdraw_time between #{begin} and #{end}
@@ -69,7 +69,7 @@
     <select id="getWithdrawRecordByPlayerIdAndPackageName"
             resultType="com.yunting.client.DTO.VO.WithdrawVo">
         select withdraw_status, withdraw_money, player_id, withdraw_time, return_money
-        from withdraw_record
+        from yunting_app_test.withdraw_record
         where player_id = #{playerId}
           and package_name = #{packageName}
         order by withdraw_record_id desc

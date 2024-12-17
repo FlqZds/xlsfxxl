@@ -3,15 +3,12 @@ package com.yunting.clientservice;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alipay.api.domain.Participant;
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.DTO.VO.DeviceDTO;
+import com.yunting.client.DTO.VO.GameMeta;
 import com.yunting.client.DTO.VO.GameSettingVo;
 import com.yunting.client.DTO.VO.infoVO;
 import com.yunting.client.DTO.dataTransFer.PlayerMetaData;
 import com.yunting.client.DTO.dataTransFer.SignDto;
-import com.yunting.client.common.exception.AppException;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.client.common.utils.*;
 import com.yunting.client.entity.Adv.AdEncourage;
 import com.yunting.client.entity.*;
@@ -26,6 +23,13 @@ import com.yunting.client.mapper.ExceptionRecordlsitMapper;
 import com.yunting.client.mapper.GameSettingMapper;
 import com.yunting.client.mapper.MobileDetailMapper;
 import com.yunting.clientservice.service.ClientService;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.IpUtils;
+import com.yunting.common.utils.JWTutil;
+import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.forest.ForestService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +48,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.yunting.client.common.utils.AliPayUtil.IdentityType;
-import static com.yunting.client.common.utils.FS.*;
+import static com.yunting.common.utils.FS.*;
 
 @Slf4j
 @Service("ClientService")
@@ -273,7 +277,7 @@ public class ClientImpl implements ClientService {
             throw new AppException(ResponseEnum.PLAYER_WITHDRAW_COUNT_OVER_LIMIT);
         }
 
-        if (playerInRed.compareTo(percentage) == -1) {
+        if (playerInRed.compareTo(Percentage) == -1) {
             log.warn("用户余额不足,无法提现", new AppException(ResponseEnum.PLAYER_NO_MORE_MONEY));
             throw new AppException(ResponseEnum.PLAYER_NO_MORE_MONEY);
         }
@@ -316,8 +320,8 @@ public class ClientImpl implements ClientService {
                 thisRebackPer_end = new BigDecimal(withdrawMapper.getThisReback(dayCash));//end (已提现全部金额的返现比例)
             }
 
-            thisRebackPer_begin = thisRebackPer_begin.multiply(percentage);
-            thisRebackPer_end = thisRebackPer_end.multiply(percentage);
+            thisRebackPer_begin = thisRebackPer_begin.multiply(Percentage);
+            thisRebackPer_end = thisRebackPer_end.multiply(Percentage);
 
             BigDecimal toReduce = dayCash.multiply(thisRebackPer_end);  //计算公式后面要减掉的那一坨
             toReduce = toReduce.setScale(2, BigDecimal.ROUND_DOWN);
@@ -468,29 +472,39 @@ public class ClientImpl implements ClientService {
 
     /***
      * 采集并上传设备信息
-     * mobileDetail 设备信息
-     * @return
-     * 如果采集到已存在的设备, 但系统不同, 则更新设备系统,在返回更新后的设备ID
-     * <p>
-     * <p>
-     * 采集到未存在的设备,则新增设备信息,然后返回新增设备ID
-     * <p>
-     * <p>
-     * 如果什么都没有变,那就返回未变化的设备ID
+     * @param mobileDetail 设备信息
+     * @return 返回不允许的设备品牌
      *
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long collectionAndUploadMobileInfo(MobileDetail mobileDetail) {
+    public List<String> collectionAndUploadMobileInfo(MobileDetail mobileDetail) {
+        List<String> allImapprovalBrand = mobileDetailMapper.getAllImapprovalBrand();
+        this.saveAndDistinct(mobileDetail);
+        log.info("Int_设备信息采集成功,禁用设备表已返回");
+        return allImapprovalBrand;
+    }
+
+
+    /***
+     * 存储+去重(设备型号,安卓系统....)+返回该次的设备id
+     * @param mobileDetail 设备信息
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long saveAndDistinct(MobileDetail mobileDetail) {
+        String mobileSystem = mobileDetail.getMobileSystem(); //传过来的设备系统
+        log.info("传过来的设备系统:"+mobileDetail);
 
         MobileDetail mobile = mobileDetailMapper.selectMobileNameAndBrand(mobileDetail.getMobileCpu(), mobileDetail.getMobileCpuFluency(), mobileDetail.getDeviceDetail(), mobileDetail.getDeviceType());
 
         if (Objects.nonNull(mobile)) {  //查到了
-            Long mobileID = Long.valueOf(mobile.getMobileId());
-            if (mobile.getMobileSystem() != mobileDetail.getMobileSystem()) {  //其他相同但是设备系统需要更新
+            Long mobileID = mobile.getMobileId();
+            String localSystem = mobile.getMobileSystem();
+            log.info("本地设备系统:"+localSystem);
+            if (localSystem.equals(mobileSystem)==false) {  //其他相同但是设备系统需要更新
                 mobileDetailMapper.changeMobileSystem(mobileID, mobileDetail.getMobileSystem());
                 log.info("该型号设备系统已变更");
             }
-            log.info("设备信息已校验");
             return mobileID;
         } else   //        如果数据库中没有该型号数据,就新增该型号
         {
@@ -501,7 +515,7 @@ public class ClientImpl implements ClientService {
                         .deviceDetail(mobileDetail.getDeviceDetail())
                         .deviceType(mobileDetail.getDeviceType()).build();
                 mobileDetailMapper.insert(detail);
-                log.info("新增一条该型号数据,设备信息已上传");
+                log.info("未查到相关型号数据,新增一条型号数据,设备信息已上传");
                 return detail.getMobileId();
             } catch (Exception e) {
                 SpringRollBackUtil.rollBack();
@@ -522,7 +536,7 @@ public class ClientImpl implements ClientService {
      *
      */
     @Transactional(rollbackFor = Exception.class)
-    public ResultMessage PlayerSignOn(SignDto signDto) {
+    public ResultMessage PlayerSignOn(HttpServletRequest request,SignDto signDto) {
         String packageName = signDto.getPackageName();//包名
         String wxCode = signDto.getWxCode();          //微信code
         String proxyName = signDto.getProxyName();    //代理名称
@@ -538,7 +552,7 @@ public class ClientImpl implements ClientService {
         String mobileCpuFluency = signDto.getMobileCpuFluency(); //CPU频率
 
         RiskControlSetting riskControlSetting = this.getRiskControlSetting(packageName); //风控参数
-        String cityInfo = IpUtils.getCityInfo(IpUtils.getIp());  //地址
+        String cityInfo = IpUtils.getCityInfo(IpUtils.getIpAddr(request));  //地址
 
 //        先判断注册还是登录
         if (StringUtils.isEmpty(packageName) || StringUtils.isEmpty(proxyName) || StringUtils.isEmpty(wxCode)) {
@@ -550,7 +564,7 @@ public class ClientImpl implements ClientService {
 
         MobileDetail md = MobileDetail.builder().deviceType(deviceType).deviceDetail(deviceDetail)
                 .mobileCpu(mobileCpu).mobileCpuFluency(mobileCpuFluency).mobileSystem(mobileSystem).build();
-        Long mobileID = this.collectionAndUploadMobileInfo(md);//存储+去重(设备型号,安卓系统....)+返回该次的设备id
+        Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,安卓系统....)+返回该次的设备id
 
         Player player_isRegistered = playerMapper.selectPlayerByWxOpenId(openid);
 
@@ -613,14 +627,17 @@ public class ClientImpl implements ClientService {
 //        登录的话就先验证设备记录, 不一致就记录异常, 一致就返回 玩家信息+风控参数+地址
             PlayerDTO playerDTO = this.generateToken(player_isRegistered);
             this.updateLocation(playerDTO, location);
-            playerDTO.setRiskControlSetting(riskControlSetting);
-            playerDTO.setAddress(cityInfo);
+
+            GameMeta gameMeta = new GameMeta();
+            BeanUtils.copyProperties(playerDTO, gameMeta);
+            gameMeta.setRiskControlSetting(riskControlSetting);
+            gameMeta.setAddress(cityInfo);
 
             playerMapper.updatePlayerMobileID(player_isRegistered_ID, mobileID);
             log.info("玩家设备id已刷新");
 
             log.info(player_isRegistered.getWxNickname() + "用户已经存在，将前往登录");
-            return new ResultMessage(ResponseEnum.SUCCESS, playerDTO);
+            return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
         } else {
 
 //        注册的话就保存设备记录,新建玩家,然后返回风控参数
@@ -630,8 +647,11 @@ public class ClientImpl implements ClientService {
                 this.addDeviceRecord(wxUser, signDto, "1");//保存新设备记录
                 PlayerDTO playerDTO = this.generateToken(wxUser);
                 this.updateLocation(playerDTO, location);
-                playerDTO.setRiskControlSetting(riskControlSetting);
-                playerDTO.setAddress(cityInfo);
+
+                GameMeta gameMeta = new GameMeta();
+                BeanUtils.copyProperties(playerDTO, gameMeta);
+                gameMeta.setRiskControlSetting(riskControlSetting);
+                gameMeta.setAddress(cityInfo);
 
                 log.info(wxUser.getWxNickname() + "玩家,注册成功");
                 return new ResultMessage(ResponseEnum.SUCCESS, playerDTO);
@@ -685,7 +705,7 @@ public class ClientImpl implements ClientService {
 
                 MobileDetail md = MobileDetail.builder().deviceType(deviceType).deviceDetail(deviceDetail)
                         .mobileCpu(mobileCpu).mobileCpuFluency(mobileCpuFluency).mobileSystem(mobileSystem).build();
-                Long mobileID = this.collectionAndUploadMobileInfo(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
+                Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
                 playerMapper.updatePlayerMobileID(playerID, mobileID);//更新玩家设备id
                 log.info("oaid异常的设备型号已记录");
                 log.info("oaid异常的玩家设备id已刷新");
@@ -699,7 +719,7 @@ public class ClientImpl implements ClientService {
 
                 MobileDetail md = MobileDetail.builder().deviceType(deviceType).deviceDetail(deviceDetail)
                         .mobileCpu(mobileCpu).mobileCpuFluency(mobileCpuFluency).mobileSystem(mobileSystem).build();
-                Long mobileID = this.collectionAndUploadMobileInfo(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
+                Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
                 playerMapper.updatePlayerMobileID(playerID, mobileID);//更新玩家设备id
                 log.info("安卓ID异常的设备型号已记录");
                 log.info("安卓ID异常的玩家设备id已刷新");
@@ -713,7 +733,7 @@ public class ClientImpl implements ClientService {
 
                 MobileDetail md = MobileDetail.builder().deviceType(deviceType).deviceDetail(deviceDetail)
                         .mobileCpu(mobileCpu).mobileCpuFluency(mobileCpuFluency).mobileSystem(mobileSystem).build();
-                Long mobileID = this.collectionAndUploadMobileInfo(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
+                Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,安卓系统....)+返回该次设备id
                 playerMapper.updatePlayerMobileID(playerID, mobileID);//更新玩家设备id
                 log.info("封禁用户的设备id已刷新");
                 return new ResultMessage(ResponseEnum.BAN_USER_OUT, null);
@@ -1033,8 +1053,8 @@ public class ClientImpl implements ClientService {
         String realName = player.getRealName(); //姓名
 
 //设置
-        playerMetaData.setScreenshotSettingVal(screenVal);
         playerMetaData.setGameSettingVo(gameSettingVo);
+        playerMetaData.setScreenshotSettingVal(screenVal);
         playerMetaData.setWithdrawPercentage(withdrawPercentage);
 //玩家数据
         playerMetaData.setInRed(String.valueOf(inRed));

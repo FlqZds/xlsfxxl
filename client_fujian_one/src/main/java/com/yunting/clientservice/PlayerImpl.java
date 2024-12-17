@@ -4,16 +4,12 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.DTO.VO.WithdrawVo;
+import com.yunting.client.DTO.img.ImgContainer;
 import com.yunting.client.DTO.img.ImgShow;
 import com.yunting.client.DTO.img.ImgVo;
-import com.yunting.client.common.exception.AppException;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.client.common.utils.MinIoUtils;
 import com.yunting.client.common.utils.RedisUtil_Record;
-import com.yunting.client.common.utils.SpringRollBackUtil;
 import com.yunting.client.entity.*;
 import com.yunting.client.entity.setting.GameSetting;
 import com.yunting.client.mapper.Client.LocationMapper;
@@ -23,6 +19,11 @@ import com.yunting.client.mapper.DayBehaveRecordlistMapper;
 import com.yunting.client.mapper.ImageMappingMapper;
 import com.yunting.client.mapper.ImgorderMapper;
 import com.yunting.clientservice.service.PlayerService;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.forest.ForestService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.yunting.client.common.utils.FS.IMG_TYPE;
+import static com.yunting.common.utils.FS.IMG_TYPE;
+
 
 @Slf4j
 @Service("PlayerService")
@@ -212,8 +214,10 @@ public class PlayerImpl implements PlayerService {
 
             String originName = files.get(i).getOriginalFilename();                        //传过来的图片名
             String originHash = minIoUtils.calculateSHA256(files.get(i).getInputStream()); //传过来的图片的hash
+
             ImageMapping imgInfo = imgorderMapper.selectImgByImginfo(originHash, originName);
 
+//解析该图片的hash,通过文件名+hash去找 如果在数据库中存在,就存,不存在 ,那就是图片造假
             if (imgInfo == null) {
                 log.error("图片不存在|图片hash不匹配|图片未找到,文件名称:" + originName, new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE));
                 throw new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE);
@@ -242,10 +246,19 @@ public class PlayerImpl implements PlayerService {
 
     // 定义一个格式化器，格式为 "yyyy-MM-dd HH:mm:ss"
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+    private static LocalDateTime startTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+    private static LocalDateTime endTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
 
     @Transactional(rollbackFor = Exception.class)
-    public void preUploadFileNameAndHashVal(PlayerDTO playerDTO, List<ImgVo> imgVo, String imgType) throws IOException {
+    public void preUploadFileNameAndHashVal(PlayerDTO playerDTO, ImgContainer imgContainer) throws IOException {
+        String imgType = imgContainer.getItp();
+        List<ImgVo> imgVo = imgContainer.getImgVos();
+        String imgMoney = imgContainer.getImgMoney();
+        String imgBusiness = imgContainer.getImgBusiness();
+        String imgTrans = imgContainer.getImgTrans();
+        String imgBusinessId = imgContainer.getImgBusinessId();
+        LocalDateTime imgPayTime = imgContainer.getImgPayTime();
+
         Long gameId = playerDTO.getGameId();
         LocalDateTime now = LocalDateTime.now();
         // 使用 formatter 格式化当前时间
@@ -262,24 +275,44 @@ public class PlayerImpl implements PlayerService {
 
         try {
             for (ImgVo vo : imgVo) {
-                //上传之前检测是否有同hash+同文件名的图片
-                ImageMapping img = imgorderMapper.selectImgByImginfo(vo.getImgHash(), vo.getImgName());
-                if (img != null) {
-                    log.error("图片已存在,请重新选择" + vo.getImgName() + "文件hash:" + vo.getImgHash(), new AppException(ResponseEnum.IMG_ALREADY_EXIST));
-                    throw new AppException(ResponseEnum.IMG_ALREADY_EXIST);
+
+                if(imgType.equals("t")){
+                    //插入订单截图之前,先看有没有该笔订单 ,有的话就直接报错了
+                    int t = imageMappingMapper.selectImgByImgTypeAndTransidAndUploadTime("t", imgTrans, now, startTime, endTime);
+                    if(t>0){
+                        log.error("订单号重复", new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE));
+                        throw  new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE);
+                    }
+
+                    //如果是订单截图就要插入图片的订单信息
+                    ImageMapping imageMapping = ImageMapping.builder()
+                            .directory(upload_dir)
+                            .fileName(vo.getImgName())
+                            .fileHash(vo.getImgHash())
+                            .imgType(imgType)
+                            .imgMoney(imgMoney)//充值金额
+                            .imgBusiness(imgBusiness)//商户名
+                            .imgTrans(imgTrans)//交易单号
+                            .imgBusinessId(imgBusinessId)//商户单号
+                            .imgPayTime(imgPayTime)//充值时间
+
+                            .playerId(playerDTO.getPlayerId())
+                            .uploadTime(now)  //图片上传时间和订单生成时间差不了24小时
+                            .build();
+                    imageMappingMapper.insertWithTrans(imageMapping);
+                }else {
+                    ImageMapping imageMapping = ImageMapping.builder()
+                            .directory(upload_dir)
+                            .fileName(vo.getImgName())
+                            .fileHash(vo.getImgHash())
+                            .imgType(imgType)
+                            .playerId(playerDTO.getPlayerId())
+                            .uploadTime(now)
+                            .build();
+                    imageMappingMapper.insert(imageMapping);
                 }
 
-                ImageMapping imageMapping = ImageMapping.builder()
-                        .directory(upload_dir)
-                        .fileName(vo.getImgName())
-                        .fileHash(vo.getImgHash())
-                        .imgType(imgType)
-                        .playerId(playerDTO.getPlayerId())
-                        .uploadTime(now)
-                        .build();
-                imageMappingMapper.insert(imageMapping);
-
-                minIoUtils.detectBucket(gameId + "");
+                minIoUtils.detectBucket(gameId + "");//检测是否存在bucket,不存在就创建
                 minIoUtils.createDirectory(gameId + "", upload_dir); //创建图片组 相关目录
             }
 

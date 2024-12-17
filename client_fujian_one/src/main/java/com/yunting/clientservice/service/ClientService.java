@@ -1,9 +1,9 @@
 package com.yunting.clientservice.service;
 
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.DTO.dataTransFer.PlayerMetaData;
 import com.yunting.client.entity.setting.RiskControlSetting;
 import com.yunting.client.entity.setting.UserRewardSetting;
+import com.yunting.common.Dto.PlayerDTO;
 
 public interface ClientService {
 

@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.yunting.adminservice.AdminService;
 import com.yunting.client.DTO.RetainActive;
 import com.yunting.client.DTO.incondition;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -102,7 +102,6 @@ public class AdminController {
     public ResultMessage changeUserPower(@RequestBody String condition) throws IOException {
         incondition to = JSON.to(incondition.class, condition);
         ResultMessage msg = adminService.changeUserPower(to);
-//        List<WithdrawRecord> withdrawRecords = adminService.queryAllWithdraw(packageName);
 
         return msg;
     }

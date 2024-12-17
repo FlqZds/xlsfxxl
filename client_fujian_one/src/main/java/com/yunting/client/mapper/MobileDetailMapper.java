@@ -1,5 +1,6 @@
 package com.yunting.client.mapper;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.yunting.client.DTO.RetainActive;
 import com.yunting.client.entity.MobileDetail;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,7 @@ public interface MobileDetailMapper {
 
     // 根据id修改设备信息
     public Integer changeMobileSystem(@Param("mobileId") Long mobileId, @Param("mobileSystem") String mobileSystem);
+
+    //     拿到所有不允许通过的设备品牌
+    List<String> getAllImapprovalBrand();
 }

@@ -3,12 +3,12 @@ package com.yunting.clientservice.service;
 import com.yunting.client.DTO.AdDto;
 import com.yunting.client.DTO.AdEncourageDto;
 import com.yunting.client.DTO.AdEncourageLoadDto;
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.common.results.CallbackMessage;
 import com.yunting.client.entity.Adv.AdInscreen;
 import com.yunting.client.entity.Adv.AdOpenscreen;
 import com.yunting.client.entity.Adv.AdRowstyle;
 import com.yunting.client.entity.Adv.AdStream;
+import com.yunting.common.Dto.PlayerDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;

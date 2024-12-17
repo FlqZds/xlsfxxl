@@ -2,9 +2,9 @@ package com.yunting.client.common.config.redis;
 
 import com.google.gson.Gson;
 import com.yunting.client.Ws.Wso;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
 import com.yunting.client.entity.setting.UserGatheringSetting;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;

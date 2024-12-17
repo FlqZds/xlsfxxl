@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 import static com.yunting.client.Ws.Wso.SESSION_POOL;
-import static com.yunting.client.common.utils.FS.serverHeartBearDuration;
+import static com.yunting.common.utils.FS.serverHeartBearDuration;
 
 @Component("HeartBongBongBong")
 @Slf4j

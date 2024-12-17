@@ -5,17 +5,17 @@ import cn.hutool.core.net.Ipv4Util;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.yunting.client.DTO.PlayerDTO;
 import com.yunting.client.DTO.VO.infoVO;
 import com.yunting.client.DTO.dataTransFer.PlayerMetaData;
 import com.yunting.client.DTO.dataTransFer.SignDto;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.results.ResultMessage;
-import com.yunting.client.common.utils.IpUtils;
 import com.yunting.client.entity.MobileDetail;
 import com.yunting.client.entity.setting.RiskControlSetting;
 import com.yunting.clientservice.ClientImpl;
 import com.yunting.clientservice.service.ClientService;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.IpUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.jdbc.Null;
@@ -74,16 +74,16 @@ public class ClientController {
 
 
     @ApiResponses({
-            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL"),
+            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL",responseContainer = "List", response = String.class),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
             @ApiResponse(code = 55099, message = "添加手机详细信息出错")
     })
-    @ApiOperation(value = "采集并上传,返回设备ID")
+    @ApiOperation(value = "采集并上传,返回设备不允许登录设备表")
     @PostMapping("/collection")
     private ResultMessage uploadMobileInfo(@RequestBody MobileDetail mobileDetail) {
 
-        client.collectionAndUploadMobileInfo(mobileDetail);
-        return new ResultMessage(ResponseEnum.SUCCESS, null);
+        List<String> strings = client.collectionAndUploadMobileInfo(mobileDetail);
+        return new ResultMessage(ResponseEnum.SUCCESS, strings);
     }
 
 
@@ -99,13 +99,13 @@ public class ClientController {
 
     })
     @PostMapping("/signOn")
-    public ResultMessage sendUserInfo(@RequestBody SignDto signDto) throws Exception {
+    public ResultMessage sendUserInfo(HttpServletRequest request,@RequestBody SignDto signDto) throws Exception {
         abv = 12;
         abvlist.add("1");
         log.info("大小:" + abv);
         log.info("长度:" + abvlist);
 
-        ResultMessage resultMessage = client.PlayerSignOn(signDto);
+        ResultMessage resultMessage = client.PlayerSignOn(request,signDto);
         return resultMessage;
     }
 
@@ -167,10 +167,10 @@ public class ClientController {
     })
 
     @GetMapping("/risking")
-    public ResultMessage getRiskControlSetting(@RequestParam("packageName") String packageName) {
+    public ResultMessage getRiskControlSetting(HttpServletRequest request,@RequestParam("packageName") String packageName) {
 
         RiskControlSetting riskControlSetting = clientService.getRiskControlSetting(packageName);
-        String ip = IpUtils.getIp();
+        String ip = IpUtils.getIpAddr(request);
         log.info("该请求的ip:" + ip);
         String addr = IpUtils.getCityInfo(ip);
         log.info("该请求的地址:" + addr);

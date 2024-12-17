@@ -11,7 +11,7 @@
         <result column="mobile_system" property="mobileSystem" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insert">
-        insert into mobile_detail( device_type, device_detail, mobile_cpu, mobile_cpu_fluency,mobile_system)
+        insert into yunting_app_test.mobile_detail( device_type, device_detail, mobile_cpu, mobile_cpu_fluency,mobile_system)
         values(#{deviceType},#{deviceDetail},#{mobileCpu},#{mobileCpuFluency},#{mobileSystem})
         <selectKey resultType="java.lang.Long" keyProperty="mobileId" keyColumn="mobile_id" order="AFTER">
             SELECT @@identity;
@@ -19,20 +19,20 @@
     </insert>
 
     <update id="changeMobileByID">
-        update mobile_detail
+        update yunting_app_test.mobile_detail
         set device_name = #{deviceName}
         where mobile_id = #{mobileId}
     </update>
 
     <update id="changeMobileSystem">
-        update mobile_detail
+        update yunting_app_test.mobile_detail
         set mobile_system = #{mobileSystem}
         where mobile_id = #{mobileId}
     </update>
 
     <select id="selectAllMobileByCondition" resultType="com.yunting.client.entity.MobileDetail">
         select mobile_id, device_name, device_type, device_detail, mobile_cpu, mobile_cpu_fluency,mobile_system
-        from mobile_detail where mobile_id=mobile_id
+        from yunting_app_test.mobile_detail where mobile_id=mobile_id
         <if test="active.selectOption != ''">
 
             <if test="active.selectOption == 1">
@@ -53,7 +53,7 @@
 
     <select id="selectMobileNameAndBrand" resultType="com.yunting.client.entity.MobileDetail">
         select mobile_id, mobile_system
-        from mobile_detail
+        from yunting_app_test.mobile_detail
         where mobile_id = mobile_id
           and mobile_cpu = #{cpu}
           and mobile_cpu_fluency = #{cpuFluency}
@@ -63,8 +63,15 @@
 
     <select id="selectByPrimaryKey" resultType="com.yunting.client.entity.MobileDetail">
         select mobile_id, device_name, device_type, device_detail, mobile_cpu, mobile_cpu_fluency, mobile_system
-        from mobile_detail
+        from yunting_app_test.mobile_detail
         where mobile_id = #{mobileId,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="getAllImapprovalBrand" resultType="java.lang.String">
+        select brand_name
+        from behind_manage.brand_inapproval
+        order by brand_id desc
     </select>
 
 

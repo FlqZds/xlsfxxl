@@ -3,12 +3,8 @@ package com.yunting.clientservice;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.yunting.client.DTO.*;
-import com.yunting.client.common.exception.AppException;
 import com.yunting.client.common.results.CallbackMessage;
-import com.yunting.client.common.results.ResponseEnum;
-import com.yunting.client.common.utils.IpUtils;
 import com.yunting.client.common.utils.RedisUtil_Record;
-import com.yunting.client.common.utils.SpringRollBackUtil;
 import com.yunting.client.entity.Adv.*;
 import com.yunting.client.entity.Player;
 import com.yunting.client.entity.setting.GameSetting;
@@ -18,6 +14,11 @@ import com.yunting.client.mapper.Client.PlayerMapper;
 import com.yunting.client.mapper.DayBehaveRecordlistMapper;
 import com.yunting.client.mapper.GameSettingMapper;
 import com.yunting.clientservice.service.RecordService;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
+import com.yunting.common.utils.IpUtils;
+import com.yunting.common.utils.SpringRollBackUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static com.yunting.client.common.utils.FS.percentage;
+import static com.yunting.common.utils.FS.Percentage;
 
 @Slf4j
 @Service("RecordImpl")
@@ -433,7 +434,7 @@ public class RecordImpl implements RecordService {
 
                     if (rewardCount == 4) //满足奖励条件了
                     {
-                        redValue = BigDecimal.valueOf(encourageEcpm).multiply(BigDecimal.valueOf(userAdvPercentage)).multiply(percentage).divide(BigDecimal.valueOf(10));
+                        redValue = BigDecimal.valueOf(encourageEcpm).multiply(BigDecimal.valueOf(userAdvPercentage)).multiply(Percentage).divide(BigDecimal.valueOf(10));
 //                        redVal = (encourageEcpm * userAdvPercentage * 0.01) / 10;
                         adEncourageMapper.changeAdEncourageRecordReward(advID, redValue);
 //                        该玩家的当日服务端回调发放奖励次数,红包总数,当日红包总数   <|>    玩家的余额 的更新

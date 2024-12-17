@@ -1,5 +1,6 @@
 package com.yunting.client.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +31,14 @@ public class ImageMapping {
 
     private LocalDateTime uploadTime;
 
+    @ApiModelProperty("商户名")
+    private String imgBusiness;
+    @ApiModelProperty("充值金额")
+    private String imgMoney;
+    @ApiModelProperty(" 交易单号")
+    private String imgTrans;
+    @ApiModelProperty("商户单号")
+    private String imgBusinessId;
+    @ApiModelProperty("充值时间")
+    private LocalDateTime imgPayTime;
 }

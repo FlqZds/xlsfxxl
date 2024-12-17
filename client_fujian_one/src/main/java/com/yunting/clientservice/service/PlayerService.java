@@ -1,9 +1,9 @@
 package com.yunting.clientservice.service;
 
 import com.github.pagehelper.PageInfo;
-import com.yunting.client.DTO.PlayerDTO;
-import com.yunting.client.DTO.img.ImgVo;
-import com.yunting.client.common.results.ResultMessage;
+import com.yunting.client.DTO.img.ImgContainer;
+import com.yunting.common.Dto.PlayerDTO;
+import com.yunting.common.results.ResultMessage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -58,8 +58,8 @@ public interface PlayerService {
      * 上传文件之前的预处理
      * 文件名称和hash值,等相关信息上传
      * @param playerDTO 玩家信息
-     * @param imgVos 多个图片的信息
+     * @param imgContainer 多个图片的信息
      */
-    public void preUploadFileNameAndHashVal(PlayerDTO playerDTO, List<ImgVo> imgVos, String imgType) throws IOException;
+    public void preUploadFileNameAndHashVal(PlayerDTO playerDTO, ImgContainer imgContainer) throws IOException;
 
 }

@@ -7,7 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Client_WLAN_Parse" />
         <module name="client_fujian_one" />
+        <module name="Client_Img_one" />
+        <module name="Common" />
       </profile>
     </annotationProcessing>
   </component>
