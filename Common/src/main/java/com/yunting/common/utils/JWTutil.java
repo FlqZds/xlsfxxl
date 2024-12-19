@@ -6,23 +6,34 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Slf4j
-@Component("JWTutil")
+@Data
 public class JWTutil {
 
-    @Value("${config.jwt.expiration}")
+    //    @Value("${config.jwt.expiration}")
     private long expiration;
-    @Value("${config.jwt.secret}")
+    //    @Value("${config.jwt.secret}")
     private String secret;
 
-    private final String token_header="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.";
+    private String token_header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.";
+
+    @Autowired
+    public JWTutil() {
+        log.info("JWT初始化");
+        expiration = 10800;
+        secret = "nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj";
+    }
 
     /**
      * 加密 成 token
@@ -56,7 +67,7 @@ public class JWTutil {
      */
     public PlayerDTO checkJwt_master(String jwtToken) {
 
-        String token= token_header + jwtToken;
+        String token = token_header + jwtToken;
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(this.secret.getBytes()).
                 parseClaimsJws(token);
         // map
@@ -70,7 +81,6 @@ public class JWTutil {
                 .gameId(gameId)
                 .build();
     }
-
 
 
 }

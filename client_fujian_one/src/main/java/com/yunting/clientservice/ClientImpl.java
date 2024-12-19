@@ -493,15 +493,15 @@ public class ClientImpl implements ClientService {
     @Transactional(rollbackFor = Exception.class)
     public Long saveAndDistinct(MobileDetail mobileDetail) {
         String mobileSystem = mobileDetail.getMobileSystem(); //传过来的设备系统
-        log.info("传过来的设备系统:"+mobileDetail);
+        log.info("传过来的设备系统:" + mobileDetail);
 
         MobileDetail mobile = mobileDetailMapper.selectMobileNameAndBrand(mobileDetail.getMobileCpu(), mobileDetail.getMobileCpuFluency(), mobileDetail.getDeviceDetail(), mobileDetail.getDeviceType());
 
         if (Objects.nonNull(mobile)) {  //查到了
             Long mobileID = mobile.getMobileId();
             String localSystem = mobile.getMobileSystem();
-            log.info("本地设备系统:"+localSystem);
-            if (localSystem.equals(mobileSystem)==false) {  //其他相同但是设备系统需要更新
+            log.info("本地设备系统:" + localSystem);
+            if (localSystem.equals(mobileSystem) == false) {  //其他相同但是设备系统需要更新
                 mobileDetailMapper.changeMobileSystem(mobileID, mobileDetail.getMobileSystem());
                 log.info("该型号设备系统已变更");
             }
@@ -536,7 +536,7 @@ public class ClientImpl implements ClientService {
      *
      */
     @Transactional(rollbackFor = Exception.class)
-    public ResultMessage PlayerSignOn(HttpServletRequest request,SignDto signDto) {
+    public ResultMessage PlayerSignOn(HttpServletRequest request, SignDto signDto) {
         String packageName = signDto.getPackageName();//包名
         String wxCode = signDto.getWxCode();          //微信code
         String proxyName = signDto.getProxyName();    //代理名称
@@ -653,8 +653,9 @@ public class ClientImpl implements ClientService {
                 gameMeta.setRiskControlSetting(riskControlSetting);
                 gameMeta.setAddress(cityInfo);
 
+
                 log.info(wxUser.getWxNickname() + "玩家,注册成功");
-                return new ResultMessage(ResponseEnum.SUCCESS, playerDTO);
+                return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
             } catch (Exception e) {
                 SpringRollBackUtil.rollBack();
                 log.error("注册失败,请检查操作");
@@ -874,7 +875,7 @@ public class ClientImpl implements ClientService {
      */
 
     @Transactional(rollbackFor = Exception.class)
-    public ResultMessage identifyAndGetEncourageID(HttpServletRequest request, PlayerDTO playerDTO, DeviceDTO json) throws UnknownHostException {
+    public ResultMessage identifyAndGetEncourageID(HttpServletRequest request, PlayerDTO playerDTO, DeviceDTO json) {
         Player p = playerMapper.selectPlayerByPlayerId(playerDTO.getPlayerId());
 
         String wifi = json.getWifi();
@@ -1021,6 +1022,8 @@ public class ClientImpl implements ClientService {
      * <p>
      * 6玩家姓名
      * <p>
+     * 7玩家任务列表
+     * <p>
      * @param packageName  应用包名
      * @return
      */
@@ -1033,16 +1036,15 @@ public class ClientImpl implements ClientService {
             throw new AppException(ResponseEnum.GET_GAME_SETTING_FAILED);
         }
 
-        Double screenVal = gameSettingMapper.getScreenshotSettingByPk(gameSetting.getScreenshotSettingId());//截图设置
+        ScreenshotSetting screenshotSetting = gameSettingMapper.getScreenshotSettingByPk(gameSetting.getScreenshotSettingId());//截图设置
 
-        GameSettingVo gameSettingVo = new GameSettingVo();
-        BeanUtils.copyProperties(gameSetting, gameSettingVo);   //游戏设置
         PlayerMetaData playerMetaData = new PlayerMetaData();
 
         Long playerId = playerDTO.getPlayerId();
         Long gameId = playerDTO.getGameId();
 
-        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId);
+        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, gameId);
+        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, gameId);
         DayBehaveRecordlist player_day_record = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId); //该玩家当日的留存数据
 
         BigDecimal totalred = player_day_record.getTotalred(); //玩家总累计红包金额
@@ -1053,8 +1055,15 @@ public class ClientImpl implements ClientService {
         String realName = player.getRealName(); //姓名
 
 //设置
-        playerMetaData.setGameSettingVo(gameSettingVo);
-        playerMetaData.setScreenshotSettingVal(screenVal);
+        //截图设置
+        playerMetaData.setScreenshotSettingVal(screenshotSetting.getScreenshotSettingVal());
+        playerMetaData.setTransLimitDaily(screenshotSetting.getTransLimitDaily());
+        playerMetaData.setTransRewardCont(screenshotSetting.getTransRewardCont());
+
+        playerMetaData.setNoticeMSG(gameSetting.getNoticeMSG());
+        playerMetaData.setAdvWatchInterval(gameSetting.getAdvWatchInterval());
+
+        playerMetaData.setNoticeMSG(gameSetting.getNoticeMSG());
         playerMetaData.setWithdrawPercentage(withdrawPercentage);
 //玩家数据
         playerMetaData.setInRed(String.valueOf(inRed));
@@ -1064,23 +1073,11 @@ public class ClientImpl implements ClientService {
         playerMetaData.setPayLoginId(payLoginId);
         playerMetaData.setRealName(realName);
 
-        log.info("获取游戏设置成功");
+//任务
+        playerMetaData.setBonus(task.getBonus());
+        playerMetaData.setTaskProcess(task.getTaskProcess());
+        log.info("玩家:|-" + playerId + "-|已读取游戏设置");
         return playerMetaData;
-    }
-
-    @Override
-    public UserRewardSetting getUserRewardSetting(String packageName) {
-        GameSetting gameSetting = gameSettingMapper.getGameSettingByPackageName(packageName);
-        Integer userRewardSettingId = gameSetting.getUserRewardSettingId();
-        UserRewardSetting userRewardSetting = gameSettingMapper.getUserRewardSetting(gameSetting.getUserRewardSettingId());
-
-        if (Objects.isNull(userRewardSetting)) {
-            log.error("获取当前的用户奖励设置失败，请检查用户奖励设置Id:" + userRewardSettingId + "或者包名是否正确", new AppException(ResponseEnum.GET_USER_REWARD_SETTING_FAILED));
-            throw new AppException(ResponseEnum.GET_USER_REWARD_SETTING_FAILED);
-        }
-
-        log.info("奖励设置获取成功");
-        return userRewardSetting;
     }
 
     /***

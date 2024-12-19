@@ -14,11 +14,6 @@ public interface ClientService {
      */
     public PlayerMetaData getGameSetting(PlayerDTO playerDTO, String packageName);
 
-    /***
-     * 通过应用包名获取当前的用户奖励设置
-     * @param packageName  应用包名
-     */
-    public UserRewardSetting getUserRewardSetting(String packageName);
 
 
     /***

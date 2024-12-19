@@ -1,11 +1,13 @@
 package com.yunting.Screenshot.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,8 +15,6 @@ import java.math.BigDecimal;
 @Builder
 public class Imgorder {
     private Long orderId;
-
-    private BigDecimal orderMoney;
 
     private Long orderPlayerId;
 
@@ -24,8 +24,6 @@ public class Imgorder {
 
     private String packagename;
 
-    private String orderTransId;
-
     private BigDecimal withdrawPercentage;
 
     private String orderImgGroup;
@@ -33,4 +31,15 @@ public class Imgorder {
     private Long appid;
 
     private String isGet;
+
+    @ApiModelProperty("商户名")
+    private String orderBusiness;
+    @ApiModelProperty("充值金额")
+    private BigDecimal orderMoney;
+    @ApiModelProperty(" 交易单号")
+    private String orderTransId;
+    @ApiModelProperty("商户单号")
+    private String orderBusinessId;
+    @ApiModelProperty("充值时间")
+    private LocalDateTime orderPayTime;
 }

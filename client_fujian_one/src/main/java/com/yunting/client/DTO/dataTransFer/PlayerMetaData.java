@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +17,12 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "玩家加入websocket后,要获取的游戏相关配置数据和玩家自身数据", description = "简称玩家元数据")
 public class PlayerMetaData {
 
-    @ApiModelProperty(value = "此时的游戏设置", dataType = "String")
-    private GameSettingVo gameSettingVo;
+    @ApiModelProperty(value = "对应请求广告与收下奖励时间间隔", dataType = "String")
+    private String advWatchInterval;
+
+    @ApiModelProperty(value = "通知公告", dataType = "String")
+    private String noticeMSG;
+
     @ApiModelProperty(value = "此时的提现比例", dataType = "String")
     private String withdrawPercentage;
     @ApiModelProperty(value = "玩家支付宝id", dataType = "String")
@@ -30,7 +36,19 @@ public class PlayerMetaData {
     @ApiModelProperty(value = "玩家当前红包余额", dataType = "String")
     private String inRed;
 
-    @ApiModelProperty(value = "代码位ecpm值大于")
+    @ApiModelProperty(value = "代码位ecpm值大于", dataType = "double")
     private Double screenshotSettingVal;
+    @ApiModelProperty(value = "当日允许用户提交截图订单上限", dataType = "int")
+    private Integer transLimitDaily;
+    @ApiModelProperty(value = "截图选项")
+    private String screenshotSettingOptions;
+    @ApiModelProperty(value = "领取奖励观看广告次数", dataType = "int")
+    private Integer transRewardCont;
+
+    @ApiModelProperty(value = "完成该任务总共能获得多少提现金额", dataType = "bigdecimal")
+    private BigDecimal bonus;
+
+    @ApiModelProperty(value = "当前看到第几个广告的进度", dataType = "int")
+    private Integer taskProcess;
 
 }

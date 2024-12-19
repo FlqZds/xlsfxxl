@@ -1,5 +1,8 @@
 package com.yunting.common.interceptor;
 
+import com.yunting.common.utils.JWTutil;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -7,16 +10,19 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class MyInterceptorConfiguration implements WebMvcConfigurer {
-    @Resource(name = "ClientInterceptor")
-    private ClientInterceptor clientInterceptor;
+@SpringBootConfiguration
+public class MyInterceptorAutoConfiguration implements WebMvcConfigurer {
+
+    @Bean("ClientInterceptor")
+    public ClientInterceptor playerInterceptor() {
+        return new ClientInterceptor();
+    }
 
 
     @Override
     public void addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry registry) {
 
-        List <String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("/swagger-resources/**");
         list.add("/swagger-ui.html/**");
         list.add("/webjars/**");
@@ -34,7 +40,7 @@ public class MyInterceptorConfiguration implements WebMvcConfigurer {
         list.add("/Advertise/reward/callback");
 
 //        MappedInterceptor mappedInterceptor
-        registry.addInterceptor(clientInterceptor)
+        registry.addInterceptor(new ClientInterceptor())
                 .excludePathPatterns(list)
                 .addPathPatterns("/**");
     }

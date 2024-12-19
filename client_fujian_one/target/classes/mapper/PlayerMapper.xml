@@ -216,5 +216,16 @@
           and game_id = #{gameId}
     </select>
 
+    <select id="getFirstTaskListByPlayerIdAndGameID"
+            resultType="com.yunting.client.entity.ScreenshotTask">
+        select bonus,
+               task_process
+        from yunting_app_test.screenshot_task
+        where player_id = #{playerId}
+          and game_id = #{gameId}
+        order by task_id
+        limit 1
+    </select>
+
 
 </mapper>

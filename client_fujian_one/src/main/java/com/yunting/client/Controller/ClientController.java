@@ -3,8 +3,12 @@ package com.yunting.client.Controller;
 
 import cn.hutool.core.net.Ipv4Util;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.yunting.client.DTO.VO.infoVO;
 import com.yunting.client.DTO.dataTransFer.PlayerMetaData;
 import com.yunting.client.DTO.dataTransFer.SignDto;
@@ -74,7 +78,7 @@ public class ClientController {
 
 
     @ApiResponses({
-            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL",responseContainer = "List", response = String.class),
+            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL", responseContainer = "List", response = String.class),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
             @ApiResponse(code = 55099, message = "添加手机详细信息出错")
     })
@@ -99,13 +103,13 @@ public class ClientController {
 
     })
     @PostMapping("/signOn")
-    public ResultMessage sendUserInfo(HttpServletRequest request,@RequestBody SignDto signDto) throws Exception {
+    public ResultMessage sendUserInfo(HttpServletRequest request, @RequestBody SignDto signDto) throws Exception {
         abv = 12;
         abvlist.add("1");
         log.info("大小:" + abv);
         log.info("长度:" + abvlist);
 
-        ResultMessage resultMessage = client.PlayerSignOn(request,signDto);
+        ResultMessage resultMessage = client.PlayerSignOn(request, signDto);
         return resultMessage;
     }
 
@@ -149,11 +153,13 @@ public class ClientController {
             @ApiResponse(code = 401, message = "未身份验证的请求"),
             @ApiResponse(code = 403, message = "未授权的请求"),
             @ApiResponse(code = 66155, message = "查询游戏设置失败"),
-
     })
-    @GetMapping("/gameSetting")
-    public ResultMessage getGameSetting(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @RequestParam("packageName") String packageName) {
-
+    @PostMapping("/gameSetting")
+    public ResultMessage getGameSetting(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @RequestBody String packageName) {
+        log.info("packageName:" + packageName);
+        JsonObject asJsonObject = JsonParser.parseString(packageName).getAsJsonObject();
+        packageName = asJsonObject.get("packageName").toString();
+        packageName = packageName.replace("\"", "").trim();
         PlayerMetaData playerMetaData = clientService.getGameSetting(playerDTO, packageName);
         return new ResultMessage(ResponseEnum.SUCCESS, playerMetaData);
     }
@@ -167,7 +173,7 @@ public class ClientController {
     })
 
     @GetMapping("/risking")
-    public ResultMessage getRiskControlSetting(HttpServletRequest request,@RequestParam("packageName") String packageName) {
+    public ResultMessage getRiskControlSetting(HttpServletRequest request, @RequestParam("packageName") String packageName) {
 
         RiskControlSetting riskControlSetting = clientService.getRiskControlSetting(packageName);
         String ip = IpUtils.getIpAddr(request);

@@ -24,7 +24,6 @@ import java.util.Objects;
 @Slf4j
 public class ScreenshotController {
 
-
     @Resource(name = "PlayerService")
     private PlayerService playerService;
 
@@ -60,6 +59,9 @@ public class ScreenshotController {
             @ApiResponse(code = 41980, message = "上传文件数量过多,请分批次上传"),
             @ApiResponse(code = 41033, message = "数据量过大，请分批导入"),
             @ApiResponse(code = 41000, message = "数据为空，请重新导入"),
+            @ApiResponse(code = 50978, message = "订单超时,上传图片失败"),
+            @ApiResponse(code = 50575, message = "图片未找到或图片hash值不匹配,请使用正确的图片"),
+            @ApiResponse(code = 50988, message = "截图中不包含订单截图,请检查上传图片"),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
     })
     @PostMapping("/uplf")

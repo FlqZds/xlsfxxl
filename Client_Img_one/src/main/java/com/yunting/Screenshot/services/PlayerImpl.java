@@ -21,10 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sun.applet.AppletIOException;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -54,7 +56,6 @@ public class PlayerImpl implements PlayerService {
     ImgorderMapper imgorderMapper;
 
 
-
     // 获取玩家未上传的图片
     public List getThisPlayerPreUploadImg(PlayerDTO playerDTO, String imgType) {
         Long playerId = playerDTO.getPlayerId();
@@ -71,16 +72,47 @@ public class PlayerImpl implements PlayerService {
         String withdrawPercentage_str = applicationMapper.getWithdrawPercentage(gameId);
         BigDecimal withdrawPercentage = new BigDecimal(withdrawPercentage_str);
 
-        //创建一笔订单
-        Imgorder imgorder = Imgorder.builder()
-                .orderPlayerId(playerDTO.getPlayerId())
-                .androidID(androidID)
-                .wxname(nickname)
-                .withdrawPercentage(withdrawPercentage)
-                .appid(gameId)
-                .build();
-        imgorderMapper.insertOneOrder(imgorder);
-        Long orderId = imgorder.getOrderId();
+        Imgorder imgorder = null;
+        for (MultipartFile file : files) {
+
+            String originName = file.getOriginalFilename();                        //传过来的图片名
+            //解析该图片的hash,通过文件名+hash去找 如果在数据库中存在,就存,不存在 ,那就是图片造假
+            String originHash = minIoUtils.calculateSHA256(file.getInputStream()); //传过来的图片的hash
+
+            ImageMapping imgInfo = imgorderMapper.selectImgByImginfo(originHash, originName);
+
+            if (imgInfo.getImgType().equals("t")) {
+                imgInfo = imgorderMapper.selectImgDetailByImginfo(originHash, originName, imgInfo.getImgType());
+
+                String business = imgInfo.getImgBusiness();
+                String businessId = imgInfo.getImgBusinessId();
+                String trans = imgInfo.getImgTrans();
+                BigDecimal orderMoney = new BigDecimal(imgInfo.getImgMoney());
+                LocalDateTime payTime = imgInfo.getImgPayTime();
+
+                //创建一笔交易订单
+                imgorder = Imgorder.builder()
+                        .orderPlayerId(playerDTO.getPlayerId())
+                        .androidID(androidID)
+                        .wxname(nickname)
+                        .withdrawPercentage(withdrawPercentage)
+                        .appid(gameId)
+
+                        .orderMoney(orderMoney)//充值金额
+                        .orderBusiness(business)//商户名
+                        .orderTransId(trans)//交易单号
+                        .orderBusinessId(businessId)//商户单号
+                        .orderPayTime(payTime)//充值时间
+                        .build();
+                imgorderMapper.insertOneOrder(imgorder);
+                break;
+            }
+        }
+
+        if (imgorder == null) {
+            log.error("截图中不包含订单截图,请检查上传图片", new AppException(ResponseEnum.IMG_TRANS_WITHOUT_RESPONSE));
+            throw new AppException(ResponseEnum.IMG_TRANS_WITHOUT_RESPONSE);
+        }
 
 
         //指定该上传的图片,都属于该笔订单
@@ -91,17 +123,26 @@ public class PlayerImpl implements PlayerService {
             }
 
             String originName = files.get(i).getOriginalFilename();                        //传过来的图片名
+            //解析该图片的hash,通过文件名+hash去找 如果在数据库中存在,就存,不存在 ,那就是图片造假
             String originHash = minIoUtils.calculateSHA256(files.get(i).getInputStream()); //传过来的图片的hash
 
             ImageMapping imgInfo = imgorderMapper.selectImgByImginfo(originHash, originName);
 
-//解析该图片的hash,通过文件名+hash去找 如果在数据库中存在,就存,不存在 ,那就是图片造假
             if (imgInfo == null) {
                 log.error("图片不存在|图片hash不匹配|图片未找到,文件名称:" + originName, new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE));
                 throw new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE);
             }
 
-            Long imgID = imgInfo.getImgId(); //要上传的图片的id,用以修改数据库img_url
+            log.info("图片的上传时间:" + imgInfo.getUploadTime());
+//            long hours = Duration.between(imgInfo.getUploadTime(), LocalDateTime.now()).toHours();
+//            if (hours >= 24) {
+//                log.error("订单超时，上传图片失败", new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE));
+//                throw new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE);
+//            }
+
+            Long orderId = imgorder.getOrderId();
+
+            Long imgID = imgInfo.getImgId(); //要上传的图片的id
 
             String obj = imgInfo.getDirectory() + "/" + originName + IMG_TYPE; //拼接的路径 | 文件上传的路径
 
@@ -151,17 +192,25 @@ public class PlayerImpl implements PlayerService {
         uuid = uuid.trim();
         String upload_dir = uuid + replaceDate; //要上传的文件目录 | 以日期来区分  (图片组是随机的)
 
+        if (imgType.equals("t")) {
+            //插入订单截图之前,先看有没有该笔订单 ,有的话就直接报错了
+            log.info("订单号:" + imgTrans);
+            int t = imageMappingMapper.selectImgByImgTypeAndTransidAndUploadTime("t", imgTrans, now, startTime, endTime);
+            if (t > 0) {
+                log.error("订单号重复", new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE));
+                throw new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE);
+            }
+
+//            long hours = Duration.between(imgPayTime, now).toHours();
+//            if (hours >= 24) {
+//                log.error("订单超时，保存图片失败", new AppException(ResponseEnum.IMG_TRANS_OVERTIME_SAVE_RESPONSE));
+//                throw new AppException(ResponseEnum.IMG_TRANS_OVERTIME_SAVE_RESPONSE);
+//            }
+        }
+
         try {
             for (ImgVo vo : imgVo) {
-
-                if(imgType.equals("t")){
-                    //插入订单截图之前,先看有没有该笔订单 ,有的话就直接报错了
-                    int t = imageMappingMapper.selectImgByImgTypeAndTransidAndUploadTime("t", imgTrans, now, startTime, endTime);
-                    if(t>0){
-                        log.error("订单号重复", new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE));
-                        throw  new AppException(ResponseEnum.IMG_TRANS_REPEAT_RESPONSE);
-                    }
-
+                if (imgType.equals("t")) {
                     //如果是订单截图就要插入图片的订单信息
                     ImageMapping imageMapping = ImageMapping.builder()
                             .directory(upload_dir)
@@ -178,7 +227,7 @@ public class PlayerImpl implements PlayerService {
                             .uploadTime(now)  //图片上传时间和订单生成时间差不了24小时
                             .build();
                     imageMappingMapper.insertWithTrans(imageMapping);
-                }else {
+                } else {
                     ImageMapping imageMapping = ImageMapping.builder()
                             .directory(upload_dir)
                             .fileName(vo.getImgName())

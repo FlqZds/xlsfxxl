@@ -93,11 +93,11 @@ forest:
   logEnabled: true # 打开或关闭日志，默认为true
 
 
-#jwt相关配置
-config:
-  jwt:
-    #    加密密钥
-    secret: nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj
-    #    有效时长 单位秒
-    expiration: 10800 # 三个小时
+##jwt相关配置
+#config:
+#  jwt:
+#    #    加密密钥
+#    secret: nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj
+#    #    有效时长 单位秒
+#    expiration: 10800 # 三个小时
 

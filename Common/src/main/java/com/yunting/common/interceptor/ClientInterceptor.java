@@ -13,14 +13,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.Resource;
 
-@SpringBootConfiguration
 @Component("ClientInterceptor")
 @Slf4j
 public class ClientInterceptor implements HandlerInterceptor {
-
-
-    @Resource(name = "JWTutil")
-    private JWTutil jwTutil;
 
     @Override
     public boolean preHandle(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, Object handler) throws Exception {
@@ -28,7 +23,7 @@ public class ClientInterceptor implements HandlerInterceptor {
 
         String authorizationTOKEN = request.getHeader("Authorization");
         PlayerDTO playerDTO = validateToken(authorizationTOKEN); //校验token
-        if (playerDTO==null){
+        if (playerDTO == null) {
             log.error("登录无效，用户被封禁");
             throw new AppException(ResponseEnum.BAN_USER_OUT);
         }
@@ -38,7 +33,6 @@ public class ClientInterceptor implements HandlerInterceptor {
 
         return true;
     }
-
 
 
     /***
@@ -54,6 +48,7 @@ public class ClientInterceptor implements HandlerInterceptor {
             throw new AppException(ResponseEnum.USER_NO_LOGIN);
         }
 
+        JWTutil jwTutil = new JWTutil();
         PlayerDTO playerDTO = jwTutil.checkJwt_master(jwt);
         Long playerId = playerDTO.getPlayerId();
 

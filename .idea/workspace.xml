@@ -5,137 +5,110 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34195466-5030-4d0f-980b-6627a53c464d" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/FileOneApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/config/minio/Fileinfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/config/minio/MinioConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/controller/ScreenshotController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/dto/img/ImgContainer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/dto/img/ImgShow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/dto/img/ImgVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/ImageMapping.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/Imgorder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/ImageMappingMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/ImgorderMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/PlayerMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/services/PlayerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/services/PlayerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/utils/MinIoUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/ImageMappingMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/ImgorderMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/PlayerMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_WLAN_Parse/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_WLAN_Parse/src/main/java/com/yunting/controller/WlanController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_WLAN_Parse/src/main/java/com/yunting/service/WlanService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_WLAN_Parse/src/main/java/com/yunting/wlan/WlanApplicationOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Common/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/ClientInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/VO/GameMeta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/img/ImgContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/logback.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Img_one/src/test/java/qwe.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/PayOneApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/config/AliPayConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/config/RedisConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/config/RedisTemplateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/controller/PayController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/entity/DayBehaveRecordlist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/entity/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/entity/WithdrawRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/entity/WithdrawSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/mapper/DayBehaveRecordlistMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/mapper/PlayerMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/mapper/WithdrawRecordMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/services/PayImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/services/PayServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/java/com/yunting/pay/utils/AliPayUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/resources/logback.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/resources/mapper/DayBehaveRecordlistMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/resources/mapper/PlayerMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Pay_one/src/main/resources/mapper/WithdrawRecordMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/src/main/java/com/yunting/sum/SumOneApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/src/main/resources/config.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Sum_One/src/main/resources/logback.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/configuration/JascksonConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/configuration/jwTutilConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/src/main/resources/META-INF/spring.factories" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/entity/ScreenshotTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/entity/setting/ScreenshotSetting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/24fbdfae-1c45-4b2b-843f-3e7babc1fd08.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/24fbdfae-1c45-4b2b-843f-3e7babc1fd08.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/adminservice/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/adminservice/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/adminservice/Adminimpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/adminservice/Adminimpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/AdvController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/AdvController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/FileOneApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/FileOneApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/controller/ScreenshotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/controller/ScreenshotController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/ImageMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/ImageMapping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/Imgorder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/entity/Imgorder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/ImgorderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/ImgorderMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/services/PlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/services/PlayerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/ImgorderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/ImgorderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/FileOneApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/FileOneApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/controller/ScreenshotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/controller/ScreenshotController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/ImageMapping$ImageMappingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/ImageMapping$ImageMappingBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/ImageMapping.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/ImageMapping.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/Imgorder$ImgorderBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/Imgorder$ImgorderBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/Imgorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/entity/Imgorder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/mapper/ImgorderMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/mapper/ImgorderMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/services/PlayerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/com/yunting/Screenshot/services/PlayerImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Img_one/target/classes/mapper/ImgorderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/target/classes/mapper/ImgorderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/exception/ControllerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/exception/ControllerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/ClientInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/ClientInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/MyInterceptorConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/MyInterceptorAutoConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/results/ResponseEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/results/ResponseEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/JWTutil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/JWTutil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/exception/ControllerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/exception/ControllerException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/interceptor/ClientInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/interceptor/ClientInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/interceptor/MyInterceptorConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/results/ResponseEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/results/ResponseEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/utils/JWTutil.class" beforeDir="false" afterPath="$PROJECT_DIR$/Common/target/classes/com/yunting/common/utils/JWTutil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/WithdrawController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Controller/WithdrawController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/PlayerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/Dto/PlayerDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/VO/GameSettingVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/VO/GameSettingVo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Ws/HeartBongBongBong.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Ws/HeartBongBongBong.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Ws/Wso.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/Ws/Wso.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/Swagger2Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/Swagger2Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/redis/RedisMessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/redis/RedisMessageListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/websocket/MyConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/websocket/MyConfigurator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/exception/AppException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/exception/AppException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/exception/ControllerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/exception/ControllerException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/interceptor/ClientInterceptor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/interceptor/MyInterceptorConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/interceptor/MyInterceptorConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/results/ResponseEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/results/ResponseEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/results/ResultMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/results/ResultMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/AliPayUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/AliPayUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/FS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/FS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/IpUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/IpUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/JWTutil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/JWTutil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/MinIoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/MinIoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/SpringRollBackUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/com/yunting/common/utils/SpringRollBackUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/WxRequestUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/WxRequestUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/sessionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/sessionUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/entity/ImageMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/entity/ImageMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/ApplicationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot/mapper/ApplicationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/ImageMappingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/ImageMappingMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/MobileDetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/MobileDetailMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/dataTransFer/PlayerMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/DTO/dataTransFer/PlayerMetaData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/minio/Fileinfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/config/minio/MinioConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/common/utils/MinIoUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/Client/PlayerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/Client/PlayerMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/GameSettingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/client/mapper/GameSettingMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/ClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/ClientImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/PlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/PlayerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/RecordImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/RecordImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/RedundantImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/RecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/RecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/java/com/yunting/clientservice/service/RedundantService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/ApplicationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Img_one/src/main/resources/mapper/ApplicationMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/ImageMappingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/ImageMappingMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/MobileDetailMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/MobileDetailMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/WithdrawRecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/WithdrawRecordMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/GameSettingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/GameSettingMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/PlayerMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/main/resources/mapper/PlayerMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/src/test/java/AlgorithemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/src/test/java/AlgorithemTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/adminservice/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/adminservice/AdminService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/adminservice/Adminimpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/adminservice/Adminimpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/AdvController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/AdvController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/ClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/ClientController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/PlayerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/PlayerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/WithdrawController.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Controller/WithdrawController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/PlayerDTO$PlayerDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/PlayerDTO.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/VO/GameSettingVo$GameSettingVoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/VO/GameSettingVo$GameSettingVoBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/VO/GameSettingVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/VO/GameSettingVo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Ws/Wso.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/Ws/Wso.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/Swagger2Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/Swagger2Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/redis/RedisMessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/redis/RedisMessageListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/websocket/MyConfigurator.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/websocket/MyConfigurator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/exception/AppException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/exception/ControllerException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/interceptor/ClientInterceptor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/interceptor/MyInterceptorConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/results/ResponseEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/results/ResultMessage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/AliPayUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/AliPayUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/FS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/IpUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/JWTutil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/MinIoUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/MinIoUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/SpringRollBackUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/WxRequestUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/WxRequestUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/sessionUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/sessionUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/entity/ImageMapping$ImageMappingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/entity/ImageMapping$ImageMappingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/entity/ImageMapping.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/entity/ImageMapping.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/ApplicationMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/ImageMappingMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/ImageMappingMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/MobileDetailMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/MobileDetailMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/dataTransFer/PlayerMetaData$PlayerMetaDataBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/dataTransFer/PlayerMetaData$PlayerMetaDataBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/dataTransFer/PlayerMetaData.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/DTO/dataTransFer/PlayerMetaData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/minio/Fileinfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/config/minio/MinioConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/common/utils/MinIoUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/Client/PlayerMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/Client/PlayerMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/GameSettingMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/client/mapper/GameSettingMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/ClientImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/ClientImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/PlayerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/PlayerImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/RecordImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/RecordImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/RedundantImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/ClientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/ClientService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/PlayerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/PlayerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/RecordService.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/RecordService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/com/yunting/clientservice/service/RedundantService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/ApplicationMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/ImageMappingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/ImageMappingMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/MobileDetailMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/MobileDetailMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/WithdrawRecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/WithdrawRecordMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/GameSettingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/GameSettingMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/PlayerMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/classes/mapper/PlayerMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_fujian_one/target/test-classes/AlgorithemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/client_fujian_one/target/test-classes/AlgorithemTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
@@ -148,6 +121,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -181,7 +155,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Client_Img_one/src/main/java/com/yunting/Screenshot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Client_Pay_one/src/main/resources" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.15" />
@@ -196,24 +170,25 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\a-share\Client\Client_Img_one\src\main\java\com\yunting\Screenshot" />
-      <recent name="D:\a-share\Client\Common\src\main\java\com\yunting\common" />
-      <recent name="D:\a-share\Client\Client_Img_one\src\main\resources" />
-      <recent name="D:\a-share\Client\Client_Img_one\src\main\resources\mapper" />
-      <recent name="D:\a-share\Client\Client_Img_one\src\main\java\com\yunting\Screenshot\entity" />
+      <recent name="D:\a-share\Client\Client_Pay_one\src\main\resources" />
+      <recent name="D:\a-share\Client\Client_Pay_one\src\main\java\com\yunting\pay\config" />
+      <recent name="D:\a-share\Client\Client_Pay_one\src\main\java\com\yunting\pay\utils" />
+      <recent name="D:\a-share\Client\Client_Pay_one\src\main\java\com\yunting\pay\entity" />
+      <recent name="D:\a-share\Client\Client_Pay_one\src\main\java\com\yunting\pay\mapper" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\a-share\Client\Common\src\main" />
       <recent name="D:\a-share\Client\Client_Img_one\src\main\resources\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.yunting.common.Dto" />
-      <recent name="com.yunting.common.utils" />
-      <recent name="com.yunting.Screenshot.entity" />
-      <recent name="com.yunting.Screenshot.mapper" />
-      <recent name="com.yunting.common.results" />
+      <recent name="com.yunting.pay.entity" />
+      <recent name="com.yunting.pay.utils" />
+      <recent name="com.yunting.pay.config" />
+      <recent name="com.yunting.client.entity" />
+      <recent name="com.yunting.client.entity.setting" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.FileOneApplication">
+  <component name="RunManager" selected="Spring Boot.PayOneApplication">
     <configuration name="FJOneApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="pay_appID" value="2021005102666099" />
@@ -274,6 +249,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="qwe.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Client_Img_one" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="qwe" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="FJOneApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="client_fujian_one" />
       <extension name="coverage">
@@ -296,6 +281,8 @@
         <env name="host" value="127.0.0.1" />
         <env name="instance_wifi_port" value="6379" />
         <env name="instance_websocket_port" value="6380" />
+        <env name="config.jwt.secret" value="nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj" />
+        <env name="config.jwt.expiration" value="10800" />
         <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
       </envs>
       <method v="2">
@@ -311,20 +298,71 @@
         </pattern>
       </extension>
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.yunting.Screenshot.FileOneApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <envs>
+        <env name="pay_appID" value="2021005102666099" />
+        <env name="pay_privateKey" value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWaoxBkk8/8PxdDAsODfToC91aIFpQEIweKYxovGeTWQqC7z42NsTGoTDNBjyP9D034oqv+SHsmtL4Qq1wuJ3insqN3gD67RZ86MKu/y7DdZQI8M1Aw/VDOtGTFX+mtApRXXrmDQh80MXn0yujmYrT/bWnNFGbu7x+EzJcw430DuZxA9n7vhlbrpMV5aZzkT5lpc9xw1JBx38HdQqHq/h3LKsTVWAqA9vvTe1rdKTp371GivKtkA8DgxnMnM+jhO4oz8Hcp0b99ENlnvKpZh6hV1Z6nCg7mJjYE9vpyprRc1seC71Juovrmb96cYt1B0VXLDR9Gs4Qez/ozY56sG5LAgMBAAECggEAI17MuoKgNiYCAhNZ6iUoCQT5OT9QXXF2sYUNqndbV8/hY+bEV1VLsnWnFx83UJabaq/P8w9/hbbmk1CCnnYbUnYKpY+l5VupJRhK54HESlw0wmF1spwh6XxEWfT9PoMpxfZYdw5rh4ZEc345zc/GUJFhjP8Fjbx416DGAABQOiqGGC5xiXnQ+4FKWu4wc1pgq4VcV5v70IUzQnCWgSAPu4yil3Xnfb/wT7E+m8rs4GCJa2T4T47buX2DPkK8tu5k59hOxJsQRD6abMrTxnblq8vUi17LrEhA+LoHKSAjFyhOCRAAZq3Tofuof0txAybw6tVp7GC5394MpRg1UsFgwQKBgQDYFWutWKadRF1lBHhQW8uu1Zy/vr2tknJ+VYwqiP66ki1s3kPbvGNNyYPjBQI4eCoeqA1/thvF0+CyRsC3+1TE8SXEhItEwB3YsxdMvmrPxFr8U7Okpsg4TuqloFtcO12rQ85hVPdUHdiIYEeGyqnLKMU41GF4URN2AMUbSteYawKBgQCyM7fGLbm9BSf8WJ1v2SpxLo78UG1kSlEzzEZQzvFErbDzWq9tWA7rzzenrWcImp3imDRUgkpajlDpqUabF7/Nrx0lpSgJoOko+cW/xvTtTxT2+lm8wb/T629IAj/QpXod7k5HVHUsA0FueBpueJCKNxFnkiedVVvaZjMq9e15oQKBgA2C+WKzgmefGL/yUZukwc3C6bRLtwydda9Uphkay+LatSBznYal9wesLCUL8SGa0fdsxrtPpdju8MP1DKP0gU53TcdGCndYFAWy3SgdWAx52L6idT88dpSeyqlkp5HS3H6TFNqdN4H5A8szSgWxsoBTolF1ZkrhtvfQAIM+YNDVAoGAKZrjjDR+yf/bLxJtZ4C3ZQduwL/yWljzjnlh7VnzgIpg5uBEVu4ZRbryjoZwqNSYih/pD9X/kBbsEzG/V1R7JoV8854Us/LKnRN7tOO5qXIuPd+DdgtyQwMTzycfSRJpaXWK9yJj3OvBqg4GdcZWUL68pIa+EwCr2ljEF4KleCECgYEAkuUG9m0vuHI1dpIqgrTui+WkF5Fc0RuGu8M/JD12lQbMgnaCK6zHZW+1Hq03RyRO1ZYztyFBNK8CTIYN6aeODWQk4gltdsry8pR1BbNdt5Fbll6MqfbLQim8V7SSvqvpClIsiKrMPqE07MfkB5qbpmtdDpByIjtFL7hBikt/bpY=" />
+        <env name="pay_serverUrl" value="https://openapi.alipay.com/gateway.do" />
+        <env name="pay_RootCertPath" value="D:\Users\file\alipayRootCert.crt" />
+        <env name="pay_AlipayPublicCertPath" value="D:\\Users\\file\\alipayCertPublicKey_RSA2.crt" />
+        <env name="pay_AppCertPath" value="D:\\Users\\file\\appCertPublicKey_2021005102666099.crt" />
+        <env name="instance_Record_port" value="6388" />
+        <env name="host" value="127.0.0.1" />
+        <env name="instance_wifi_port" value="6379" />
+        <env name="instance_websocket_port" value="6380" />
+        <env name="config.jwt.secret" value="nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj" />
+        <env name="config.jwt.expiration" value="10800" />
+        <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PayOneApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="Client_Pay_one" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yunting.pay.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yunting.pay.PayOneApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <envs>
+        <env name="pay_appID" value="2021005102666099" />
+        <env name="pay_privateKey" value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWaoxBkk8/8PxdDAsODfToC91aIFpQEIweKYxovGeTWQqC7z42NsTGoTDNBjyP9D034oqv+SHsmtL4Qq1wuJ3insqN3gD67RZ86MKu/y7DdZQI8M1Aw/VDOtGTFX+mtApRXXrmDQh80MXn0yujmYrT/bWnNFGbu7x+EzJcw430DuZxA9n7vhlbrpMV5aZzkT5lpc9xw1JBx38HdQqHq/h3LKsTVWAqA9vvTe1rdKTp371GivKtkA8DgxnMnM+jhO4oz8Hcp0b99ENlnvKpZh6hV1Z6nCg7mJjYE9vpyprRc1seC71Juovrmb96cYt1B0VXLDR9Gs4Qez/ozY56sG5LAgMBAAECggEAI17MuoKgNiYCAhNZ6iUoCQT5OT9QXXF2sYUNqndbV8/hY+bEV1VLsnWnFx83UJabaq/P8w9/hbbmk1CCnnYbUnYKpY+l5VupJRhK54HESlw0wmF1spwh6XxEWfT9PoMpxfZYdw5rh4ZEc345zc/GUJFhjP8Fjbx416DGAABQOiqGGC5xiXnQ+4FKWu4wc1pgq4VcV5v70IUzQnCWgSAPu4yil3Xnfb/wT7E+m8rs4GCJa2T4T47buX2DPkK8tu5k59hOxJsQRD6abMrTxnblq8vUi17LrEhA+LoHKSAjFyhOCRAAZq3Tofuof0txAybw6tVp7GC5394MpRg1UsFgwQKBgQDYFWutWKadRF1lBHhQW8uu1Zy/vr2tknJ+VYwqiP66ki1s3kPbvGNNyYPjBQI4eCoeqA1/thvF0+CyRsC3+1TE8SXEhItEwB3YsxdMvmrPxFr8U7Okpsg4TuqloFtcO12rQ85hVPdUHdiIYEeGyqnLKMU41GF4URN2AMUbSteYawKBgQCyM7fGLbm9BSf8WJ1v2SpxLo78UG1kSlEzzEZQzvFErbDzWq9tWA7rzzenrWcImp3imDRUgkpajlDpqUabF7/Nrx0lpSgJoOko+cW/xvTtTxT2+lm8wb/T629IAj/QpXod7k5HVHUsA0FueBpueJCKNxFnkiedVVvaZjMq9e15oQKBgA2C+WKzgmefGL/yUZukwc3C6bRLtwydda9Uphkay+LatSBznYal9wesLCUL8SGa0fdsxrtPpdju8MP1DKP0gU53TcdGCndYFAWy3SgdWAx52L6idT88dpSeyqlkp5HS3H6TFNqdN4H5A8szSgWxsoBTolF1ZkrhtvfQAIM+YNDVAoGAKZrjjDR+yf/bLxJtZ4C3ZQduwL/yWljzjnlh7VnzgIpg5uBEVu4ZRbryjoZwqNSYih/pD9X/kBbsEzG/V1R7JoV8854Us/LKnRN7tOO5qXIuPd+DdgtyQwMTzycfSRJpaXWK9yJj3OvBqg4GdcZWUL68pIa+EwCr2ljEF4KleCECgYEAkuUG9m0vuHI1dpIqgrTui+WkF5Fc0RuGu8M/JD12lQbMgnaCK6zHZW+1Hq03RyRO1ZYztyFBNK8CTIYN6aeODWQk4gltdsry8pR1BbNdt5Fbll6MqfbLQim8V7SSvqvpClIsiKrMPqE07MfkB5qbpmtdDpByIjtFL7hBikt/bpY=" />
+        <env name="pay_serverUrl" value="https://openapi.alipay.com/gateway.do" />
+        <env name="pay_RootCertPath" value="D:\Users\file\alipayRootCert.crt" />
+        <env name="pay_AlipayPublicCertPath" value="D:\\Users\\file\\alipayCertPublicKey_RSA2.crt" />
+        <env name="pay_AppCertPath" value="D:\\Users\\file\\appCertPublicKey_2021005102666099.crt" />
+        <env name="instance_Record_port" value="6388" />
+        <env name="host" value="127.0.0.1" />
+        <env name="instance_wifi_port" value="6379" />
+        <env name="instance_websocket_port" value="6380" />
+        <env name="config.jwt.secret" value="nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj" />
+        <env name="config.jwt.expiration" value="10800" />
+        <env name="appSecurityKey" value="cb7ebcca2f3fde73ea853d96aae91336" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Spring Boot.FJOneApplication" />
-      <item itemvalue="应用程序.FJOneApplication" />
       <item itemvalue="JUnit.AlgorithemTest.test2" />
+      <item itemvalue="JUnit.qwe.test" />
+      <item itemvalue="Spring Boot.FJOneApplication" />
       <item itemvalue="Spring Boot.FileOneApplication" />
+      <item itemvalue="Spring Boot.PayOneApplication" />
+      <item itemvalue="应用程序.FJOneApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.FileOneApplication" />
+        <item itemvalue="Spring Boot.PayOneApplication" />
         <item itemvalue="Spring Boot.FJOneApplication" />
+        <item itemvalue="Spring Boot.FileOneApplication" />
+        <item itemvalue="JUnit.qwe.test" />
         <item itemvalue="应用程序.FJOneApplication" />
       </list>
     </recent_temporary>
@@ -337,11 +375,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1734248070004</updated>
-      <workItem from="1734248071330" duration="63990000" />
+      <workItem from="1734248071330" duration="113304000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

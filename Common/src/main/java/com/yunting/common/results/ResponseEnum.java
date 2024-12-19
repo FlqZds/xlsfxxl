@@ -45,6 +45,9 @@ public enum ResponseEnum {
 
     IMG_NOT_MATCH_RESPONSE("50575", "图片未找到或图片hash值不匹配,请使用正确的图片"),
     IMG_TRANS_REPEAT_RESPONSE("50975", "图片订单号重复,请勿上传相同图片"),
+    IMG_TRANS_OVERTIME_SAVE_RESPONSE("50977", "订单超时,保存图片失败"),
+    IMG_TRANS_OVERTIME_UPLOAD_RESPONSE("50978", "订单超时,上传图片失败"),
+    IMG_TRANS_WITHOUT_RESPONSE("50988", "截图中不包含订单截图,请检查上传图片"),
     GENERATE_KEY_PAIR_ERROR("11111", "密钥对生成失败"),
     KEY_PAIR_NOT_FOUND("10080", "密钥对未找到"),
 

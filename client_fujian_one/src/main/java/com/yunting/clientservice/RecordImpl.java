@@ -311,16 +311,16 @@ public class RecordImpl implements RecordService {
     @Transactional(rollbackFor = Exception.class)
     public void enoughchangeAdEncourageRecord(PlayerDTO playerDTO, String advEncourageId, String trasnId) {
 
+        Long playerId = playerDTO.getPlayerId();
         try {
             String clientTime = LocalDateTime.now().toString();
             Integer integer = adEncourageMapper.changeAdEncourageRecordEnoughReward(advEncourageId, clientTime, trasnId);
 
-            Long playerId = playerDTO.getPlayerId();
 
-            log.info("达到奖励条件修改激励广告的记录,达到奖励条件 步骤成功");
+            log.info("玩家:|-" + playerId + "-|达到奖励条件修改激励广告的记录,达到奖励条件 步骤成功");
         } catch (Exception e) {
             SpringRollBackUtil.rollBack();
-            log.error("激励广告达到奖励条件修改失败，请联系管理员");
+            log.error("玩家:|-" + playerId + "-|激励广告达到奖励条件修改失败，请联系管理员");
             throw new AppException(ResponseEnum.UPDATE_AD_ENCOURAGE_ENOUGH_FAILED);
         }
     }
@@ -342,7 +342,7 @@ public class RecordImpl implements RecordService {
             {
                 try {
                     AdOpenscreen adOpenscreen = AdOpenscreen.builder().clicks(clickCount).build();
-                    Long adOpenRecordID = changeAdOpenscreenRecord(advID, adOpenscreen);
+                    changeAdOpenscreenRecord(advID, adOpenscreen);
                     rur.delete(advType);
                 } catch (Exception e) {
                     SpringRollBackUtil.rollBack();
@@ -356,7 +356,7 @@ public class RecordImpl implements RecordService {
             {
                 try {
                     AdInscreen adInscreen = AdInscreen.builder().clicks(clickCount).build();
-                    Long inscreenRecordID = changeAdInscreenRecord(advID, adInscreen);
+                    changeAdInscreenRecord(advID, adInscreen);
                     rur.delete(advType);
                 } catch (Exception e) {
                     SpringRollBackUtil.rollBack();
@@ -370,21 +370,21 @@ public class RecordImpl implements RecordService {
             {
                 try {
                     AdStream adStream = AdStream.builder().clicks(clickCount).build();
-                    Long adStreamRecordID = changeAdStreamRecord(advID, adStream);
+                    changeAdStreamRecord(advID, adStream);
                     rur.delete(advType);
                 } catch (Exception e) {
                     SpringRollBackUtil.rollBack();
                     log.error("修改信息流广告关闭状态失败，请联系管理员");
                     throw new AppException(ResponseEnum.UPDATE_AD_STREAM_CLOSE_FAILED);
                 }
-                log.info("<信修改息流广告关闭>操作录成功");
+                log.info("<修改信息流广告关闭>操作录成功");
                 break;
             }
             case "4": //横幅广告
             {
                 try {
                     AdRowstyle adRowstyle = AdRowstyle.builder().clicks(clickCount).build();
-                    Long adRowRecordID = changeAdRowRecord(advID, adRowstyle);
+                    changeAdRowRecord(advID, adRowstyle);
                     rur.delete(advType);
                 } catch (Exception e) {
                     SpringRollBackUtil.rollBack();

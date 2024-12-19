@@ -11,6 +11,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -51,7 +52,7 @@ public class ControllerException {
     public ResultMessage AppException(AppException e) {
 
         log.error("异常信息：" + e);
-        return new ResultMessage(e.getCode(),e.getMessage(),null);
+        return new ResultMessage(e.getCode(), e.getMessage(), null);
     }
 
     // eof异常
@@ -59,7 +60,7 @@ public class ControllerException {
     public ResultMessage EOF_Exception(EOFException eof) {
 
         log.error("文件读取结束,已达至末尾");
-        log.error("异常信息："+eof.getMessage());
+        log.error("异常信息：" + eof.getMessage());
         return new ResultMessage(FILE_READ_END_ERROR, null);
     }
 
@@ -77,7 +78,7 @@ public class ControllerException {
     public ResultMessage handleArithmeticException(ArithmeticException e) {
 
         log.error("算数异常");
-        log.error("异常信息："+e.getMessage());
+        log.error("异常信息：" + e.getMessage());
         return new ResultMessage(ARITHMETIC_EXCEPTION, null);
     }
 
@@ -104,7 +105,7 @@ public class ControllerException {
     public ResultMessage RedisConnectionException(RedisConnectionException e) {
 
         log.error("redis连接异常");
-        log.error("异常信息："+e.getMessage());
+        log.error("异常信息：" + e.getMessage());
         return new ResultMessage(REDIS_CONNECTION_ERROR, null);
     }
 
@@ -128,7 +129,6 @@ public class ControllerException {
         log.error("异常信息：" + ex.getMessage());
         return new ResultMessage(TOKEN_EXPIRE, null);
     }
-
 
 
 }

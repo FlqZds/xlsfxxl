@@ -21,8 +21,8 @@
     </select>
 
     <select id="getScreenshotSettingByPk"
-            resultType="java.lang.Double">
-        select screenshot_setting_val
+            resultType="com.yunting.client.entity.setting.ScreenshotSetting">
+        select screenshot_setting_option, screenshot_setting_val, trans_limit_daily, trans_reward_cont
         from behind_manage.screenshot_setting
         where screenshot_setting_id = #{screenshotSettingID}
     </select>

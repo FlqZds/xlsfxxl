@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yunting.common.interceptor.MyInterceptorAutoConfiguration,\
+  com.yunting.common.configuration.jwTutilConfiguration,\
+  com.yunting.common.configuration.JascksonConfiguration

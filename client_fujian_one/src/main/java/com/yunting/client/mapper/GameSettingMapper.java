@@ -2,6 +2,7 @@ package com.yunting.client.mapper;
 
 import com.yunting.client.entity.setting.GameSetting;
 import com.yunting.client.entity.setting.RiskControlSetting;
+import com.yunting.client.entity.setting.ScreenshotSetting;
 import com.yunting.client.entity.setting.UserRewardSetting;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ public interface GameSettingMapper {
     GameSetting getGameSettingByPackageName(@Param("packageName") String packageName);
 
     //主键获取该游戏的截图设置
-    Double getScreenshotSettingByPk(Integer screenshotSettingID);
+    ScreenshotSetting getScreenshotSettingByPk(Integer screenshotSettingID);
 
     UserRewardSetting getUserRewardSetting(@Param("userRewardSettingId") Integer userRewardSettingId);
 

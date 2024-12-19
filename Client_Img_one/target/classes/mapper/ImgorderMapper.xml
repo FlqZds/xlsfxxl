@@ -13,8 +13,10 @@
 
     <insert id="insertOneOrder" useGeneratedKeys="true" keyColumn="order_id" keyProperty="orderId">
         insert into behind_manage.imgorder (order_player_id, appid,
-                                            androidID, wxName, withdraw_percentage)
-        values (#{orderPlayerId}, #{appid}, #{androidID}, #{wxname}, #{withdrawPercentage})
+                                            androidID, wxName, withdraw_percentage, order_trans_id, order_business,
+                                            order_pay_time, order_business_id, order_money)
+        values (#{orderPlayerId}, #{appid}, #{androidID}, #{wxname}, #{withdrawPercentage}, #{orderTransId},
+                #{orderBusiness}, #{orderPayTime}, #{orderBusinessId}, #{orderMoney})
     </insert>
 
     <update id="updateOrderStatus">
@@ -32,7 +34,7 @@
     </select>
 
     <select id="selectImgByImginfo" resultType="com.yunting.Screenshot.entity.ImageMapping">
-        select img_id, directory
+        select img_id, directory, img_type, uploadTime
         from behind_manage.image_mapping
         where fileHash = #{hashVal}
           and fileName = #{fileName}
@@ -42,6 +44,18 @@
         select img_id, directory, fileName, fileHash
         from behind_manage.image_mapping
         where fileName = #{fileName}
+    </select>
+
+    <select id="selectImgDetailByImginfo" resultType="com.yunting.Screenshot.entity.ImageMapping">
+        select img_money,
+               img_trans,
+               img_business,
+               img_business_id,
+               img_pay_time
+        from behind_manage.image_mapping
+        where fileHash = #{hashVal}
+          and fileName = #{fileName}
+          and img_type = #{imgType}
     </select>
 
 </mapper>

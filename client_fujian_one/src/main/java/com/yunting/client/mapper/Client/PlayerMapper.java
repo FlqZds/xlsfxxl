@@ -2,6 +2,7 @@ package com.yunting.client.mapper.Client;
 
 import com.yunting.client.DTO.RetainActive;
 import com.yunting.client.entity.Player;
+import com.yunting.client.entity.ScreenshotTask;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +58,7 @@ public interface PlayerMapper {
     Player selectPlayerByPlayerId(@Param("playerId") Long playerId);
 
     //  根据玩家ID查到玩家的支付宝相关信息 和玩家此时的余额
-    Player selectAliPayInfoByPlayerId(@Param("playerId") Long playerId);
+    Player selectAliPayInfoByPlayerId(@Param("playerId") Long playerId, @Param("gameId")Long gameId);
 
     //  根据支付宝ID查到玩家
     Long selectPlayerByPayID(@Param("PayID") String PayID);
@@ -70,4 +71,9 @@ public interface PlayerMapper {
 
     //  根据玩家ID和游戏ID查到玩家的余额
     BigDecimal selectInRedByPlayerId(@Param("playerId") Long playerId, @Param("gameId") Long gameId);
+
+
+    //  根据玩家ID和游戏ID查到玩家的所有任务中首次任务
+    ScreenshotTask getFirstTaskListByPlayerIdAndGameID(@Param("playerId") Long playerId, @Param("gameId") Long gameId);
+
 }

@@ -1,0 +1,66 @@
+server:
+  port: 8040
+
+  tomcat:
+    remoteip:
+      remote-ip-header: X-Real-IP
+      host-header: X-Forwarded-Host
+      protocol-header: X-Forwarded-Proto
+  forward-headers-strategy: framework
+
+
+spring:
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+  web:
+    resources:
+      static-locations: classpath:/static/,templates/
+
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+  #  swagger要配这个
+  mvc:
+    pathmatch:
+      #      匹配策略
+      matching-strategy: ant_path_matcher
+    static-path-pattern: /**
+
+  #  数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource #引入druid数据源
+    url: jdbc:mysql://127.0.0.1:3306/yunting_app_test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+
+    druid:
+      initial-size: 10
+      max-active: 50
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+
+
+
+# mybatis　相关　ｘｍｌ文件在哪里　驼峰　　分页插件　打印ｓｑｌ语句的日志
+mybatis:
+  # 扫描映射文件
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 开启驼峰映射配置
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   # 打印sql语句
+
+
+#logback日志配置
+logging:
+  level:
+    root: info

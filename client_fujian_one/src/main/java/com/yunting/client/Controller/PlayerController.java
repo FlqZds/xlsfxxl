@@ -76,6 +76,7 @@ public class PlayerController {
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
+
     @ApiOperation(value = "获取文件名和hash值")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "packageName", value = "包名", required = true, dataType = "String", paramType = "query"),
@@ -87,9 +88,8 @@ public class PlayerController {
     @GetMapping("/lstimg")
     public ResultMessage getPlayerScreenShot(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO,
                                              @RequestParam String imgType) {
-        List list = playerService.getThisPlayerPreUploadImg(playerDTO, imgType);
-        log.info("查询图片类型" + imgType + "截图数据已返回");
-        return new ResultMessage(ResponseEnum.SUCCESS, list);
+
+        return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 
 
@@ -114,19 +114,8 @@ public class PlayerController {
             @ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO,
             @RequestPart List<MultipartFile> files,
             @ApiParam(name = "安卓设备id") @RequestParam("aid") String androidID) throws IOException {
-        if (Objects.isNull(files) || files.size() == 0) {
-            log.error("空文件,请上传整正确的文件格式", new AppException(ResponseEnum.FILE_EMPTY_ERROR));
-            return new ResultMessage(ResponseEnum.FILE_EMPTY_ERROR, null);
-        }
 
-        if (files.size() > 10) {
-            log.error("上传文件数量过多,请分批次上传", new AppException(ResponseEnum.UPLOAD_FILE_TOO_MUCH));
-            return new ResultMessage(ResponseEnum.UPLOAD_FILE_TOO_MUCH, null);
-        }
-
-        ResultMessage resultMessage = playerService.uploadImgByPlayerAndAddOrder(playerDTO, androidID, files);
-
-        return resultMessage;
+        return null;
     }
 
 
@@ -149,7 +138,7 @@ public class PlayerController {
     public ResultMessage uploadFile(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO,
                                     @ApiParam(name = "文件信息,其中的file字段可忽略")
                                     @RequestBody ImgContainer imgContainer) throws IOException {
-        playerService.preUploadFileNameAndHashVal(playerDTO, imgContainer);
+
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 
@@ -161,7 +150,7 @@ public class PlayerController {
     })
     @PutMapping("/rdtetmt")
     public ResultMessage manIdentify() {
-       ;
+        ;
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 

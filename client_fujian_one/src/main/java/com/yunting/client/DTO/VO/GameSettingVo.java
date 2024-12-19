@@ -11,28 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class GameSettingVo {
-
-    @ApiModelProperty(value = "mac地址允许多少位用户", dataType = "String")
-    private String macAddressSetting;
-
-    @ApiModelProperty(value = "留存的记录方式", dataType = "String")
-    private String retainWay;
-
-    @ApiModelProperty(value = "点击量请求限制记录", dataType = "String")
-    private String clickLimit;
-
-    @ApiModelProperty(value = "禁止观看广告时间的时间段，起始时间,类型:Character", dataType = "Character")
-    private String prohibtSeeAdvStart;
-
-    @ApiModelProperty(value = "禁止观看广告时间的时间段，终止时间,类型:Character", dataType = "Character")
-    private String prohibtSeeAdvEnd;
-
-    @ApiModelProperty(value = "是否启用功能 ：禁止观看广告时间段", dataType = "String")
-    private String isEnableProhibt;
-
-    @ApiModelProperty(value = "每日活跃标准", dataType = "String")
-    private String activeStandard;
-
     @ApiModelProperty(value = "对应请求广告与收下奖励时间间隔", dataType = "String")
     private String advWatchInterval;
 

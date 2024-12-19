@@ -64,14 +64,3 @@ mybatis:
 logging:
   level:
     root: info
-
-
-
-#jwt相关配置
-config:
-  jwt:
-    #    加密密钥
-    secret: nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj
-    #    有效时长 单位秒
-    expiration: 10800 # 三个小时
-
