@@ -46,26 +46,6 @@ public class ClientController {
     @Resource(name = "ClientService")
     private ClientImpl client;
 
-    //    http://localhost:8088/Client/testing?playerId=123
-    //专用 测试 请求
-    @ApiOperation(value = "专用 测试 请求")
-    @GetMapping("/testing")
-    private String testing(HttpServletRequest request, @RequestParam("playerId") String playerId) throws ServletException, IOException {
-
-        if (ObjectUtil.isEmpty(request)) {
-            return Ipv4Util.LOCAL_IP;
-        } else {
-//            try {
-////                String remoteHost = JakartaServletUtil.getClientIP(request);
-//                return "0:0:0:0:0:0:0:1".equals(remoteHost) ? Ipv4Util.LOCAL_IP : remoteHost;
-//            } catch (Exception e) {
-//                log.error(">>> 获取客户端ip异常：", e);
-//                return Ipv4Util.LOCAL_IP;
-//            }
-        }
-        return "0:0:0:0:0:0:0:1";
-    }
-
 
     @ApiOperation(value = "手动添加设备信息")
     @PostMapping("/addMobile")

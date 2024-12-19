@@ -30,7 +30,7 @@ public class JWTutil {
 
     @Autowired
     public JWTutil() {
-        log.info("JWT初始化");
+//        log.info("JWT初始化");
         expiration = 10800;
         secret = "nsdgdfhsagbjsdbfhjlatgfiuigufiugopdtuj";
     }

@@ -13,9 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableScheduling
 @EnableSwagger2
 
-@MapperScan(basePackages = "com.yunting.client.mapper")
-
-@ForestScan(basePackages = "com.yunting.forest")
+@MapperScan(basePackages = "com.yunting.wlan.mapper")
 @SpringBootApplication
 public class WlanApplicationOne {
 

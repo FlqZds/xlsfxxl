@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.wlan.mapper.DeviceRecordlistMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.wlan.entity.DeviceRecordlist">
+        <id column="device_id" jdbcType="BIGINT" property="deviceId"/>
+        <result column="player_id" jdbcType="BIGINT" property="playerId"/>
+        <result column="wx_nickname" jdbcType="VARCHAR" property="wxNickname"/>
+        <result column="oaid" jdbcType="VARCHAR" property="oaid"/>
+        <result column="android_id" jdbcType="VARCHAR" property="androidId"/>
+        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
+        <result column="device_detail" jdbcType="VARCHAR" property="deviceDetail"/>
+        <result column="firstLoginTime" jdbcType="TIMESTAMP" property="firstlogintime"/>
+        <result column="identifiction" jdbcType="CHAR" property="identifiction"/>
+    </resultMap>
+
+    <insert id="insertDeviceRecord">
+        INSERT INTO yunting_app_test.device_recordlist(player_id, wx_nickname, oaid, android_id, device_type,
+                                                       device_detail, firstLoginTime, identifiction)
+        VALUES (#{playerId}, #{wxNickname}, #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail}, #{firstlogintime},
+                #{identifiction})
+    </insert>
+
+
+    <select id="getLastDeviceRecordByPlayerId" resultType="com.yunting.wlan.entity.DeviceRecordlist">
+        SELECT device_id,
+               device_recordlist.player_id,
+               device_recordlist.wx_nickname,
+               oaid,
+               android_id,
+               device_type,
+               device_detail,
+               firstLoginTime,
+               identifiction
+        FROM yunting_app_test.device_recordlist
+                 left join yunting_app_test.player p on device_recordlist.player_id = p.player_id
+        WHERE device_recordlist.player_id = #{playerId}
+        order by device_id desc
+        limit 1
+    </select>
+
+    <insert id="insertAdEncourage">
+        insert into yunting_app_test.ad_encourage (adv_encourage_id, adv_type_id, app_id,player_id, wx_nick_name,
+        ip,is_old_player,address,is_close_encourage_adv,
+        is_see_end,is_client_call,is_server_call,is_display_ad)
+        values (#{advEncourageId}, #{advTypeId}, #{appID},#{playerId}, #{wxNickName}
+        ,inet_aton(#{ip}),#{isOldPlayer}, #{address},#{isCloseEncourageAdv},
+        #{isSeeEnd},#{isClientCall},#{isServerCall},#{isDisplayAd})
+        <selectKey resultType="long" keyProperty="advEncourageId" order="AFTER" keyColumn="adv_encourage_id">
+            select @@identity;
+        </selectKey>
+    </insert>
+
+    <insert id="insertExceptionRecord">
+        INSERT INTO yunting_app_test.exception_recordlsit(player_id, wx_nick_name, game_id, oaid, android_id,
+                                                          device_type, device_detail,
+                                                          except_type, except_info, exception_time)
+        VALUES (#{playerId}, #{wxNickName}, #{gameId},
+                #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail},
+                #{exceptType}, #{exceptInfo}, #{exceptionTime})
+    </insert>
+
+    <select id="getGatheringSetting" resultType="com.yunting.wlan.entity.UserGatheringSetting">
+        select ga.gathering_choice,ga.gathering_population_small,ga.gathering_population_large,
+               ga.same_mac_population,ga.gathering_deviceLimit
+        from behind_manage.user_gathering_setting ga left join game_setting g on ga.user_gathering_id=g.user_gathering_setting_id where g.appid=#{gameId}
+    </select>
+</mapper>
