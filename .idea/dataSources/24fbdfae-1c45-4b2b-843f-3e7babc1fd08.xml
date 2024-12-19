@@ -1885,26 +1885,26 @@ package_name</ColNames>
       <Comment>游戏id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="480" parent="306" name="screenshot_setting_option">
+    <column id="480" parent="306" name="screenshot_setting_val">
       <Position>3</Position>
-      <Comment>截图选项</Comment>
-      <DataType>char(1)|0s</DataType>
-    </column>
-    <column id="481" parent="306" name="screenshot_setting_val">
-      <Position>4</Position>
       <Comment>代码位ecpm值大于</Comment>
       <DataType>double(10,2 digit)|0s</DataType>
     </column>
-    <column id="482" parent="306" name="trans_limit_daily">
-      <Position>5</Position>
+    <column id="481" parent="306" name="trans_limit_daily">
+      <Position>4</Position>
       <Comment>当日允许用户提交截图订单上限</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="483" parent="306" name="trans_reward_cont">
-      <Position>6</Position>
+    <column id="482" parent="306" name="trans_reward_cont">
+      <Position>5</Position>
       <Comment>&#xd;
 领取奖励观看广告次数</Comment>
       <DataType>int(11)|0s</DataType>
+    </column>
+    <column id="483" parent="306" name="screenshot_setting_options">
+      <Position>6</Position>
+      <Comment>截图选项1代表关闭,0代表开启</Comment>
+      <DataType>char(1)|0s</DataType>
     </column>
     <key id="484" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>

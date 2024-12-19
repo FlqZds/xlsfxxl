@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.adv.mapper.DayBehaveRecordlistMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.adv.entity.DayBehaveRecordlist">
+        <id column="day_id" property="dayId" jdbcType="CHAR"/>
+        <result column="player_id" property="playerId" jdbcType="CHAR"/>
+        <result column="app_id" property="appId" jdbcType="CHAR"/>
+        <result column="todayRed" property="todayred" jdbcType="DECIMAL"/>
+        <result column="totalRed" property="totalred" jdbcType="DECIMAL"/>
+        <result column="today_encourageAdv_count" property="todayEncourageAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_AdvCount" property="serviceCallBackAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_Reward_Count" property="serviceCallBackRewardCount" jdbcType="INTEGER"/>
+        <result column="retain_time" property="retainTime" jdbcType="TIMESTAMP"/>
+        <result column="retain_way" property="retainWay" jdbcType="CHAR"/>
+        <result column="day_cash" property="dayCash" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <update id="changeDayBehaveRecordEncourageCount">
+        UPDATE yunting_app_test.day_behave_recordlist
+        SET today_encourageAdv_count = today_encourageAdv_count + #{encourageCount}
+        WHERE day_id = #{dayid}
+    </update>
+    <update id="changeDayBehaveRecordCallbackCount">
+        UPDATE yunting_app_test.day_behave_recordlist
+        SET service_CallBack_AdvCount = service_CallBack_AdvCount + #{callbackCount}
+        WHERE day_id = #{dayid}
+    </update>
+
+    <update id="changeDayBehaveRecordCallbackRewardCount">
+        UPDATE yunting_app_test.day_behave_recordlist
+        SET service_CallBack_AdvCount = service_CallBack_AdvCount + #{rewardCount},
+            totalRed                  = totalRed + #{totalRed},
+            todayRed                  = todayRed + #{todayRed}
+        WHERE day_id = #{dayid}
+    </update>
+
+
+    <select id="getDayLastDayBehaveRecordlistByPlayerId" resultType="com.yunting.adv.entity.DayBehaveRecordlist">
+        SELECT day_id,
+               player_id,
+               app_id,
+               retain_way,
+               todayRed,
+               totalRed,
+               today_encourageAdv_count,
+               service_CallBack_AdvCount,
+               service_CallBack_Reward_Count,
+               retain_time,
+               day_cash
+        FROM yunting_app_test.day_behave_recordlist
+        WHERE player_id = #{playerId}
+        group by player_id, date(retain_time)
+        order by date(retain_time) desc
+        limit 1
+    </select>
+
+    <select id="getUserRewardSettingByGameID" resultType="com.yunting.adv.entity.UserRewardSetting">
+        SELECT user_reward_setting.user_adv_percentage,user_reward_setting.get_reward_max_val
+        FROM behind_manage.user_reward_setting
+                 left join game_setting gs on user_reward_setting.user_reward_setting_id = gs.user_reward_setting_id
+        where gs.appid = #{gameId}
+    </select>
+
+</mapper>

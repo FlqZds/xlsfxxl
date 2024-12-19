@@ -16,6 +16,7 @@
         <module>Common</module>
         <module>Client_Pay_one</module>
         <module>Client_Sum_One</module>
+        <module>Client_Adv_One</module>
     </modules>
 
     <properties>
