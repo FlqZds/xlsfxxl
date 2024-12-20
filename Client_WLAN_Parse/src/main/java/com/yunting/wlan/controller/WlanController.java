@@ -28,20 +28,6 @@ public class WlanController {
     private WlanService wlanService;
 
     @ApiOperation(value = "聚集验证和同型号验证")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "location", value = "位置信息", required = true, paramType = "RequestBody", dataType = "String"),
-            @ApiImplicitParam(name = "Wifi", value = "wifi列表", required = true, paramType = "RequestBody", dataType = "String"),
-            @ApiImplicitParam(name = "thisMAC", value = "该玩家自己mac", required = true, paramType = "RequestBody", dataType = "String")
-    })
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL", response = Null.class),
-            @ApiResponse(code = 80595, message = "在线人数超出聚集设置上限,请重新登录"),
-            @ApiResponse(code = 66028, message = "该设备型号数量已达上限,请稍后再试"),
-            @ApiResponse(code = 66029, message = "该MAC地址人数已达上限,请稍后再试"),
-            @ApiResponse(code = 80504, message = "您的账号已被封禁，请联系管理员"),
-            @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
-            @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
-    })
     @PostMapping("/lIdetfy")
     public ResultMessage gathIdentifyAndTypeIdentify(@ApiIgnore @RequestAttribute PlayerDTO playerDTO, @ApiIgnore @RequestBody Map<String, String> json) {
         Map<String, String> thismap = JSON.to(Map.class, json);
@@ -56,15 +42,6 @@ public class WlanController {
     }
 
     @ApiOperation(value = "激励聚集验证接口,返回激励广告的记录id+相关省份")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL,", response = String.class, responseContainer = "Map"),
-            @ApiResponse(code = 80595, message = "在线人数超出聚集设置上限,请重新登录"),
-            @ApiResponse(code = 66028, message = "该设备型号数量已达上限,请稍后再试"),
-            @ApiResponse(code = 66029, message = "该MAC地址人数已达上限,请稍后再试"),
-            @ApiResponse(code = 80504, message = "您的账号已被封禁，请联系管理员"),
-            @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
-            @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
-    })
     @PostMapping("/ecIdety")
     public ResultMessage identifyAndGetEncourageID(HttpServletRequest request, @ApiIgnore @RequestAttribute PlayerDTO playerDTO, @RequestBody DeviceDTO json) {
 
@@ -73,15 +50,6 @@ public class WlanController {
     }
 
     @ApiOperation(value = "上传设备记录和地址由服务端进行设备验证和聚集验证")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL"),
-            @ApiResponse(code = 80595, message = "在线人数超出聚集设置上限,请重新登录"),
-            @ApiResponse(code = 66028, message = "该设备型号数量已达上限,请稍后再试"),
-            @ApiResponse(code = 66029, message = "该MAC地址人数已达上限,请稍后再试"),
-            @ApiResponse(code = 80504, message = "您的账号已被封禁，请联系管理员"),
-            @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
-            @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
-    })
     @PostMapping("/uIdetfy")
     public ResultMessage loginIdentify(@ApiIgnore @RequestAttribute PlayerDTO playerDTO, @RequestBody infoVO json) {
 

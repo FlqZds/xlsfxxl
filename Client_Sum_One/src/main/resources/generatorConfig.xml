@@ -51,7 +51,7 @@
             <property name="nullCatalogMeansCurrent" value="true"/>
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="imginfo"/>
+        <table tableName="location"/>
 
     </context>
 </generatorConfiguration>

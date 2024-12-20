@@ -1,13 +1,6 @@
 server:
   port: 8040
 
-  tomcat:
-    remoteip:
-      remote-ip-header: X-Real-IP
-      host-header: X-Forwarded-Host
-      protocol-header: X-Forwarded-Proto
-  forward-headers-strategy: framework
-
 
 spring:
   main:
@@ -15,14 +8,6 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-  web:
-    resources:
-      static-locations: classpath:/static/,templates/
-
-  servlet:
-    multipart:
-      max-file-size: -1
-      max-request-size: -1
 
   #  swagger要配这个
   mvc:

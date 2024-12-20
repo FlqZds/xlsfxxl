@@ -17,6 +17,7 @@
         <module>Client_Pay_one</module>
         <module>Client_Sum_One</module>
         <module>Client_Adv_One</module>
+        <module>Client_Login</module>
     </modules>
 
     <properties>

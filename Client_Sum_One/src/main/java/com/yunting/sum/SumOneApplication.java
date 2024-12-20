@@ -1,7 +1,10 @@
 package com.yunting.sum;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@MapperScan(basePackages = "com.yunting.sum.mapper")
 @SpringBootApplication
 public class SumOneApplication {
     public static void main(String[] args) {

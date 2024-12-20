@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /***
  * 常量类
  * @author ：zds
- *仅FS能用，不可被调，不可被继承，不可被外界改变
+ *仅FS能用，不可被继承，不可被外界改变
  */
 public final class FS {
     public static String temp_code = "";

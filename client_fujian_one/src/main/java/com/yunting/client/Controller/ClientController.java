@@ -111,7 +111,7 @@ public class ClientController {
             @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
     })
-    @PostMapping("/lIdetfy")
+//    @PostMapping("/lIdetfy")
     public ResultMessage gathIdentifyAndTypeIdentify(@ApiIgnore @RequestAttribute PlayerDTO playerDTO, @ApiIgnore @RequestBody Map<String, String> json) {
         Map<String, String> thismap = JSON.to(Map.class, json);
         String thisMAC = thismap.get("thisMAC");
@@ -175,7 +175,7 @@ public class ClientController {
             @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
     })
-    @PostMapping("/uIdetfy")
+//    @PostMapping("/uIdetfy")
     public ResultMessage loginIdentify(@ApiIgnore @RequestAttribute PlayerDTO playerDTO, @RequestBody infoVO json) {
 
         ResultMessage resultMessage = client.storeDeviceAndLocationThenIdentify(playerDTO, json);

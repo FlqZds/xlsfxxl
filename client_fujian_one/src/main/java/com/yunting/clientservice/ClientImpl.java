@@ -29,6 +29,7 @@ import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.IpUtils;
 import com.yunting.common.utils.JWTutil;
+import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.forest.ForestService;
 import lombok.Data;
@@ -1029,42 +1030,29 @@ public class ClientImpl implements ClientService {
      */
     @Override
     public PlayerMetaData getGameSetting(PlayerDTO playerDTO, String packageName) {
-        GameSetting gameSetting = gameSettingMapper.getGameSettingByPackageName(packageName);
-
-        if (Objects.isNull(gameSetting)) {
-            log.error("获取游戏设置失败，请检查包名:" + packageName + "是否正确", new AppException(ResponseEnum.GET_GAME_SETTING_FAILED));
-            throw new AppException(ResponseEnum.GET_GAME_SETTING_FAILED);
-        }
-
-        ScreenshotSetting screenshotSetting = gameSettingMapper.getScreenshotSettingByPk(gameSetting.getScreenshotSettingId());//截图设置
-
         PlayerMetaData playerMetaData = new PlayerMetaData();
 
         Long playerId = playerDTO.getPlayerId();
-        Long gameId = playerDTO.getGameId();
 
-        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, gameId);
-        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, gameId);
+        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, ST.GameId());
+        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, ST.GameId());
         DayBehaveRecordlist player_day_record = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId); //该玩家当日的留存数据
 
         BigDecimal totalred = player_day_record.getTotalred(); //玩家总累计红包金额
         BigDecimal todayred = player_day_record.getTodayred(); //玩家当日红包余额
         BigDecimal inRed = player.getInRed();                  //玩家余额
-        String withdrawPercentage = withdrawMapper.getWithdrawPercentage(gameId);//提现比例
         String payLoginId = player.getPayLoginId(); //支付宝id
         String realName = player.getRealName(); //姓名
 
 //设置
         //截图设置
-        playerMetaData.setScreenshotSettingVal(screenshotSetting.getScreenshotSettingVal());
-        playerMetaData.setTransLimitDaily(screenshotSetting.getTransLimitDaily());
-        playerMetaData.setTransRewardCont(screenshotSetting.getTransRewardCont());
+        playerMetaData.setScreenshotSettingVal(ST.Codebit_Max_val());
+        playerMetaData.setTransLimitDaily(ST.Daily_Max_Submit_Num());
+        playerMetaData.setTransRewardCont(ST.Daily_Max_Watch_Num());
 
-        playerMetaData.setNoticeMSG(gameSetting.getNoticeMSG());
-        playerMetaData.setAdvWatchInterval(gameSetting.getAdvWatchInterval());
-
-        playerMetaData.setNoticeMSG(gameSetting.getNoticeMSG());
-        playerMetaData.setWithdrawPercentage(withdrawPercentage);
+        playerMetaData.setNoticeMSG(ST.Notification());
+        playerMetaData.setAdvWatchInterval(ST.ADV_Interval());
+        playerMetaData.setWithdrawPercentage(ST.Withdraw_Percentage());
 //玩家数据
         playerMetaData.setInRed(String.valueOf(inRed));
         playerMetaData.setTotalRed(String.valueOf(totalred));
@@ -1074,6 +1062,10 @@ public class ClientImpl implements ClientService {
         playerMetaData.setRealName(realName);
 
 //任务
+        if (task == null) {
+            log.info("玩家:|-" + playerId + "-|已读取游戏设置");
+            return playerMetaData;
+        }
         playerMetaData.setBonus(task.getBonus());
         playerMetaData.setTaskProcess(task.getTaskProcess());
         log.info("玩家:|-" + playerId + "-|已读取游戏设置");

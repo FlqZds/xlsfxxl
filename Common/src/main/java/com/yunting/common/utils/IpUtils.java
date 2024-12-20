@@ -43,6 +43,7 @@ public class IpUtils {
             return UNKNOWN;
         }
 
+
         String host = request.getHeader("host");
 
         //判断这个ip是否为代理ip / 从各种代理中获取到ip
@@ -80,7 +81,6 @@ public class IpUtils {
 
     private static final String DB_PATH = "C:\\Users\\Administrator\\Desktop\\Client\\src\\main\\resources\\ip2region.db";
     private static final String DEFAULT_CITY_NAME = "未知地址";
-
 
 
     public static String getCityInfo(String ip) {

@@ -62,6 +62,6 @@
     <select id="getGatheringSetting" resultType="com.yunting.wlan.entity.UserGatheringSetting">
         select ga.gathering_choice,ga.gathering_population_small,ga.gathering_population_large,
                ga.same_mac_population,ga.gathering_deviceLimit
-        from behind_manage.user_gathering_setting ga left join game_setting g on ga.user_gathering_id=g.user_gathering_setting_id where g.appid=#{gameId}
+        from behind_manage.user_gathering_setting ga left join behind_manage.game_setting g on ga.user_gathering_id=g.user_gathering_setting_id where g.appid=#{gameId}
     </select>
 </mapper>

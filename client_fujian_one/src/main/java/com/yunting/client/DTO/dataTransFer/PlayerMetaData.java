@@ -17,8 +17,8 @@ import java.math.BigDecimal;
 @ApiModel(value = "玩家加入websocket后,要获取的游戏相关配置数据和玩家自身数据", description = "简称玩家元数据")
 public class PlayerMetaData {
 
-    @ApiModelProperty(value = "对应请求广告与收下奖励时间间隔", dataType = "String")
-    private String advWatchInterval;
+    @ApiModelProperty(value = "对应请求广告与收下奖励时间间隔", dataType = "int")
+    private int advWatchInterval;
 
     @ApiModelProperty(value = "通知公告", dataType = "String")
     private String noticeMSG;

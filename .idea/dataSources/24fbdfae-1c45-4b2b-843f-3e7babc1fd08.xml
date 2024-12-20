@@ -1446,9 +1446,9 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Comment>留存方式 （0是自然日记录 ，1是24小时记录）</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="398" parent="299" name="click_limit">
+    <column id="398" parent="299" name="reset_max_time">
       <Position>12</Position>
-      <Comment>点击量请求限制记录</Comment>
+      <Comment>应用后台最大闲置时长</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
     <column id="399" parent="299" name="prohibt_see_adv_start">

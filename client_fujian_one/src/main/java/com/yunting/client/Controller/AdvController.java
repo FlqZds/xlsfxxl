@@ -44,7 +44,7 @@ public class AdvController {
             @ApiResponse(code = 66027, message = "登录异常,请检查设备是否更换"),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
     })
-    @PostMapping("/ecIdety")
+//    @PostMapping("/ecIdety")
     public ResultMessage identifyAndGetEncourageID(HttpServletRequest request, @ApiIgnore @RequestAttribute PlayerDTO playerDTO, @RequestBody DeviceDTO json) throws UnknownHostException {
 
         ResultMessage resultMessage = client.identifyAndGetEncourageID(request, playerDTO, json);

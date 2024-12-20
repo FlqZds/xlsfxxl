@@ -117,7 +117,6 @@ public class WlanService {
             wlanList.add(thisMAC);
             this.buildWiFiRelation(wlanList, playerId + "", location);
             return new ResultMessage(ResponseEnum.SUCCESS, null);
-
         }
 
 
@@ -435,7 +434,6 @@ public class WlanService {
 
     }
 
-    //写个方法recheck() 给list_recheck做聚集判断用 方法返回的是需要踢掉的人的id列表'
 
     /***
      *
