@@ -4,6 +4,7 @@ import com.alipay.api.domain.Participant;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.pay.entity.DayBehaveRecordlist;
 import com.yunting.pay.entity.Player;
@@ -98,15 +99,12 @@ public class PayImpl implements PayServices {
 
         BigDecimal playerInRed = player.getInRed(); //用户当前余额
 
-        WithdrawSetting withdrawSetting = withdrawMapper.getWithdrawSetting(player.getGameId());
-        String packageName = withdrawSetting.getPackageName();
-
         DayBehaveRecordlist dayRecord = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId);
         BigDecimal dayCash = dayRecord.getDayCash(); //用户当日已提现总金额
 
-        BigDecimal withdrawPercentage = new BigDecimal(withdrawSetting.getWithdrawPercentage());//提现比例
-        Integer withdrawCount = withdrawSetting.getWithdrawCount();//获取该用户的 当日提现次数上限
-        BigDecimal withdrawNojudgeMoney = withdrawSetting.getWithdrawNojudgeMoney(); //设置的免审核金额
+        BigDecimal withdrawPercentage = new BigDecimal(ST.Withdraw_Percentage());//提现比例
+        Integer withdrawCount = ST.Daily_Withdraw_Count();//获取该用户的 当日提现次数上限
+        BigDecimal withdrawNojudgeMoney = new BigDecimal(ST.Withdraw_Nojudge_Money()); //设置的免审核金额
 
         String playerTodayCount = "";
         if (rs.hExists("withdrawCount", playerId + "") == true) {
@@ -186,7 +184,7 @@ public class PayImpl implements PayServices {
 
         WithdrawRecord withdrawRecord = WithdrawRecord.builder()
                 .withdrawMoney(transAmount).returnMoney(rebackVal)
-                .playerId(playerId).packageName(packageName)
+                .playerId(playerId).packageName(ST.PackageName())
                 .withdrawPercentageNow(String.valueOf(withdrawPercentage))
                 .withdrawTime(LocalDateTime.now()).wxNickname(player.getWxNickname()).build();
 

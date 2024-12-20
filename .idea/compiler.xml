@@ -10,6 +10,7 @@
         <module name="Client_Pay_one" />
         <module name="Client_WLAN_Parse" />
         <module name="Client_Adv_One" />
+        <module name="Client_Login" />
         <module name="Client_Sum_One" />
         <module name="client_fujian_one" />
         <module name="Client_Img_one" />

@@ -13,7 +13,7 @@ public interface PlayerMapper {
 
 
     //  根据玩家ID和游戏ID查到玩家微信昵称
-    String selectWxNicknameByPlayerId(@Param("playerId") Long playerId, @Param("gameId") Long gameId);
+    String selectWxNicknameByPlayerId(@Param("playerId") Long playerId, @Param("gameId") String gameId);
 
 
 }

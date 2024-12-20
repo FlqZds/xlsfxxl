@@ -15,6 +15,7 @@ import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -67,10 +68,9 @@ public class PlayerImpl implements PlayerService {
     @Transactional(rollbackFor = Exception.class)
     public ResultMessage uploadImgByPlayerAndAddOrder(PlayerDTO playerDTO, String androidID, List<MultipartFile> files) throws IOException {
         Long playerId = playerDTO.getPlayerId();
-        Long gameId = playerDTO.getGameId();
-        String nickname = playerMapper.selectWxNicknameByPlayerId(playerId, gameId);
-        String withdrawPercentage_str = applicationMapper.getWithdrawPercentage(gameId);
-        BigDecimal withdrawPercentage = new BigDecimal(withdrawPercentage_str);
+        long gameid = Long.parseLong(ST.GameId());
+        String nickname = playerMapper.selectWxNicknameByPlayerId(playerId, ST.GameId());
+        BigDecimal withdrawPercentage = new BigDecimal(ST.Withdraw_Percentage());
 
         Imgorder imgorder = null;
         for (MultipartFile file : files) {
@@ -96,7 +96,7 @@ public class PlayerImpl implements PlayerService {
                         .androidID(androidID)
                         .wxname(nickname)
                         .withdrawPercentage(withdrawPercentage)
-                        .appid(gameId)
+                        .appid(gameid)
 
                         .orderMoney(orderMoney)//充值金额
                         .orderBusiness(business)//商户名
@@ -147,7 +147,7 @@ public class PlayerImpl implements PlayerService {
             String obj = imgInfo.getDirectory() + "/" + originName + IMG_TYPE; //拼接的路径 | 文件上传的路径
 
             try {
-                String url = minIoUtils.uploadFile(files.get(i), gameId + "", obj);
+                String url = minIoUtils.uploadFile(files.get(i), ST.GameId(), obj);
 
                 imageMappingMapper.updateByPrimaryKey(imgID, url, orderId);  //指定该图片属于哪笔订单,以及,绑定访问的url
             } catch (IOException e) {
