@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.sum.mapper.AdnMapper">
+
+    <select id="getAllProxyName" resultType="java.lang.String">
+        select proxy_name
+        from behind_manage.proxy_team
+        where proxy_status = 0
+    </select>
+
+    <select id="getAllProxySonName" resultType="java.lang.String">
+        select proxy_name
+        from behind_manage.proxy_team_son
+        where proxy_status = 0
+    </select>
+
+
+    <select id="sumInscreenEcpmCount" resultType="java.math.BigDecimal">
+        -- 统计了该广告中该日 插屏广告 某广告网络的ecpm总数
+        select sum(adv_ecpm),
+               adv_type_id,
+               adn.adn_name as advLegengds
+        from ${dbName}.ad_inscreen inAdv
+                 left join behind_manage.admin_codebit code on inAdv.code_bit_id = code.code_bit_id
+                 left join behind_manage.adn
+                           on code.adn_id = adn.id
+                 left join ${dbName}.player on proxy_name = #{proxyName}
+        WHERE adn.adn_name = #{adnName}
+          AND inAdv.request_time between #{startDate} and #{endDate}
+    </select>
+
+    <select id="sumStreamEcpmCount" resultType="java.math.BigDecimal">
+        -- 统计了该广告中该日 信息流广告 某广告网络的ecpm总数
+        select sum(adv_ecpm),
+               adv_type_id,
+               adn.adn_name as advLegengds
+        from ${dbName}.ad_stream stream
+                 left join behind_manage.admin_codebit code on stream.code_bit_id = code.code_bit_id
+                 left join behind_manage.adn
+                           on code.adn_id = adn.id
+                 left join ${dbName}.player on proxy_name = #{proxyName}
+        WHERE adn.adn_name = #{adnName}
+          AND stream.request_time between #{startDate} and #{endDate}
+    </select>
+
+    <select id="sumEncourageEcpmCount" resultType="java.math.BigDecimal">
+        -- 统计了该广告中该日 激励广告 某广告网络的ecpm总数
+        select sum(encourage_ecpm),
+               adv_type_id,
+               adn.adn_name as advLegengds
+        from ${dbName}.ad_encourage encourage
+                 left join behind_manage.admin_codebit code on encourage.code_bit_id = code.code_bit_id
+                 left join behind_manage.adn
+                           on code.adn_id = adn.id
+                 left join ${dbName}.player on proxy_name = #{proxyName}
+        WHERE adn.adn_name = #{adnName}
+          AND encourage.request_time between #{startDate} and #{endDate}
+    </select>
+
+    <select id="sumOpenEcpmCount" resultType="java.math.BigDecimal">
+        -- 统计了该广告中该日 开屏广告  某广告网络的ecpm总数
+        select sum(adv_ecpm),
+               adv_type_id,
+               adn.adn_name as advLegengds
+        from ${dbName}.ad_openscreen openAdv
+                 left join behind_manage.admin_codebit code on openAdv.code_bit_id = code.code_bit_id
+                 left join behind_manage.adn
+                           on code.adn_id = adn.id
+                 left join ${dbName}.player on proxy_name = #{proxyName}
+        WHERE adn.adn_name = #{adnName}
+          AND openAdv.request_time between #{startDate} and #{endDate}
+    </select>
+
+    <select id="sumRowStyleEcpmCount" resultType="java.math.BigDecimal">
+        -- 统计了该广告中该日 横幅  某广告网络的ecpm总数
+        select sum(adv_ecpm),
+               adv_type_id,
+               adn.adn_name as advLegengds
+        from ${dbName}.ad_rowstyle rowStyle
+                 left join behind_manage.admin_codebit code on rowStyle.code_bit_id = code.code_bit_id
+                 left join behind_manage.adn on code.adn_id = adn.id
+                 left join ${dbName}.player on proxy_name = #{proxyName}
+        WHERE adn.adn_name = #{adnName}
+          AND rowStyle.request_time between #{startDate} and #{endDate}
+    </select>
+
+    <select id="getAllProxySonNameByProxyName" resultType="java.lang.String">
+        select proxy_name
+        from behind_manage.proxy_team_son
+        WHERE proxy_name = #{proxyName}
+    </select>
+
+    <select id="getSumCashByProxyNameAndDate" resultType="com.yunting.sum.entity.SumProxy">
+        select *
+        from behind_manage.sum_proxy
+        where proxy_name = #{proxyName}
+          and adn_name = 'all'
+          and sum_day = #{date}
+    </select>
+
+    <select id="getAllProxyCashCount" resultType="java.math.BigDecimal">
+        select sum(sum_proxy_cash)
+        from behind_manage.sum_proxy
+        where sum_day = #{date}
+          and proxy_name = #{proxyName}
+          and adn_name = 'all'
+    </select>
+
+    <select id="getProxyRatio" resultType="java.lang.Double">
+        select proxyGamePropotion
+        from behind_manage.proxy_team
+        where proxy_name = #{proxyName}
+    </select>
+
+    <select id="getSonProxyRatio" resultType="java.lang.Double">
+        select proxy_proportion
+        from behind_manage.proxy_team_son
+        where proxy_name = #{proxyName}
+    </select>
+
+
+    <insert id="addTotalAdn">
+        insert into ${dbName}.total_adn(total_encourage, total_adn_open, total_adn_in, total_adn_row,
+                                               total_adn_stream, total_adn_withdraw, total_adn_ecpm, total_adn_date,
+                                               total_adn_type, appid, proxy_name)
+        values (#{adnTotal.totalEncourage}, #{adnTotal.totalAdnOpen}, #{adnTotal.totalAdnIn}, #{adnTotal.totalAdnRow},
+                #{adnTotal.totalAdnStream}, #{adnTotal.totalAdnWithdraw}, #{adnTotal.totalAdnEcpm},
+                #{adnTotal.totalAdnDate}, #{adnTotal.totalAdnType}, #{adnTotal.appid}, #{adnTotal.proxyName})
+    </insert>
+
+    <insert id="addTotalAdvLegends">
+        insert into ${dbName}.total_advlegends (total_ecpm, baidu, you_liang_hui, fast_hand, gromore, total_date,
+                                                       appid, proxy_name)
+        values (#{advlegends.totalEcpm}, #{advlegends.baidu}, #{advlegends.youLiangHui}, #{advlegends.fastHand},
+                #{advlegends.gromore}, #{advlegends.totalDate}, #{advlegends.appid}, #{advlegends.proxyName})
+    </insert>
+
+    <insert id="addTotalProfile">
+        insert into ${dbName}.total_profile (total_profile_date, total_red_day_user, total_count_day_rebate,
+                                                    total_count_day_judge_rebate, total_count_day_cash,
+                                                    total_count_day_judge_cash,
+                                                    total_count_day_normal, total_count_day_no_reward,
+                                                    total_count_day_no_callback,
+                                                    total_charge_rebate, appid, proxy_name)
+        values (#{profile.totalProfileDate}, #{profile.totalRedDayUser}, #{profile.totalCountDayRebate},
+                #{profile.totalCountDayJudgeRebate}, #{profile.totalCountDayCash}, #{profile.totalCountDayJudgeCash},
+                #{profile.totalCountDayNormal}, #{profile.totalCountDayNoReward}, #{profile.totalCountDayNoCallback},
+                #{profile.totalChargeRebate}, #{profile.appid}, #{profile.proxyName})
+    </insert>
+
+    <insert id="addTotalEcpm">
+        insert into ${dbName}.total_ecpm (total_ecpm_encourage, total_ecpm_in, total_ecpm_stream,
+                                                 total_ecpm_open,
+                                                 total_ecpm_row,
+                                                 withdraw_encourage, total_ecpm, total_ecpm_date, appid, proxy_name)
+        values (#{totalEcpm.totalEcpmEncourage}, #{totalEcpm.totalEcpmIn}, #{totalEcpm.totalEcpmStream},
+                #{totalEcpm.totalEcpmOpen}, #{totalEcpm.totalEcpmRow}, #{totalEcpm.withdrawEncourage},
+                #{totalEcpm.totalEcpm}, #{totalEcpm.totalEcpmDate}, #{totalEcpm.appid}, #{totalEcpm.proxyName})
+    </insert>
+
+
+</mapper>

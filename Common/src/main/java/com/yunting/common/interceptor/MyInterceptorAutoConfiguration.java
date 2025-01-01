@@ -28,14 +28,12 @@ public class MyInterceptorAutoConfiguration implements WebMvcConfigurer {
         list.add("/webjars/**");
         list.add("/v2/api-docs/**");
 
-        list.add("/Client/testing");
         list.add("/sum/upd");
+        list.add("/sum/collection/");
+        list.add("/sum/addMobile/");
 
-        list.add("/Client/signOn/");
+        list.add("/Client/signOn");
         list.add("/Client/risking");
-        list.add("/Client/addMobile/");
-        list.add("/Client/*");
-        list.add("/Client/signOff");
 
         list.add("/Admin/*");
         list.add("/Advertise/reward/callback");

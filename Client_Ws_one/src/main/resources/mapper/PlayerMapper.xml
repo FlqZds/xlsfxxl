@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.ws.mapper.PlayerMapper">
+
+    <select id="selectPlayerStatusByPlayerId" resultType="java.lang.Character">
+        select status
+        from ${dbName}.player
+        where player_id = #{playerId}
+    </select>
+
+    <select id="selectPlayerByPlayerId" resultType="com.yunting.ws.entity.Player">
+        select player_id,
+               wx_open_id,
+               pay_login_id,
+               game_id,
+               wx_nickname,
+               real_name,
+               wx_headimgurl,
+               player_creat_time,
+               proxy_name,
+               status,
+               mobile_id,
+               in_red,
+               special
+        from ${dbName}.player
+        where player_id = #{playerId}
+    </select>
+
+    <select id="selectInRedByPlayerId" resultType="java.math.BigDecimal">
+        select in_red
+        from ${dbName}.player
+        where player_id = #{playerId}
+          and game_id = #{gameId};
+    </select>
+
+    <insert id="addDayBehaveRecordlist">
+        INSERT INTO ${dbName}.day_behave_recordlist ( player_id, app_id, retain_way, todayRed, totalRed
+                                                    , today_encourageAdv_count, service_CallBack_AdvCount
+                                                    , service_CallBack_Reward_Count, retain_time)
+        VALUES (#{dayRecord.playerId}, #{dayRecord.appId}, #{dayRecord.retainWay}, #{dayRecord.todayred},
+                #{dayRecord.totalred},
+                #{dayRecord.todayEncourageAdvCount}, #{dayRecord.serviceCallBackAdvCount},
+                #{dayRecord.serviceCallBackRewardCount}, #{dayRecord.retainTime})
+    </insert>
+
+    <select id="getLastLocationByPlayerId" resultType="java.lang.String">
+        select location
+        from ${dbName}.location
+        where player_id = #{playerId}
+          and date(record_time) = #{today}
+        order by locate_id desc
+        limit 1
+    </select>
+
+</mapper>

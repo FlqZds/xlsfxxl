@@ -27,10 +27,7 @@ import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
-import com.yunting.common.utils.IpUtils;
-import com.yunting.common.utils.JWTutil;
-import com.yunting.common.utils.ST;
-import com.yunting.common.utils.SpringRollBackUtil;
+import com.yunting.common.utils.*;
 import com.yunting.forest.ForestService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -108,6 +105,9 @@ public class ClientImpl implements ClientService {
 
     @Resource(name = "AliPayUtil")
     AliPayUtil aliPayUtil;
+
+    @Resource(name = "ST")
+    private ST st;
 
 
     /***
@@ -1034,8 +1034,8 @@ public class ClientImpl implements ClientService {
 
         Long playerId = playerDTO.getPlayerId();
 
-        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, ST.GameId());
-        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, ST.GameId());
+        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, st.GameId());
+        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, st.GameId());
         DayBehaveRecordlist player_day_record = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId); //该玩家当日的留存数据
 
         BigDecimal totalred = player_day_record.getTotalred(); //玩家总累计红包金额
@@ -1046,13 +1046,13 @@ public class ClientImpl implements ClientService {
 
 //设置
         //截图设置
-        playerMetaData.setScreenshotSettingVal(ST.Codebit_Max_val());
-        playerMetaData.setTransLimitDaily(ST.Daily_Max_Submit_Num());
-        playerMetaData.setTransRewardCont(ST.Daily_Max_Watch_Num());
+        playerMetaData.setScreenshotSettingVal(st.Codebit_Max_val());
+        playerMetaData.setTransLimitDaily(st.Daily_Max_Submit_Num());
+        playerMetaData.setTransRewardCont(st.Daily_Max_Watch_Num());
 
-        playerMetaData.setNoticeMSG(ST.Notification());
-        playerMetaData.setAdvWatchInterval(ST.ADV_Interval());
-        playerMetaData.setWithdrawPercentage(ST.Withdraw_Percentage());
+        playerMetaData.setNoticeMSG(st.Notification());
+        playerMetaData.setAdvWatchInterval(st.ADV_Interval());
+        playerMetaData.setWithdrawPercentage(st.Withdraw_Percentage());
 //玩家数据
         playerMetaData.setInRed(String.valueOf(inRed));
         playerMetaData.setTotalRed(String.valueOf(totalred));

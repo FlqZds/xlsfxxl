@@ -39,7 +39,7 @@ public class PlayerInfoDto {
     private String payLoginId;
 
     @ApiModelProperty(value = "所属团队", dataType = "Long.class")
-    private Long proxyId;
+    private String proxyName;
 
     @ApiModelProperty(value = "红包余额", dataType = "BigDecimal.class")
     private BigDecimal redHad;

@@ -21,9 +21,9 @@ import java.util.Date;
 @Data
 public class JWTutil {
 
-    //    @Value("${config.jwt.expiration}")
+//        @Value("${config.jwt.expiration}")
     private long expiration;
-    //    @Value("${config.jwt.secret}")
+//        @Value("${config.jwt.secret}")
     private String secret;
 
     private String token_header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.";

@@ -17,10 +17,11 @@
         <result column="errinfo" jdbcType="VARCHAR" property="errinfo"/>
     </resultMap>
     <insert id="insertOpenscreen">
-        insert into ad_openscreen (ad_openScreen_id, adv_type_id, player_id, app_id, code_bit_id, request_id, adv_ecpm, clicks, ip, request_time,
+        insert into ${dbName}.ad_openscreen (ad_openScreen_id, adv_type_id, player_id, app_id, code_bit_id, request_id,
+        adv_ecpm, clicks, ip, request_time,
         wx_nick_name, errinfo)
         values (#{adOpenscreenId}, #{advTypeId}, #{playerId}, #{appId},
-                #{codeBitId}, #{requestId}, #{advEcpm},
+        #{codeBitId}, #{requestId}, #{advEcpm},
         #{clicks}, inet_aton(#{ip}), #{requestTime},
         #{wxNickName}, #{errinfo})
         <selectKey resultType="long" keyProperty="adOpenscreenId" order="AFTER" keyColumn="ad_openScreen_id">
@@ -29,16 +30,14 @@
     </insert>
 
     <update id="changeAdOpenRecord">
-        update ad_openscreen
-        set
-            clicks= #{changeData.clicks}
+        update ${dbName}.ad_openscreen
+        set clicks= #{changeData.clicks}
         where ad_openScreen_id = #{targetAdv}
     </update>
 
     <update id="openScreenFirstClickTime">
-        update ad_openscreen
-        set
-            first_click_time = #{firstClickTime}
+        update ${dbName}.ad_openscreen
+        set first_click_time = #{firstClickTime}
         where ad_openScreen_id = #{advId}
     </update>
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.client.mapper.ImageMappingMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.client.entity.ImageMapping">
+        <id column="img_id" property="imgId" jdbcType="BIGINT"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="directory" property="directory" jdbcType="VARCHAR"/>
+        <result column="fileName" property="fileName" jdbcType="VARCHAR"/>
+        <result column="fileHash" property="fileHash" jdbcType="VARCHAR"/>
+        <result column="img_type" property="imgType" jdbcType="CHAR"/>
+        <result column="img_order_id" property="imgOrderId" jdbcType="CHAR"/>
+        <result column="player_id" property="playerId" jdbcType="CHAR"/>
+    </resultMap>
+
+    <insert id="insertWithTrans">
+        insert into behind_manage.image_mapping(directory, fileHash, fileName, img_type, player_id, uploadTime,img_money,img_business,img_business_id,img_trans,img_pay_time)
+        values (#{directory}, #{fileHash}, #{fileName}, #{imgType}, #{playerId}, #{uploadTime},#{imgMoney},#{imgBusiness},#{imgBusinessId},#{imgTrans},#{imgPayTime})
+    </insert>
+
+
+    <insert id="insert">
+        insert into behind_manage.image_mapping(directory, fileHash, fileName, img_type, player_id, uploadTime)
+        values (#{directory}, #{fileHash}, #{fileName}, #{imgType}, #{playerId}, #{uploadTime})
+    </insert>
+
+
+    <update id="updateByPrimaryKey">
+        update behind_manage.image_mapping
+        set img_url     = #{img},
+            img_order_id=#{imgOrderID}
+        where img_id = #{imgID}
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete
+        from behind_manage.image_mapping
+        where img_id = #{imgId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectImgByDir" resultType="com.yunting.client.entity.ImageMapping">
+        select img_id,
+               directory,
+               fileName,
+               fileHash
+        from behind_manage.image_mapping
+        where directory = #{dir}
+          and fileName = #{fileName}
+    </select>
+
+    <select id="selectImgByImgTypeAndTransidAndUploadTime" resultType="java.lang.Integer">
+        select count(img_id)
+        from behind_manage.image_mapping
+        where img_type = #{imgType}
+          and img_trans = #{transID}
+          and uploadTime between #{startTime} and #{endTime}
+    </select>
+
+</mapper>

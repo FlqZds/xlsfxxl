@@ -125,7 +125,7 @@ public class ClientController {
     }
 
 
-    @ApiOperation(value = "通过包名获取游戏设置")
+
     @ApiResponses({
             @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL", response = PlayerMetaData.class),
             @ApiResponse(code = 500, message = "发生未知异常，请联系管理员"),
@@ -134,6 +134,7 @@ public class ClientController {
             @ApiResponse(code = 403, message = "未授权的请求"),
             @ApiResponse(code = 66155, message = "查询游戏设置失败"),
     })
+    @ApiOperation(value = "获取游戏数据+玩家数据")
     @PostMapping("/gameSetting")
     public ResultMessage getGameSetting(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @RequestBody String packageName) {
         log.info("packageName:" + packageName);
@@ -145,13 +146,12 @@ public class ClientController {
     }
 
 
-    @ApiOperation(value = "通过包名获取风控参数")
     @ApiImplicitParam(name = "packageName", value = "包名", required = true, dataType = "String")
     @ApiResponses({
             @ApiResponse(code = 200, message = "请求成功-SUCCESSFUL", response = RiskControlSetting.class),
             @ApiResponse(code = 66411, message = "查询风控设置失败"),
     })
-
+    @ApiOperation(value = "通过包名获取风控参数")
     @GetMapping("/risking")
     public ResultMessage getRiskControlSetting(HttpServletRequest request, @RequestParam("packageName") String packageName) {
 

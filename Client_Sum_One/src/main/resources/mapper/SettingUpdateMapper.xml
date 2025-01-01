@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.sum.mapper.SettingUpdateMapper">
+
+    <select id="getUpdatedScreenshotSetting" resultType="com.yunting.sum.entity.setting.ScreenshotSetting">
+        select screenshot_setting.*
+        from behind_manage.screenshot_setting
+        where screenshot_setting.game_id = #{gameId}
+    </select>
+
+    <select id="getUpdatedGatherSetting" resultType="com.yunting.sum.entity.setting.UserGatheringSetting">
+        select user_gathering_setting.*
+        from behind_manage.user_gathering_setting
+                 left join behind_manage.game_setting gs on user_gathering_setting.user_gathering_id = gs.user_gathering_setting_id
+        where gs.package_name = #{packageName}
+    </select>
+
+    <select id="getUpdatedRewardSetting" resultType="com.yunting.sum.entity.setting.UserRewardSetting">
+        select user_reward_setting.*
+        from behind_manage.user_reward_setting
+                 left join behind_manage.game_setting gs on user_reward_setting.user_reward_setting_id = gs.user_reward_setting_id
+        where gs.package_name = #{packageName}
+    </select>
+
+    <select id="getUpdatedWithdrawSetting" resultType="com.yunting.sum.entity.setting.WithdrawSetting">
+        select withdraw_setting.*
+        from behind_manage.withdraw_setting
+        where package_name = #{packageName}
+    </select>
+
+    <select id="getUpdatedRiskSetting" resultType="com.yunting.common.Dto.RiskControlSetting">
+        select *
+        from behind_manage.risk_control_setting
+        where package_name = #{packageName}
+    </select>
+
+    <select id="getUpdatedOtherSetting" resultType="com.yunting.sum.entity.setting.GameSetting">
+        select retain_way,
+               reset_max_time,
+               active_standard,
+               is_anchor_weekend,
+               is_enable_prohibt,
+               prohibt_see_adv_start,
+               prohibt_see_adv_end,
+               device_System_Condition,
+               adv_watch_interval
+        from behind_manage.game_setting
+        where package_name = #{packageName}
+    </select>
+
+    <select id="getNewestNotification" resultType="java.lang.String">
+        select notice_msg
+        from behind_manage.game_setting
+        where package_name = #{packageName}
+    </select>
+
+</mapper>

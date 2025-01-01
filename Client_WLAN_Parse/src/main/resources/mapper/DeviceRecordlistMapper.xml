@@ -14,7 +14,7 @@
     </resultMap>
 
     <insert id="insertDeviceRecord">
-        INSERT INTO yunting_app_test.device_recordlist(player_id, wx_nickname, oaid, android_id, device_type,
+        INSERT INTO ${dbName}.device_recordlist(player_id, wx_nickname, oaid, android_id, device_type,
                                                        device_detail, firstLoginTime, identifiction)
         VALUES (#{playerId}, #{wxNickname}, #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail}, #{firstlogintime},
                 #{identifiction})
@@ -31,15 +31,15 @@
                device_detail,
                firstLoginTime,
                identifiction
-        FROM yunting_app_test.device_recordlist
-                 left join yunting_app_test.player p on device_recordlist.player_id = p.player_id
+        FROM ${dbName}.device_recordlist
+                 left join ${dbName}.player p on device_recordlist.player_id = p.player_id
         WHERE device_recordlist.player_id = #{playerId}
         order by device_id desc
         limit 1
     </select>
 
     <insert id="insertAdEncourage">
-        insert into yunting_app_test.ad_encourage (adv_encourage_id, adv_type_id, app_id,player_id, wx_nick_name,
+        insert into ${dbName}.ad_encourage (adv_encourage_id, adv_type_id, app_id,player_id, wx_nick_name,
         ip,is_old_player,address,is_close_encourage_adv,
         is_see_end,is_client_call,is_server_call,is_display_ad)
         values (#{advEncourageId}, #{advTypeId}, #{appID},#{playerId}, #{wxNickName}
@@ -51,7 +51,7 @@
     </insert>
 
     <insert id="insertExceptionRecord">
-        INSERT INTO yunting_app_test.exception_recordlsit(player_id, wx_nick_name, game_id, oaid, android_id,
+        INSERT INTO ${dbName}.exception_recordlsit(player_id, wx_nick_name, game_id, oaid, android_id,
                                                           device_type, device_detail,
                                                           except_type, except_info, exception_time)
         VALUES (#{playerId}, #{wxNickName}, #{gameId},

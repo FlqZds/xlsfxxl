@@ -120,11 +120,11 @@ public class AdvController {
     })
     @ApiImplicitParams(
             {
+                    @ApiImplicitParam(name = "isRemedy", value = "是否补发(0是补发,1是正常关闭)", required = true),
                     @ApiImplicitParam(name = "exceptionMsg", value = "违规内容", required = true),
                     @ApiImplicitParam(name = "clickCount", value = "点击次数", required = true),
                     @ApiImplicitParam(name = "packageName", value = "包名", required = true),
-                    @ApiImplicitParam(name = "advID", value = "广告ID", required = true)
-            })
+                    @ApiImplicitParam(name = "advID", value = "广告ID", required = true)})
     @PostMapping("/notice")
     public ResultMessage notifyNoClick(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @ApiIgnore @RequestBody HashMap<String, String> requestMap) {
 

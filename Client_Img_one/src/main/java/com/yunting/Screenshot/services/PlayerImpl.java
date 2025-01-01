@@ -17,6 +17,7 @@ import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,8 @@ public class PlayerImpl implements PlayerService {
     @Resource(name = "ApplicationMapper")
     private ApplicationMapper applicationMapper;
 
+    @Resource(name = "ST")
+    private ST st;
 
     @Resource(name = "MinIoUtils")
     MinIoUtils minIoUtils;
@@ -68,11 +71,11 @@ public class PlayerImpl implements PlayerService {
     @Transactional(rollbackFor = Exception.class)
     public ResultMessage uploadImgByPlayerAndAddOrder(PlayerDTO playerDTO, String androidID, List<MultipartFile> files) throws IOException {
         Long playerId = playerDTO.getPlayerId();
-        long gameid = Long.parseLong(ST.GameId());
-        String nickname = playerMapper.selectWxNicknameByPlayerId(playerId, ST.GameId());
-        BigDecimal withdrawPercentage = new BigDecimal(ST.Withdraw_Percentage());
+        long gameid = Long.parseLong(st.GameId());
+        String nickname = playerMapper.selectWxNicknameByPlayerId(playerId, st.GameId());
+        BigDecimal withdrawPercentage = new BigDecimal(st.Withdraw_Percentage());
 
-        Imgorder imgorder = null;
+        Imgorder imgorder = Imgorder.builder().build();
         for (MultipartFile file : files) {
 
             String originName = file.getOriginalFilename();                        //传过来的图片名
@@ -80,6 +83,10 @@ public class PlayerImpl implements PlayerService {
             String originHash = minIoUtils.calculateSHA256(file.getInputStream()); //传过来的图片的hash
 
             ImageMapping imgInfo = imgorderMapper.selectImgByImginfo(originHash, originName);
+            if (imgInfo == null) {
+                log.warn("未知的图片,图片不存在,请检查", new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE));
+                throw new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE);
+            }
 
             if (imgInfo.getImgType().equals("t")) {
                 imgInfo = imgorderMapper.selectImgDetailByImginfo(originHash, originName, imgInfo.getImgType());
@@ -91,22 +98,21 @@ public class PlayerImpl implements PlayerService {
                 LocalDateTime payTime = imgInfo.getImgPayTime();
 
                 //创建一笔交易订单
-                imgorder = Imgorder.builder()
-                        .orderPlayerId(playerDTO.getPlayerId())
-                        .androidID(androidID)
-                        .wxname(nickname)
-                        .withdrawPercentage(withdrawPercentage)
-                        .appid(gameid)
+                imgorder.setOrderPlayerId(playerDTO.getPlayerId());
+                imgorder.setAndroidID(androidID);
 
-                        .orderMoney(orderMoney)//充值金额
-                        .orderBusiness(business)//商户名
-                        .orderTransId(trans)//交易单号
-                        .orderBusinessId(businessId)//商户单号
-                        .orderPayTime(payTime)//充值时间
-                        .build();
-                imgorderMapper.insertOneOrder(imgorder);
+                imgorder.setWithdrawPercentage(withdrawPercentage);
+                imgorder.setWxname(nickname);
+                imgorder.setAppid(gameid);
+
+                imgorder.setOrderBusiness(business);
+                imgorder.setOrderBusinessId(businessId);
+                imgorder.setOrderMoney(orderMoney);
+                imgorder.setOrderTransId(trans);
+                imgorder.setOrderPayTime(payTime);
                 break;
             }
+
         }
 
         if (imgorder == null) {
@@ -128,26 +134,26 @@ public class PlayerImpl implements PlayerService {
 
             ImageMapping imgInfo = imgorderMapper.selectImgByImginfo(originHash, originName);
 
-            if (imgInfo == null) {
-                log.error("图片不存在|图片hash不匹配|图片未找到,文件名称:" + originName, new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE));
-                throw new AppException(ResponseEnum.IMG_NOT_MATCH_RESPONSE);
+            if (imgInfo.getImgType().equals("o")) { //来源截图
+                imgorder.setAdvEncourageId(imgInfo.getAdvEncourageId());
             }
 
             log.info("图片的上传时间:" + imgInfo.getUploadTime());
-//            long hours = Duration.between(imgInfo.getUploadTime(), LocalDateTime.now()).toHours();
-//            if (hours >= 24) {
-//                log.error("订单超时，上传图片失败", new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE));
-//                throw new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE);
-//            }
 
-            Long orderId = imgorder.getOrderId();
+            long hours = Duration.between(imgInfo.getUploadTime(), LocalDateTime.now()).toHours();
+            if (hours >= 24) {
+                log.error("订单超时，上传图片失败", new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE));
+                throw new AppException(ResponseEnum.IMG_TRANS_OVERTIME_UPLOAD_RESPONSE);
+            }
 
+            String orderId = (String) imgInfo.getDirectory().subSequence(0, (imgInfo.getDirectory().length() - 10));
+            imgorder.setOrderId(orderId);
             Long imgID = imgInfo.getImgId(); //要上传的图片的id
 
             String obj = imgInfo.getDirectory() + "/" + originName + IMG_TYPE; //拼接的路径 | 文件上传的路径
 
             try {
-                String url = minIoUtils.uploadFile(files.get(i), ST.GameId(), obj);
+                String url = minIoUtils.uploadFile(files.get(i), st.GameId(), obj);
 
                 imageMappingMapper.updateByPrimaryKey(imgID, url, orderId);  //指定该图片属于哪笔订单,以及,绑定访问的url
             } catch (IOException e) {
@@ -157,7 +163,8 @@ public class PlayerImpl implements PlayerService {
 
         }
 
-
+        //文件都上传成功之后才创建该笔订单
+        imgorderMapper.insertOneOrder(imgorder);
         log.info("文件上传成功");
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
@@ -177,6 +184,7 @@ public class PlayerImpl implements PlayerService {
         String imgTrans = imgContainer.getImgTrans();
         String imgBusinessId = imgContainer.getImgBusinessId();
         LocalDateTime imgPayTime = imgContainer.getImgPayTime();
+        String advEncourageId = imgContainer.getAdvEncourageId();
 
         Long gameId = playerDTO.getGameId();
         LocalDateTime now = LocalDateTime.now();
@@ -235,6 +243,7 @@ public class PlayerImpl implements PlayerService {
                             .imgType(imgType)
                             .playerId(playerDTO.getPlayerId())
                             .uploadTime(now)
+                            .advEncourageId(advEncourageId)
                             .build();
                     imageMappingMapper.insert(imageMapping);
                 }

@@ -24,7 +24,7 @@ import java.util.StringJoiner;
 import static com.yunting.common.results.ResponseEnum.*;
 
 @Slf4j
-//@RestControllerAdvice
+@RestControllerAdvice
 public class ControllerException {
 
 

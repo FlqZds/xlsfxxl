@@ -33,7 +33,7 @@
     </resultMap>
 
     <update id="changeAdEncourageRecordClose">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set click_times            = #{clickCount},
             is_close_encourage_adv = '0',
             exception_operate= #{exceptionMsg}
@@ -41,7 +41,7 @@
     </update>
 
     <update id="changeAdEncourageRecordEnoughReward">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set client_callback_time=#{clientTime},
             trans_id            = #{transId},
             is_client_call='0'
@@ -49,19 +49,19 @@
     </update>
 
     <update id="changeAdEncourageRecordIsOk">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set is_see_end = #{changeData}
         where adv_encourage_id = #{targetAdv}
     </update>
 
     <update id="changeAdEncourageRecordGetWard">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set ask_adv_put_time = #{askPutTimeDate}
         where adv_encourage_id = #{targetAdv}
     </update>
 
     <update id="loadAndChange">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set request_time              = #{load.requestTime},
             encourage_from            = #{load.encourageFrom},
             get_reward_click_time_date=#{load.getRewardClickTimeDate}
@@ -69,7 +69,7 @@
     </update>
 
     <update id="watchAndChange">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set code_bit_id=#{watch.codeBitId},
             request_id=#{watch.requestId},
             encourage_ecpm=#{watch.advEcpm},
@@ -79,7 +79,7 @@
     </update>
 
     <update id="changeAdEncourageRecordServcer">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set trans_id=#{transId},
             server_callback_time=#{serverTime}
                 ,
@@ -88,59 +88,41 @@
     </update>
 
     <update id="changeAdEncourageRecordClickTime">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set first_click_time=#{clickTime},
             click_times=#{clickCount}
         where adv_encourage_id = #{targetAdv}
     </update>
 
     <update id="changeAdEncourageRecordReward">
-        update yunting_app_test.ad_encourage
+        update ${dbName}.ad_encourage
         set encourage_reward=#{encourageReward}
         where adv_encourage_id = #{targetAdv}
     </update>
 
     <update id="compensateAdEncourageClickCount">
-        update yunting_app_test.ad_encourage
-        set click_times=#{clickCount}
+        update ${dbName}.ad_encourage
+        set click_times=#{clickCount},
+            exception_operate= #{exceptionMsg}
         where adv_encourage_id = #{targetAdv}
     </update>
 
 
     <select id="selectByPrimaryKey" resultType="com.yunting.adv.entity.Adv.AdEncourage">
-        select adv_encourage_id,
-               adv_type_id,
-               player_id,
-               wx_nick_name,
-               request_id,
-               trans_id,
-               code_bit_id,
-               server_callback_time,
+        select player_id,
                is_server_call,
                is_client_call,
-               client_callback_time,
-               request_time,
-               encourage_from,
-               encourage_reward,
-               encourage_ecpm,
-               first_click_time,
-               click_times,
-               get_reward_click_time_date,
-               inet_ntoa(ip) as ip,
-               is_close_encourage_adv,
                is_see_end,
-               is_display_ad,
-               is_old_player,
-               err_info,
-               address,
-               exception_operate
-        from yunting_app_test.ad_encourage
+               is_close_encourage_adv,
+               encourage_ecpm,
+               encourage_from
+        from ${dbName}.ad_encourage
         where adv_encourage_id = #{advEncourageId}
     </select>
 
     <select id="isCloseAdEncourage" resultType="string">
         select is_close_encourage_adv
-        from yunting_app_test.ad_encourage
+        from ${dbName}.ad_encourage
         where adv_encourage_id = #{targetAdv}
     </select>
 

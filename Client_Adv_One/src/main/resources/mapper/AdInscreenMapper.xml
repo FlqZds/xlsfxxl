@@ -18,7 +18,7 @@
     </resultMap>
 
     <insert id="insertAdInscreen">
-        insert into ad_inscreen (ad_inScreen_id, adv_type_id, player_id, app_id, code_bit_id,
+        insert into ${dbName}.${dbName}.ad_inscreen (ad_inScreen_id, adv_type_id, player_id, app_id, code_bit_id,
         request_id, adv_ecpm,clicks,ip, request_time,
         wx_nick_name,errinfo)
         values (#{adInscreenId}, #{advTypeId}, #{playerId}, #{appId}, #{codeBitId}, #{requestId}, #{advEcpm},
@@ -31,12 +31,14 @@
 
 
     <update id="changeAdInScreenRecord">
-        update ad_inscreen set  clicks= #{changeData.clicks}
+        update ${dbName}.ad_inscreen
+        set clicks= #{changeData.clicks}
         where ad_inScreen_id = #{targetAdv}
     </update>
 
     <update id="inScreenFirstClickTime">
-        update ad_inscreen set first_click_time = #{firstClickTime}
+        update ${dbName}.ad_inscreen
+        set first_click_time = #{firstClickTime}
         where ad_inScreen_id = #{advId}
     </update>
 
@@ -54,8 +56,9 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_inscreen
-        where adv_type_id = #{advType} order by ad_inScreen_id desc
+        from ${dbName}.ad_inscreen
+        where adv_type_id = #{advType}
+        order by ad_inScreen_id desc
     </select>
 
     <select id="getAdInscreenRecordsByCodeId" resultType="com.yunting.adv.entity.Adv.AdInscreen">
@@ -72,7 +75,7 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_inscreen
+        from ${dbName}.ad_inscreen
         where code_bit_id = #{codeId}
     </select>
 </mapper>

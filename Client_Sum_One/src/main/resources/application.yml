@@ -42,6 +42,8 @@ mybatis:
   configuration:
     # 开启驼峰映射配置
     map-underscore-to-camel-case: true
+  configuration-properties:
+    dbName: yunting_app_test
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   # 打印sql语句
 
 

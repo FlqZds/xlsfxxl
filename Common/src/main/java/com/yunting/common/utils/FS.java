@@ -46,6 +46,11 @@ public final class FS {
     public static final String heartBeatRespMsg = "pong";
     public static final String GATH_DETECTED_MSG = ":IS Judged";
 
+    public static final String ADN_csj = "穿山甲";
+    public static final String ADN_ks = "快手";
+    public static final String ADN_bd = "百度";
+    public static final String ADN_ylh = "优量汇";
+
 
     //服务端检测连接状态的时间间隔，单位为minus
     public static final int serverClearSessionInterval = 2;

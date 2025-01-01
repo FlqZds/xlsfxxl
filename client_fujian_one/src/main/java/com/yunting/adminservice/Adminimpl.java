@@ -9,7 +9,6 @@ import com.yunting.client.DTO.PlayerInfoDto;
 import com.yunting.client.DTO.RetainActive;
 import com.yunting.client.DTO.VO.RetainActiveVO;
 import com.yunting.client.DTO.incondition;
-import com.yunting.client.common.utils.RedisUtil_session;
 import com.yunting.client.common.utils.sessionUtils;
 import com.yunting.client.entity.*;
 import com.yunting.client.entity.setting.GameSetting;
@@ -25,6 +24,7 @@ import com.yunting.client.mapper.OperationRecordlistMapper;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.RedisUtil_session;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.forest.ForestService;
 import lombok.extern.slf4j.Slf4j;
@@ -58,22 +58,8 @@ public class Adminimpl implements AdminService {
     @Resource(name = "DeviceRecordlistMapper")
     private DeviceRecordlistMapper deviceRecordlistMapper;
 
-    @Resource(name = "AdRowstyleMapper")
-    private AdRowstyleMapper adRowstyleMapper;
-    @Resource(name = "AdInscreenMapper")
-    private AdInscreenMapper adInscreenMapper;
-    @Resource(name = "AdOpenscreenMapper")
-    private AdOpenscreenMapper adOpenscreenMapper;
-    @Resource(name = "AdStreamMapper")
-    private AdStreamMapper adStreamMapper;
-    @Resource(name = "AdEncourageMapper")
-    private AdEncourageMapper adEncourageMapper;
-
     @Resource(name = "DayBehaveRecordlistMapper")
     private DayBehaveRecordlistMapper dayBehaveMapper;
-
-    @Resource(name = "WithdrawRecordMapper")
-    private WithdrawRecordMapper withdrawRecordMapper;
 
     @Resource(name = "ExceptionRecordlsitMapper")
     private ExceptionRecordlsitMapper exceptionRecordMapper;
@@ -257,7 +243,7 @@ public class Adminimpl implements AdminService {
             playerInfoDto.setPayLoginId(player.getPayLoginId());
             playerInfoDto.setWxNickname(player.getWxNickname());
             playerInfoDto.setRealName(player.getRealName());
-            playerInfoDto.setProxyId(player.getProxyId());
+            playerInfoDto.setProxyName(player.getProxyName());
 
 //            钱
             playerInfoDto.setRedHad(player.getInRed());

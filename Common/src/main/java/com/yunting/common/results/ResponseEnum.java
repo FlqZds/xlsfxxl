@@ -8,7 +8,7 @@ public enum ResponseEnum {
     // 系统的·正常和异常情况
     SUCCESS("200", "请求成功-SUCCESSFUL"),
     NOTICE_MSG_MODIFYED("10086", ""),
-    SYSTEM_ERROR("500", "未知错误，联系管理员"),
+    SYSTEM_ERROR("500", "未知错误"),
     ARITHMETIC_EXCEPTION("5001", "算术异常"),
     MISSING_REQUEST_PARAMETER_EXCEPTION("5003", "请求参数丢失"),
 
@@ -58,8 +58,6 @@ public enum ResponseEnum {
     ADV_ENCOURAGE_SIGN_ERROR("80502", "激励广告回传签名不匹配,请使用正确的签名"),
     TOKEN_INVALIDATE("80545", "无效Token ,请使用正确的Token"),
     TOKEN_EXPIRE("80501", "Token过期 ,请重新登录"),
-    COMPRESS_JWT_FAILED("80504", "压缩JWT失败"),
-    DECOMPRESS_JWT_FAILED("80505", "解压JWT失败"),
     USER_NO_LOGIN("80401", "用户未登录,请先登录"),
     REGISTER_FAILED("80503", "用户注册失败"),
     BAN_USER_OUT("80504", "您的账号已被封禁，请联系管理员"),
@@ -80,7 +78,10 @@ public enum ResponseEnum {
 
 
     //    添加 删除 ,修改,查找数据
-    SELECT_DATA_FAILED("66030", "查询目标数据失败"),
+    BATCH_SUMMARY_DATA_FAILED("66030", "批量添加统计数据出错,请联系管理员"),
+    RETAIN_BATCH_INLINE_FAILED("66031", "批量添加在线用户数据出错,请联系管理员"),
+
+
     PLAYER_NO_SEE_ENCOURAGE("67667", "用户未观看激励广告,请先去观看激励广告再来发起提现"),
     WITHDRAW_PRE_WATCH("88066", "提现广告已观看,请立马前往提现"),
     PLAYER_NO_REAL_IDENTIFY("55002", "用户未完成实名认证,请优先去实名认证"),
@@ -156,6 +157,7 @@ public enum ResponseEnum {
     SAVE_AD_INSCREEN_FAILED("55054", "添加插屏广告失败"),
     SAVE_AD_ROWSTYLE_FAILED("55055", "添加横幅广告失败"),
 
+    SAVE_AD_CLICK_REPEAT("55097", "已记录点击量的广告已提交点击量"),
 
     UPDATE_DATA_ERROR("55050", "修改目标数据失败"),
     //    激励广告 全步骤
@@ -207,7 +209,6 @@ public enum ResponseEnum {
     SEND_MESSAGE_FAILED("898891", "Websocket消息发送失败");
 
 
-    public String codeqwe;
     private String code;
     private String message;
 

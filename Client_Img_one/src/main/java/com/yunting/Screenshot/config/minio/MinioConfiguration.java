@@ -1,17 +1,18 @@
 package com.yunting.Screenshot.config.minio;
 
 import io.minio.MinioClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootConfiguration
 public class MinioConfiguration {
-
-    private final String END_POINT = "http://192.168.99.11:9000";
-
-    private final String USERNAME = "admin";
-
-    private final String PASSWORD = "password";
+    @Value("${MINIO_ROOT_END_POINT}")
+    private String END_POINT;
+    @Value("${MINIO_ROOT_USER}")
+    private String USERNAME;
+    @Value("${MINIO_ROOT_PASSWORD}")
+    private String PASSWORD;
 
     @Bean("minioClient")
     public MinioClient minioClient() {

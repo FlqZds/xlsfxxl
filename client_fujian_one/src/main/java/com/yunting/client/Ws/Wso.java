@@ -2,14 +2,13 @@ package com.yunting.client.Ws;
 
 import com.google.gson.Gson;
 import com.yunting.SpringBeanContext;
-import com.yunting.client.common.config.redis.RedisMessageListener;
 import com.yunting.client.common.config.websocket.MyConfigurator;
-import com.yunting.client.common.utils.RedisUtil_session;
 import com.yunting.client.common.utils.sessionUtils;
 import com.yunting.client.entity.setting.UserGatheringSetting;
 import com.yunting.client.mapper.DayBehaveRecordlistMapper;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.RedisUtil_session;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,6 @@ public class Wso {
     private static RedisUtil_session rus;
     private static sessionUtils gatheringUtil;
     public static DayBehaveRecordlistMapper dayBehaveMapper;
-    public static RedisMessageListener listener;
     private static Gson gson = new Gson();
 
     public static UserGatheringSetting gatheringSetting;//聚集设置变更的接收者
@@ -44,9 +42,8 @@ public class Wso {
     public static AtomicInteger castNum;//公告展示次数
     public static AtomicInteger setNum;//设置检测次数
 
-    public static volatile ConcurrentHashMap<String, Session> SESSION_POOL = new ConcurrentHashMap();
+    public static volatile ConcurrentHashMap<String, Session> SESSION_POOL = new ConcurrentHashMap<String, Session>();
 
-    //    @Autowired
     public Wso() {
 //        //        自己从上下文中获取bean
 
@@ -54,7 +51,6 @@ public class Wso {
         Wso.gatheringUtil = SpringBeanContext.getContext().getBean(sessionUtils.class);
         Wso.rus = SpringBeanContext.getContext().getBean(RedisUtil_session.class);
         Wso.dayBehaveMapper = SpringBeanContext.getContext().getBean(DayBehaveRecordlistMapper.class);
-        Wso.listener = SpringBeanContext.getContext().getBean(RedisMessageListener.class);
 
 
         gatheringSetting = new UserGatheringSetting();

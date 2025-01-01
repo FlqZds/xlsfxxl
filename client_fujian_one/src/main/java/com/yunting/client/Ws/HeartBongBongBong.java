@@ -2,8 +2,8 @@
 package com.yunting.client.Ws;
 
 
-import com.yunting.client.common.utils.RedisUtil_session;
 import com.yunting.client.common.utils.sessionUtils;
+import com.yunting.common.utils.RedisUtil_session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

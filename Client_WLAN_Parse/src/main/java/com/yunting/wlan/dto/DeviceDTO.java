@@ -28,5 +28,6 @@ public class DeviceDTO {
     @ApiModelProperty(value = "wifi列表", dataType = "List<String>")
     private String Wifi;
 
+    private String encId; //客户端上次请求激励广告未成功的id 没有就是null
 
 }

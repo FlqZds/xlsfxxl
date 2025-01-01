@@ -10,7 +10,6 @@
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="wx_headimgurl" jdbcType="VARCHAR" property="wxHeadimgurl"/>
         <result column="player_creat_time" jdbcType="TIMESTAMP" property="playerCreatTime"/>
-        <result column="proxy_id" jdbcType="BIGINT" property="proxyId"/>
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="mobile_id" jdbcType="BIGINT" property="mobileId"/>
         <result column="in_red" jdbcType="DECIMAL" property="inRed"/>
@@ -18,11 +17,10 @@
     </resultMap>
 
     <update id="updatePlayerInRed">
-        update yunting_app_test.player
+        update ${dbName}.player
         set in_red = in_red + #{inred}
         where player_id = #{playerId}
     </update>
-
 
 
     <select id="selectPlayerByPlayerId" resultType="com.yunting.adv.entity.Player">
@@ -34,12 +32,12 @@
                real_name,
                wx_headimgurl,
                player_creat_time,
-               proxy_id,
+               proxy_name,
                status,
                mobile_id,
                in_red,
                special
-        from yunting_app_test.player
+        from ${dbName}.player
         where player_id = #{playerId}
     </select>
 

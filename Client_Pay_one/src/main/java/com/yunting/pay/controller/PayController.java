@@ -30,21 +30,6 @@ public class PayController {
             @ApiImplicitParam(name = "red", value = "提现金额", required = true)
 
     })
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "提现申请成功"),
-            @ApiResponse(code = 67667, message = "用户未观看激励广告,请先去激励广告再来发起提现"),
-            @ApiResponse(code = 66077, message = "免审核订单提现成功"),
-            @ApiResponse(code = 66088, message = "订单已提交审核,请稍候"),
-            @ApiResponse(code = 66666, message = "支付宝转账成功!!!"),
-            @ApiResponse(code = 55000, message = "提现金额太小了"),
-            @ApiResponse(code = 55001, message = "玩家已绑定支付宝,请先解绑"),
-            @ApiResponse(code = 66006, message = "支付宝客户端初始化失败"),
-            @ApiResponse(code = 55005, message = "支付宝转账接口调用失败,请联系管理员查看详情"),
-            @ApiResponse(code = 55006, message = "您所提交的支付宝账号信息与上次有所不同"),
-            @ApiResponse(code = 55090, message = "玩家提现次数已达上限,请明天再来吧"),
-            @ApiResponse(code = 55001, message = "玩家已绑定支付宝,请先解绑"),
-            @ApiResponse(code = 55888, message = "提现前请先去看一个广告")
-    })
     @PostMapping("/cl/apy")
     public ResultMessage applyWithdraw(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @ApiIgnore @RequestBody String info) {
 

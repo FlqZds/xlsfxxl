@@ -10,7 +10,6 @@
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="wx_headimgurl" jdbcType="VARCHAR" property="wxHeadimgurl"/>
         <result column="player_creat_time" jdbcType="TIMESTAMP" property="playerCreatTime"/>
-        <result column="proxy_id" jdbcType="BIGINT" property="proxyId"/>
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="mobile_id" jdbcType="BIGINT" property="mobileId"/>
         <result column="in_red" jdbcType="DECIMAL" property="inRed"/>
@@ -19,7 +18,7 @@
 
     <select id="selectMobileIDByPlayerId" resultType="java.lang.Long">
         select mobile_id
-        from yunting_app_test.player
+        from ${dbName}.player
         where player_id = #{playerId}
         limit 1
     </select>
@@ -33,32 +32,32 @@
                real_name,
                wx_headimgurl,
                player_creat_time,
-               proxy_id,
+               proxy_name,
                status,
                mobile_id,
                in_red,
                special
-        from yunting_app_test.player
+        from ${dbName}.player
         where player_id = #{playerId}
     </select>
 
     <update id="updatePlayerMobileID">
-        update player
+        update ${dbName}.player
         set mobile_id = #{mobileID}
         where player_id = #{playerId}
     </update>
 
     <select id="selectPlayerPowerAndStatus" resultType="com.yunting.wlan.entity.Player">
         select status, special
-        from yunting_app_test.player
+        from ${dbName}.player
         where player_id = #{playerId}
           and game_id = #{gameId}
     </select>
 
     <select id="selectMobileNameByPlayerId" resultType="java.lang.String">
         select mobile_detail.device_name
-        from yunting_app_test.mobile_detail
-        where mobile_id = (select mobile_id from yunting_app_test.player where player_id = #{playerId})
+        from ${dbName}.mobile_detail
+        where mobile_id = (select mobile_id from ${dbName}.player where player_id = #{playerId})
     </select>
 
 

@@ -4,18 +4,17 @@ import com.alipay.api.domain.Participant;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.RedisUtil_Record;
+import com.yunting.common.utils.RedisUtils_Wlan;
 import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.pay.entity.DayBehaveRecordlist;
 import com.yunting.pay.entity.Player;
 import com.yunting.pay.entity.WithdrawRecord;
-import com.yunting.pay.entity.WithdrawSetting;
 import com.yunting.pay.mapper.DayBehaveRecordlistMapper;
 import com.yunting.pay.mapper.PlayerMapper;
 import com.yunting.pay.mapper.WithdrawRecordMapper;
 import com.yunting.pay.utils.AliPayUtil;
-import com.yunting.pay.utils.RedisUtil_Record;
-import com.yunting.pay.utils.RedisUtils_Wlan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +35,7 @@ public class PayImpl implements PayServices {
 
     @Resource(name = "RedisUtil_Record")
     private RedisUtil_Record rur;
+
     @Resource(name = "RedisUtils")
     private RedisUtils_Wlan rs;
 
@@ -47,8 +47,12 @@ public class PayImpl implements PayServices {
 
     @Resource(name = "DayBehaveRecordlistMapper")
     private DayBehaveRecordlistMapper dayBehaveMapper;
+
     @Resource(name = "AliPayUtil")
     AliPayUtil aliPayUtil;
+
+    @Resource(name = "ST")
+    private ST st;
 
 
     /***
@@ -62,13 +66,13 @@ public class PayImpl implements PayServices {
     @Transactional(rollbackFor = Exception.class)
     public ResultMessage applyWithdraw(Long playerId, String payId, String realName) {
         ResultMessage resultMessage = new ResultMessage(ResponseEnum.SUCCESS, null);
-
-        String is_see_enc = rur.get("withdraw" + playerId) + "";
-        int see_count = Integer.parseInt(is_see_enc);
+        int see_count;
+        String is_see_enc = rur.get(playerId + "withdraw") + "";
+        see_count = Integer.parseInt(is_see_enc);
         if (see_count != 88) {
             log.info("玩家提现之前要先去看一个激励广告", new AppException(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE));
-            rur.setEx("withdraw" + playerId, "0", 5, TimeUnit.SECONDS);
-            throw new AppException(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE);
+            rur.setEx("withdraw" + playerId, "0", 5, TimeUnit.MINUTES);
+            return new ResultMessage(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE, null);
         }
 
         BigDecimal playerRed_Need_reduce = BigDecimal.ZERO;
@@ -102,9 +106,9 @@ public class PayImpl implements PayServices {
         DayBehaveRecordlist dayRecord = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId);
         BigDecimal dayCash = dayRecord.getDayCash(); //用户当日已提现总金额
 
-        BigDecimal withdrawPercentage = new BigDecimal(ST.Withdraw_Percentage());//提现比例
-        Integer withdrawCount = ST.Daily_Withdraw_Count();//获取该用户的 当日提现次数上限
-        BigDecimal withdrawNojudgeMoney = new BigDecimal(ST.Withdraw_Nojudge_Money()); //设置的免审核金额
+        BigDecimal withdrawPercentage = new BigDecimal(st.Withdraw_Percentage());//提现比例
+        Integer withdrawCount = st.Daily_Withdraw_Count();//获取该用户的 当日提现次数上限
+        BigDecimal withdrawNojudgeMoney = new BigDecimal(st.Withdraw_Nojudge_Money()); //设置的免审核金额
 
         String playerTodayCount = "";
         if (rs.hExists("withdrawCount", playerId + "") == true) {
@@ -184,7 +188,7 @@ public class PayImpl implements PayServices {
 
         WithdrawRecord withdrawRecord = WithdrawRecord.builder()
                 .withdrawMoney(transAmount).returnMoney(rebackVal)
-                .playerId(playerId).packageName(ST.PackageName())
+                .playerId(playerId).packageName(st.PackageName())
                 .withdrawPercentageNow(String.valueOf(withdrawPercentage))
                 .withdrawTime(LocalDateTime.now()).wxNickname(player.getWxNickname()).build();
 
@@ -229,7 +233,7 @@ public class PayImpl implements PayServices {
             }
             withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
 
-            rur.delete("withdraw" + playerId);
+            rur.delete(playerId + "withdraw");
             playerMapper.updatePlayerInRed(playerId, playerRed_Need_reduce.multiply(withdrawPercentage).negate());  //玩家余额减少
             rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
             BigDecimal redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());  //提现后余额

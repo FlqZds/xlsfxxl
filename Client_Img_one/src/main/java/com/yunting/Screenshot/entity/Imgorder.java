@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Imgorder {
-    private Long orderId;
+    private String orderId;
 
     private Long orderPlayerId;
 
@@ -42,4 +42,7 @@ public class Imgorder {
     private String orderBusinessId;
     @ApiModelProperty("充值时间")
     private LocalDateTime orderPayTime;
+
+    @ApiModelProperty("激励广告id")
+    private String advEncourageId;
 }

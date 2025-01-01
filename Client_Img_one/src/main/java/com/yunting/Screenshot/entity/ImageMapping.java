@@ -42,4 +42,7 @@ public class ImageMapping {
     private String imgBusinessId;
     @ApiModelProperty("充值时间")
     private LocalDateTime imgPayTime;
+    @ApiModelProperty("激励广告id")
+    private String advEncourageId;
+
 }

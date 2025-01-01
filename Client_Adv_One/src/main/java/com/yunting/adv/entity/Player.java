@@ -34,7 +34,7 @@ public class Player {
 
     private String wxHeadimgurl;
 
-    private Long proxyId;
+    private String proxyName;
 
     private BigDecimal inRed;
 

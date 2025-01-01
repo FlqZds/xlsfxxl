@@ -29,6 +29,8 @@ public class ImgContainer {
     @ApiModelProperty("充值时间")
     private LocalDateTime imgPayTime;
 
+    @ApiModelProperty("激励广告id")
+    private String advEncourageId;
     @ApiModelProperty("图片信息")
     List<ImgVo> imgVos;
 }

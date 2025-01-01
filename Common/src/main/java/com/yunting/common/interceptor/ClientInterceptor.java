@@ -5,8 +5,6 @@ import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.utils.JWTutil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -43,7 +41,7 @@ public class ClientInterceptor implements HandlerInterceptor {
     @Transactional(rollbackFor = Exception.class)
     public PlayerDTO validateToken(String jwt) {
         //没有携带token就是没有登录
-        if (StringUtils.isBlank(jwt)) {
+        if (jwt == null || jwt == "") {
             log.error("token为空导致的请求失败");
             throw new AppException(ResponseEnum.USER_NO_LOGIN);
         }

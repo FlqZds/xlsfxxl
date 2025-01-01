@@ -18,7 +18,8 @@
     </resultMap>
 
     <insert id="insertAdStream">
-        insert into ad_stream (ad_stream_id, adv_type_id, player_id, app_id, code_bit_id, request_id, adv_ecpm,
+        insert into ${dbName}.ad_stream (ad_stream_id, adv_type_id, player_id, app_id, code_bit_id, request_id,
+        adv_ecpm,
         clicks, ip, request_time, wx_nick_name,
         errinfo)
         values (#{adStreamId}, #{advTypeId}, #{playerId}, #{appId}, #{codeBitId}, #{requestId}, #{advEcpm},
@@ -30,13 +31,13 @@
     </insert>
 
     <update id="changeAdStreamRecord">
-        update ad_stream
+        update ${dbName}.ad_stream
         set clicks= #{changeData.clicks}
         where ad_stream_id = #{targetAdv}
     </update>
 
     <update id="streamFirstClickTime">
-        update ad_stream
+        update ${dbName}.ad_stream
         set first_click_time = #{firstClickTime}
         where ad_stream_id = #{advId}
     </update>
@@ -55,8 +56,9 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_stream
-        where adv_type_id = #{advType} order by ad_stream_id desc
+        from ${dbName}.ad_stream
+        where adv_type_id = #{advType}
+        order by ad_stream_id desc
     </select>
 
     <select id="getAdStreamRecordsByCodeId" resultType="com.yunting.adv.entity.Adv.AdStream">
@@ -73,7 +75,7 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_stream
+        from ${dbName}.ad_stream
         where code_bit_id = #{codeId}
     </select>
 

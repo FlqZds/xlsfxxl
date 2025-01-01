@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.pay.mapper.DayBehaveRecordlistMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.pay.entity.DayBehaveRecordlist">
+        <id column="day_id" property="dayId" jdbcType="CHAR"/>
+        <result column="player_id" property="playerId" jdbcType="CHAR"/>
+        <result column="app_id" property="appId" jdbcType="CHAR"/>
+        <result column="todayRed" property="todayred" jdbcType="DECIMAL"/>
+        <result column="totalRed" property="totalred" jdbcType="DECIMAL"/>
+        <result column="today_encourageAdv_count" property="todayEncourageAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_AdvCount" property="serviceCallBackAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_Reward_Count" property="serviceCallBackRewardCount" jdbcType="INTEGER"/>
+        <result column="retain_time" property="retainTime" jdbcType="TIMESTAMP"/>
+        <result column="retain_way" property="retainWay" jdbcType="CHAR"/>
+        <result column="day_cash" property="dayCash" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <insert id="addDayBehaveRecordlist">
+        INSERT INTO ${dbName}.day_behave_recordlist ( player_id, app_id, retain_way, todayRed, totalRed
+                                                           , today_encourageAdv_count, service_CallBack_AdvCount
+                                                           , service_CallBack_Reward_Count, retain_time)
+        VALUES (#{dayRecord.playerId}, #{dayRecord.appId}, #{dayRecord.retainWay}, #{dayRecord.todayred},
+                #{dayRecord.totalred},
+                #{dayRecord.todayEncourageAdvCount}, #{dayRecord.serviceCallBackAdvCount},
+                #{dayRecord.serviceCallBackRewardCount}, #{dayRecord.retainTime})
+    </insert>
+
+    <update id="changeDayBehaveRecordWithdrawCash">
+        UPDATE ${dbName}.day_behave_recordlist
+        SET day_cash = day_cash + #{dayCash}
+        WHERE day_id = #{dayid}
+    </update>
+
+    <select id="getDayLastDayBehaveRecordlistByPlayerId" resultType="com.yunting.pay.entity.DayBehaveRecordlist">
+        SELECT day_id,
+               player_id,
+               app_id,
+               retain_way,
+               todayRed,
+               totalRed,
+               today_encourageAdv_count,
+               service_CallBack_AdvCount,
+               service_CallBack_Reward_Count,
+               retain_time,
+               day_cash
+        FROM ${dbName}.day_behave_recordlist
+        WHERE player_id = #{playerId}
+        group by player_id, date(retain_time)
+        order by date(retain_time) desc
+        limit 1
+    </select>
+
+
+</mapper>

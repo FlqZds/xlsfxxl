@@ -12,10 +12,26 @@
         <module name="Client_Adv_One" />
         <module name="Client_Login" />
         <module name="Client_Sum_One" />
-        <module name="client_fujian_one" />
+        <module name="Client_Ws_one" />
         <module name="Client_Img_one" />
         <module name="Common" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client_fujian_one" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Client_Adv_One" options="-parameters" />
+      <module name="Client_Img_one" options="-parameters" />
+      <module name="Client_Login" options="-parameters" />
+      <module name="Client_Pay_one" options="-parameters" />
+      <module name="Client_Sum_One" options="-parameters" />
+      <module name="Client_WLAN_Parse" options="-parameters" />
+      <module name="Client_Ws_one" options="-parameters" />
+      <module name="Common" options="-parameters" />
+      <module name="client_fujian_one" options="-parameters" />
+    </option>
   </component>
 </project>

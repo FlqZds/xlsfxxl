@@ -43,7 +43,7 @@ public interface AdEncourageMapper {
     String isCloseAdEncourage(@Param("targetAdv") Long adEncourageId);
 
     //      通过激励广告id 修改该条激励广告点击量 (补发点击量)
-    Integer compensateAdEncourageClickCount(@Param("targetAdv") Long adEncourageId, @Param("clickCount") Integer clickCount);
+    Integer compensateAdEncourageClickCount(@Param("targetAdv") Long adEncourageId, @Param("clickCount") Integer clickCount, @Param("exceptionMsg") String exceptionMsg);
 
     //      通过激励广告id 修改该条激励广告记录  (是否颁发奖励) 广告奖励
     Integer changeAdEncourageRecordReward(@Param("targetAdv") Long adEncourageId, @Param("encourageReward") BigDecimal encourageReward);

@@ -1,12 +1,13 @@
 package com.yunting.wlan.service;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.IpUtils;
+import com.yunting.common.utils.RedisUtil_session;
+import com.yunting.common.utils.RedisUtils_Wlan;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.wlan.dto.DeviceDTO;
 import com.yunting.wlan.dto.SignDto;
@@ -17,8 +18,6 @@ import com.yunting.wlan.mapper.LocationMapper;
 import com.yunting.wlan.mapper.MobileDetailMapper;
 import com.yunting.wlan.mapper.PlayerMapper;
 import com.yunting.wlan.utils.ExceptionRecording;
-import com.yunting.wlan.utils.RedisUtil_session;
-import com.yunting.wlan.utils.RedisUtils_Wlan;
 import com.yunting.wlan.utils.sessionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -239,35 +238,47 @@ public class WlanService {
 //新建 激励广告
         String ipAddr = IpUtils.getIpAddr(request);
 
-        Long playerId = playerDTO.getPlayerId();
+        //查询上一条是否为空数据
 
-        Player player = playerMapper.selectPlayerByPlayerId(playerId);
-        String playerIsNewIn = ""; //0是新用户，1是老用户
-        if (player.getPlayerCreatTime().isBefore(LocalDateTime.now()) == true) playerIsNewIn = "0";
-        else playerIsNewIn = "1";
+        if (json.getEncId() == null) {
+            Long playerId = playerDTO.getPlayerId();
 
-        AdEncourage encourage = AdEncourage.builder().ip(ipAddr).playerId(playerId)
-                .appID(Long.valueOf(gameId))
-                .wxNickName(player.getWxNickname()).advTypeId('5').address(location)
-                .isOldPlayer(playerIsNewIn).isCloseEncourageAdv("1").isSeeEnd("1")
-                .isDisplayAd("1").isServerCall('1').isClientCall('1')
-                .build();
+            Player player = playerMapper.selectPlayerByPlayerId(playerId);
+            String playerIsNewIn = ""; //0是新用户，1是老用户
+            if (player.getPlayerCreatTime().isBefore(LocalDateTime.now()) == true) playerIsNewIn = "0";
+            else playerIsNewIn = "1";
 
-        try {
-            deviceRecordlistMapper.insertAdEncourage(encourage);
-        } catch (Exception e) {
-            SpringRollBackUtil.rollBack();
-            log.error("添加激励广告记录失败，请联系管理员");
-            throw new AppException(ResponseEnum.ADD_AD_ENCOURAGE_FAILED);
+            AdEncourage encourage = AdEncourage.builder().ip(ipAddr).playerId(playerId)
+                    .appID(Long.valueOf(gameId))
+                    .wxNickName(player.getWxNickname()).advTypeId('5').address(location)
+                    .isOldPlayer(playerIsNewIn).isCloseEncourageAdv("1").isSeeEnd("1")
+                    .isDisplayAd("1").isServerCall('1').isClientCall('1')
+                    .build();
+
+            try {
+                deviceRecordlistMapper.insertAdEncourage(encourage);
+            } catch (Exception e) {
+                SpringRollBackUtil.rollBack();
+                log.error("添加激励广告记录失败，请联系管理员");
+                throw new AppException(ResponseEnum.ADD_AD_ENCOURAGE_FAILED);
+            }
+
+            Long encourageId = encourage.getAdvEncourageId();
+            String cityInfo = IpUtils.getCityInfo(ipAddr);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("encourageId", encourageId + "");
+            map.put("cityInfo", cityInfo);
+            log.info("添加激励广告记录，激励广告ID:" + encourageId);
+            return new ResultMessage(ResponseEnum.SUCCESS, map);
+        } else {
+            String encourageId = json.getEncId();
+            String cityInfo = IpUtils.getCityInfo(ipAddr);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("encourageId", encourageId);
+            map.put("cityInfo", cityInfo);
+            log.info("激励广告ID为上次未请求成功的ID:" + encourageId);
+            return new ResultMessage(ResponseEnum.SUCCESS, map);
         }
-
-        Long encourageId = encourage.getAdvEncourageId();
-        String cityInfo = IpUtils.getCityInfo(ipAddr);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("encourageId", encourageId + "");
-        map.put("cityInfo", cityInfo);
-        log.info("添加激励广告记录，激励广告ID:" + encourageId);
-        return new ResultMessage(ResponseEnum.SUCCESS, map);
     }
 
 

@@ -12,8 +12,8 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
-            <name qname="@" />
             <name qname="yunting_app_test" />
+            <name qname="behind_manage" />
           </node>
         </introspection-scope>
       </schema-mapping>

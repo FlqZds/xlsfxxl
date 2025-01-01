@@ -17,6 +17,5 @@ public interface AdOpenscreenMapper {
 
     Integer changeAdOpenRecord(@Param("targetAdv") Long targetAdv,@Param("changeData") AdOpenscreen adOpenscreen);
 
-    List<AdOpenscreen> showAdOpenscreenRecordlist(@Param("advType") Character advType);
 
 }

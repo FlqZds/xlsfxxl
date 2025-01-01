@@ -77,8 +77,6 @@ public class WxRequestUtil {
         nickname = parse_wxInfo.get("nickname");   //微信昵称
 
 
-        long proxyID = Long.parseLong(proxyName);
-
         Player player = Player.builder().
                 gameId(applicationId).
                 playerCreatTime(LocalDateTime.now()). //玩家创建时间
@@ -89,7 +87,7 @@ public class WxRequestUtil {
                 wxHeadimgurl(wxAvatar). //头像
                 mobileId(mobileID).     //设备信息ID
                 inRed(BigDecimal.ZERO). //红包余额
-                proxyId(proxyID).   //团队标识
+                proxyName(proxyName).   //团队标识
                 build();
 
         return player;
