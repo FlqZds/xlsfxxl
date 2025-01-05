@@ -5,13 +5,11 @@ import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
-import com.yunting.common.utils.IpUtils;
-import com.yunting.common.utils.RedisUtil_session;
-import com.yunting.common.utils.RedisUtils_Wlan;
-import com.yunting.common.utils.SpringRollBackUtil;
+import com.yunting.common.utils.*;
 import com.yunting.wlan.dto.DeviceDTO;
 import com.yunting.wlan.dto.SignDto;
 import com.yunting.wlan.dto.infoVO;
+import com.yunting.wlan.dto.timeVo;
 import com.yunting.wlan.entity.*;
 import com.yunting.wlan.mapper.DeviceRecordlistMapper;
 import com.yunting.wlan.mapper.LocationMapper;
@@ -27,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -289,6 +288,12 @@ public class WlanService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ResultMessage storeDeviceAndLocationThenIdentify(PlayerDTO playerDTO, infoVO infoVO) {
+        //通过玩家id 查找当前要登录的玩家是否是已在线的玩家  若是,则报错
+        if (Objects.nonNull(rus.get(playerDTO.getPlayerId() + "State"))) {
+            log.error("当前要登录的用户是已在线的用户");
+            return new ResultMessage(ResponseEnum.USER_IS_ONLINE, null);
+        }
+
         String androidID = infoVO.getAndroidID();      //安卓id
         String oaid = infoVO.getOaid();                //oaid
         String deviceType = infoVO.getDeviceType();    //设备品牌
@@ -389,13 +394,26 @@ public class WlanService {
         }
         String thisMAC = infoVO.getThisMAC();
         Objects.requireNonNull(location, "有token的聚集验证,位置信息不能为空");
+
+        timeVo timeVo = new timeVo();
+        timeVo.setDayOfWeek(TimeUtils.getDayOfWeek());
+
+        LocalTime beginTime = LocalTime.parse(st.Forbid_Begin_Time());
+        LocalTime endTime = LocalTime.parse(st.Forbid_End_Time());
+        timeVo.setBeginTimeInterval(TimeUtils.getThisTimeStamp(beginTime.getHour(), beginTime.getMinute()));
+        timeVo.setEndTimeInterval(TimeUtils.getThisTimeStamp(endTime.getHour(), endTime.getMinute()));
+        timeVo.setForbidSwitch(st.isForbid_Switch());
+        timeVo.setEnableWeekend(st.IS_Weekend());
+
         ResultMessage identMSG = this.identification(playerDTO, thisMAC, wlanList, location);
         rus.setEx(playerID + "DET", location, 9, TimeUnit.SECONDS); //设置为已检测
         rus.sAdd("DET", playerID + "");   //加入已检测队列
+        identMSG.setData(timeVo);
         return identMSG;
     }
 
-
+    @Resource(name = "ST")
+    private ST st;
     /***
      * 存储新用户的WiFi列表和更新该地区的用户列表
      * @param wlanList 新上线玩家此时的wifi列表

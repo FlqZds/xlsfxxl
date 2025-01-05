@@ -27,7 +27,7 @@ public class PayController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "payId", value = "支付宝登录号", required = true),
             @ApiImplicitParam(name = "realName", value = "姓名", required = true),
-            @ApiImplicitParam(name = "red", value = "提现金额", required = true)
+            @ApiImplicitParam(name = "from", value = "提现来源", required = true)
 
     })
     @PostMapping("/cl/apy")
@@ -38,7 +38,8 @@ public class PayController {
         HashMap<String, String> to = (HashMap<String, String>) JSON.to(Map.class, info);
         String payId = to.get("payId");
         String realName = to.get("realName");
-        ResultMessage resultMessage = payServices.applyWithdraw(playerId, payId, realName);
+        String from = to.get("from"); //提现来源from  [r=红包提现 o=订单提现]
+        ResultMessage resultMessage = payServices.applyWithdraw(playerId, payId, realName, from);
         return resultMessage;
     }
 
@@ -47,18 +48,19 @@ public class PayController {
 //            @ApiImplicitParam(name = "payId", value = "支付宝登录号", required = true),
 //            @ApiImplicitParam(name = "realName", value = "实名", required = true)
 //    })
-    @PostMapping("/cl/manfy")
-    public ResultMessage manIdentify(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @ApiIgnore @RequestBody String info) {
-        Long playerId = playerDTO.getPlayerId();
-
-        HashMap<String, String> to = (HashMap<String, String>) JSON.to(Map.class, info);
-        String payId = to.get("payId");
-        String realName = to.get("realName");
-        Integer integer = payServices.manIdentify(playerId, payId, realName);
-        if (integer != 1) {
-            return new ResultMessage(ResponseEnum.MAN_IDENTIFY_FAILED, null);
-        }
-        log.info("支付宝绑定成功");
-        return new ResultMessage(ResponseEnum.SUCCESS, null);
-    }
+//    @PostMapping("/cl/manfy")
+//    public ResultMessage manIdentify(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO, @ApiIgnore @RequestBody String info) {
+//        Long playerId = playerDTO.getPlayerId();
+//
+//        HashMap<String, String> to = (HashMap<String, String>) JSON.to(Map.class, info);
+//        String payId = to.get("payId");
+//        String realName = to.get("realName");
+//
+//        Integer integer = payServices.manIdentify(playerId, payId, realName);
+//        if (integer != 1) {
+//            return new ResultMessage(ResponseEnum.MAN_IDENTIFY_FAILED, null);
+//        }
+//        log.info("支付宝绑定成功");
+//        return new ResultMessage(ResponseEnum.SUCCESS, null);
+//    }
 }

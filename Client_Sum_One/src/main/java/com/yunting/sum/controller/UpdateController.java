@@ -47,9 +47,4 @@ public class UpdateController {
     @Resource(name = "ExecuteTask")
     private ExecuteTask executeTask;
 
-    @GetMapping("/task")
-    public ResultMessage Testtask(@RequestParam("my") String my) {
-        executeTask.task_Save_onlineUser();
-        return new ResultMessage(ResponseEnum.SUCCESS, null);
-    }
 }

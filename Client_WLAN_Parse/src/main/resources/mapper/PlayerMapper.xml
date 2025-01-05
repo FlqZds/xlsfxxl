@@ -56,7 +56,7 @@
 
     <select id="selectMobileNameByPlayerId" resultType="java.lang.String">
         select mobile_detail.device_name
-        from ${dbName}.mobile_detail
+        from behind_manage.mobile_detail
         where mobile_id = (select mobile_id from ${dbName}.player where player_id = #{playerId})
     </select>
 

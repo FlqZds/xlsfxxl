@@ -19,6 +19,7 @@ import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -92,43 +93,20 @@ public class MyConfigurator extends ServerEndpointConfig.Configurator {
     public void recordingPlayerBehaver(String playerid) {
         PlayerMapper playerMapper = SpringBeanContext.getContext().getBean(PlayerMapper.class);
         RedisUtil_Record rur = SpringBeanContext.getContext().getBean("RedisUtil_Record", RedisUtil_Record.class);
-        ST st = SpringBeanContext.getContext().getBean(ST.class);
 
         Player player = playerMapper.selectPlayerByPlayerId(playerid);
 
-        if (rur.getBit("retain_bitMap", Long.parseLong(playerid)) == false) {
-            String way = "1";
-            if (st.Retain_Way()) {
-                way = "0";
-            }
-            if (!st.Retain_Way()) {
-                way = "1";
-            }
+        try {
+            playerMapper.updatePlayerDayrecord(playerid, LocalDateTime.now(), "pos", LocalDate.now());
 
+            rur.setBit("retain_bitMap", Long.parseLong(playerid), true);
 
-            //        留存记录插入
-            DayBehaveRecordlist dayBehave = DayBehaveRecordlist.builder()
-                    .playerId(playerid).appId(player.getGameId().toString())
-                    .retainTime(LocalDateTime.now()).retainWay(way)
-                    .todayred(BigDecimal.ZERO).totalred(BigDecimal.ZERO)
-                    .todayEncourageAdvCount(0)
-                    .serviceCallBackAdvCount(0)
-                    .serviceCallBackRewardCount(0)
-                    .build();
+            log.info("用户:" + playerid + " 当日行为记录已留存");
 
-            try {
-                playerMapper.addDayBehaveRecordlist(dayBehave);
-
-                rur.setBit("retain_bitMap", Long.parseLong(playerid), true);
-
-                log.info("用户:" + playerid + " 当日行为记录已留存");
-
-            } catch (Exception e) {
-                SpringRollBackUtil.rollBack();
-                log.error("用户:" + playerid + " 当日行为记录留存失败");
-                throw new AppException(ResponseEnum.RECORD_BEHAVE_ADD_FAILED);
-            }
-
+        } catch (Exception e) {
+            SpringRollBackUtil.rollBack();
+            log.error("用户:" + playerid + " 当日行为记录留存失败");
+            throw new AppException(ResponseEnum.RECORD_BEHAVE_ADD_FAILED);
         }
 
     }

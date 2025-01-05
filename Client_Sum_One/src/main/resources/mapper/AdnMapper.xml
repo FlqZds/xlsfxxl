@@ -16,7 +16,7 @@
 
 
     <select id="sumInscreenEcpmCount" resultType="java.math.BigDecimal">
-        -- 统计了该广告中该日 插屏广告 某广告网络的ecpm总数
+        -- 统计了该代理用户 该广告中该日 插屏广告 某广告网络的ecpm总数
         select sum(adv_ecpm),
                adv_type_id,
                adn.adn_name as advLegengds
@@ -30,7 +30,7 @@
     </select>
 
     <select id="sumStreamEcpmCount" resultType="java.math.BigDecimal">
-        -- 统计了该广告中该日 信息流广告 某广告网络的ecpm总数
+        -- 统计了该代理用户 该广告中该日 信息流广告 某广告网络的ecpm总数
         select sum(adv_ecpm),
                adv_type_id,
                adn.adn_name as advLegengds
@@ -44,7 +44,7 @@
     </select>
 
     <select id="sumEncourageEcpmCount" resultType="java.math.BigDecimal">
-        -- 统计了该广告中该日 激励广告 某广告网络的ecpm总数
+        -- 统计了该代理用户 该广告中该日 激励广告 某广告网络的ecpm总数
         select sum(encourage_ecpm),
                adv_type_id,
                adn.adn_name as advLegengds
@@ -54,11 +54,12 @@
                            on code.adn_id = adn.id
                  left join ${dbName}.player on proxy_name = #{proxyName}
         WHERE adn.adn_name = #{adnName}
+          and encourage_from = #{from}
           AND encourage.request_time between #{startDate} and #{endDate}
     </select>
 
     <select id="sumOpenEcpmCount" resultType="java.math.BigDecimal">
-        -- 统计了该广告中该日 开屏广告  某广告网络的ecpm总数
+        -- 统计了该代理用户 该广告中该日 开屏广告  某广告网络的ecpm总数
         select sum(adv_ecpm),
                adv_type_id,
                adn.adn_name as advLegengds
@@ -72,7 +73,7 @@
     </select>
 
     <select id="sumRowStyleEcpmCount" resultType="java.math.BigDecimal">
-        -- 统计了该广告中该日 横幅  某广告网络的ecpm总数
+        -- 统计了该代理用户 该广告中该日 横幅  某广告网络的ecpm总数
         select sum(adv_ecpm),
                adv_type_id,
                adn.adn_name as advLegengds
@@ -118,11 +119,33 @@
         where proxy_name = #{proxyName}
     </select>
 
+    <select id="getAllPlayer" resultType="java.lang.String">
+        select player_id
+        from yunting_app_test.player
+        where player_id = player_id
+          and proxy_name = #{proxyName}
+    </select>
+
+    <select id="getDayBehaveRecordlist" resultType="com.yunting.sum.entity.total_data.TotalProfile">
+        select todayred                      as totalRedDayUser,
+               server_callback_no            as totalCountDayNoCallback,
+               service_callback_advcount     as totalCountDayNoReward,
+               service_callback_reward_count as totalCountDayNormal,
+               day_cash                      as totalCountDayCash,
+               day_withdraw_judge            as totalCountDayJudgeCash,
+               day_rebate                    as totalCountDayRebate,
+               day_rebate_judge              as totalCountDayJudgeRebate,
+               day_charge_rebate             as totalChargeRebate
+        from yunting_app_test.day_behave_recordlist
+        where player_id = #{playerId}
+          and date(retain_time) = #{date}
+    </select>
+
 
     <insert id="addTotalAdn">
         insert into ${dbName}.total_adn(total_encourage, total_adn_open, total_adn_in, total_adn_row,
-                                               total_adn_stream, total_adn_withdraw, total_adn_ecpm, total_adn_date,
-                                               total_adn_type, appid, proxy_name)
+                                        total_adn_stream, total_adn_withdraw, total_adn_ecpm, total_adn_date,
+                                        total_adn_type, appid, proxy_name)
         values (#{adnTotal.totalEncourage}, #{adnTotal.totalAdnOpen}, #{adnTotal.totalAdnIn}, #{adnTotal.totalAdnRow},
                 #{adnTotal.totalAdnStream}, #{adnTotal.totalAdnWithdraw}, #{adnTotal.totalAdnEcpm},
                 #{adnTotal.totalAdnDate}, #{adnTotal.totalAdnType}, #{adnTotal.appid}, #{adnTotal.proxyName})
@@ -130,18 +153,18 @@
 
     <insert id="addTotalAdvLegends">
         insert into ${dbName}.total_advlegends (total_ecpm, baidu, you_liang_hui, fast_hand, gromore, total_date,
-                                                       appid, proxy_name)
+                                                appid, proxy_name)
         values (#{advlegends.totalEcpm}, #{advlegends.baidu}, #{advlegends.youLiangHui}, #{advlegends.fastHand},
                 #{advlegends.gromore}, #{advlegends.totalDate}, #{advlegends.appid}, #{advlegends.proxyName})
     </insert>
 
     <insert id="addTotalProfile">
         insert into ${dbName}.total_profile (total_profile_date, total_red_day_user, total_count_day_rebate,
-                                                    total_count_day_judge_rebate, total_count_day_cash,
-                                                    total_count_day_judge_cash,
-                                                    total_count_day_normal, total_count_day_no_reward,
-                                                    total_count_day_no_callback,
-                                                    total_charge_rebate, appid, proxy_name)
+                                             total_count_day_judge_rebate, total_count_day_cash,
+                                             total_count_day_judge_cash,
+                                             total_count_day_normal, total_count_day_no_reward,
+                                             total_count_day_no_callback,
+                                             total_charge_rebate, appid, proxy_name)
         values (#{profile.totalProfileDate}, #{profile.totalRedDayUser}, #{profile.totalCountDayRebate},
                 #{profile.totalCountDayJudgeRebate}, #{profile.totalCountDayCash}, #{profile.totalCountDayJudgeCash},
                 #{profile.totalCountDayNormal}, #{profile.totalCountDayNoReward}, #{profile.totalCountDayNoCallback},
@@ -150,9 +173,9 @@
 
     <insert id="addTotalEcpm">
         insert into ${dbName}.total_ecpm (total_ecpm_encourage, total_ecpm_in, total_ecpm_stream,
-                                                 total_ecpm_open,
-                                                 total_ecpm_row,
-                                                 withdraw_encourage, total_ecpm, total_ecpm_date, appid, proxy_name)
+                                          total_ecpm_open,
+                                          total_ecpm_row,
+                                          withdraw_encourage, total_ecpm, total_ecpm_date, appid, proxy_name)
         values (#{totalEcpm.totalEcpmEncourage}, #{totalEcpm.totalEcpmIn}, #{totalEcpm.totalEcpmStream},
                 #{totalEcpm.totalEcpmOpen}, #{totalEcpm.totalEcpmRow}, #{totalEcpm.withdrawEncourage},
                 #{totalEcpm.totalEcpm}, #{totalEcpm.totalEcpmDate}, #{totalEcpm.appid}, #{totalEcpm.proxyName})

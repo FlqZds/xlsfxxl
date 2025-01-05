@@ -7,10 +7,13 @@ import com.yunting.common.utils.RedisUtil_Record;
 import com.yunting.common.utils.ST;
 import com.yunting.sum.entity.setting.*;
 import com.yunting.sum.mapper.SettingUpdateMapper;
+import com.yunting.sum.mapper.SumMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service("UpdateService")
@@ -33,12 +36,13 @@ public class UpdateService {
      *
      */
     public void refreshOnline(PlayerDTO playerDTO, String location) {
-        //将请求信息保存到redis  ,包含用户id,位置信息
-        rur.lLeftPush("inLine_user", playerDTO.getPlayerId() + "_" + location);
-        //将在线用户信息的请求存入一个 hashmap
-        //存入后, 服务器在12:30分,之后每隔一分钟将 500 条请求记录插入数据库
-        log.info("用户数据已留存至redis");
+        Long playerId = playerDTO.getPlayerId();
+        sumMapper.updatePlayerDayrecord(playerId, LocalDateTime.now(), location, LocalDate.now());
+        log.info(playerDTO.getPlayerId() + "用户数据已留存");
     }
+
+    @Resource(name = "SumMapper")
+    private SumMapper sumMapper;
 
 
     //在游戏设置变更之后,让缓存中的数据也进行更新
@@ -122,7 +126,6 @@ public class UpdateService {
 
                 rur.set("Min_System_Version", systemCondition);
                 rur.set("ADV_Interval", advWatchInterval);
-
                 log.info("其他设置已更新" + advWatchInterval);
                 break;
             }

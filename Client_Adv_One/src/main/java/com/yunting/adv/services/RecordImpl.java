@@ -56,14 +56,12 @@ public class RecordImpl implements RecordService {
 
         Player player = playerMapper.selectPlayerByPlayerId(playerId);
 
-        LocalDateTime requestTime = LocalDateTime.parse(adDto.getRequestTime());
-
         AdRowstyle rowstyle = AdRowstyle.builder().advTypeId('4')
                 .playerId(playerId)
                 .appId(playerDTO.getGameId().toString())
                 .codeBitId(adDto.getCodeBitId())
                 .requestId(adDto.getRequestId())
-                .requestTime(requestTime)
+                .requestTime(LocalDateTime.now())
                 .advEcpm(adDto.getAdvEcpm())
                 .ip(ipAddr)
                 .clicks(0)
@@ -77,9 +75,9 @@ public class RecordImpl implements RecordService {
                 log.error("添加横幅广告失败，请联系管理员");
                 throw new AppException(ResponseEnum.SAVE_AD_ROWSTYLE_FAILED);
             }
-            log.info("添加横幅广告，广告ID：{}", rowstyle.getAdRowstyleId());
-            rur.set(rowstyle.getAdRowstyleId() + "advType", rowstyle.getAdvTypeId() + "");  //存 这个广告的类型
-            return rowstyle.getAdRowstyleId();
+            log.info("添加横幅广告，广告ID：{}", rowstyle.getAdRowStyleId());
+            rur.set(rowstyle.getAdRowStyleId() + "advType", rowstyle.getAdvTypeId() + "");  //存 这个广告的类型
+            return rowstyle.getAdRowStyleId();
         } catch (AppException e) {
             e.printStackTrace();
             SpringRollBackUtil.rollBack();
@@ -100,14 +98,12 @@ public class RecordImpl implements RecordService {
 
         Player player = playerMapper.selectPlayerByPlayerId(playerId);
 
-        LocalDateTime requestTime = LocalDateTime.parse(adDto.getRequestTime());
-
         AdInscreen adInscreen = AdInscreen.builder().advTypeId('2')
                 .playerId(playerId)
                 .appId(playerDTO.getGameId().toString())
                 .codeBitId(adDto.getCodeBitId())
                 .requestId(adDto.getRequestId())
-                .requestTime(requestTime)
+                .requestTime(LocalDateTime.now())
                 .advEcpm(adDto.getAdvEcpm())
                 .ip(ipAddr)
                 .clicks(0)
@@ -144,14 +140,12 @@ public class RecordImpl implements RecordService {
 
         Player player = playerMapper.selectPlayerByPlayerId(playerId);
 
-        LocalDateTime requestTime = LocalDateTime.parse(adDto.getRequestTime());
-
         AdOpenscreen adOpenscreen = AdOpenscreen.builder().advTypeId('1')
                 .playerId(playerId)
                 .appId(playerDTO.getGameId().toString())
                 .codeBitId(adDto.getCodeBitId())
                 .requestId(adDto.getRequestId())
-                .requestTime(requestTime)
+                .requestTime(LocalDateTime.now())
                 .advEcpm(adDto.getAdvEcpm())
                 .ip(ipAddr)
                 .clicks(0)
@@ -187,8 +181,6 @@ public class RecordImpl implements RecordService {
 
         Long playerId = playerDTO.getPlayerId();
 
-        LocalDateTime requestTime = LocalDateTime.parse(adDto.getRequestTime());
-
         Player player = playerMapper.selectPlayerByPlayerId(playerId);
 
         AdStream adStream = AdStream.builder().advTypeId('3')
@@ -196,7 +188,7 @@ public class RecordImpl implements RecordService {
                 .appId(playerDTO.getGameId().toString())
                 .codeBitId(adDto.getCodeBitId())
                 .requestId(adDto.getRequestId())
-                .requestTime(requestTime)
+                .requestTime(LocalDateTime.now())
                 .advEcpm(adDto.getAdvEcpm())
                 .ip(ipAddr)
                 .clicks(0)
@@ -243,11 +235,18 @@ public class RecordImpl implements RecordService {
     @Transactional(rollbackFor = Exception.class)
     public void loadAndUpload(AdEncourageLoadDto loadDto, PlayerDTO playerDTO) {
         try {
+            loadDto.setRequestTime(LocalDateTime.now().toString());
+
+            Long playerId = playerDTO.getPlayerId();
             String from = loadDto.getEncourageFrom();
             if (from.equals("提现")) {
-                Long playerId = playerDTO.getPlayerId();
-                rur.setEx(playerId + "withdraw", "0", 5, TimeUnit.MINUTES);
+                rur.set(playerId + "withdraw", "0");
             }
+
+            if (from.equals("激励") && rur.get(playerId + "withdraw") != null) {  //上一个 红包提现的视频看了却提现失败或者没去提现,然后来看普通激励了
+                rur.delete(playerId + "withdraw");
+            }
+
             adEncourageMapper.loadAndChange(loadDto);
             Long encourageId = loadDto.getAdvEncourageId();
             //          有了客户端回调,可以计数一次该玩家激励广告观看次数了
@@ -333,12 +332,7 @@ public class RecordImpl implements RecordService {
     @Transactional(rollbackFor = Exception.class)
     public ResultMessage closeRecordingClick(PlayerDTO playerDTO, String advId, Integer clickCount, String exceptionMsg, String isRemedy) {
 
-        String advType = rur.get(advId + "advType");
-
-        if (advType == null) {
-            log.info("已记录的广告id点击量已经提交过");
-            return new ResultMessage(ResponseEnum.SAVE_AD_CLICK_REPEAT, "点击重发");
-        }
+        String advType = String.valueOf(advId.charAt(0));
 
         Long advID = Long.parseLong(advId);
 
@@ -466,7 +460,6 @@ public class RecordImpl implements RecordService {
         }
 //清掉redis中关联的key
         log.info("开始清理_该广告的相关类型标记_同时清理对应点击量记录,该次关闭的类型:" + isRemedy);
-        rur.delete(advId + "advType");
         rur.delete(advId + "click");
         return new ResultMessage(ResponseEnum.SUCCESS, redValue);
     }
@@ -578,57 +571,55 @@ public class RecordImpl implements RecordService {
             }
             log.info(typeName + "广告,首次点击已记入redis,首次点击时间已入库");
         }
-        Integer clicks = Integer.parseInt(rur.get(click_key)); //redis中的点击次数
+//        Integer clicks = Integer.parseInt(rur.get(click_key)); //redis中的点击次数
 
-        if (clicks < 4) {
-
-            try {
-                Long advID = Long.parseLong(advId);
-                //点击次数<5就取redis中的点击次数存到数据库中 ,>5就清redis
-                switch (advType) {
-                    case "1": { //开屏
-                        adOpenscreenMapper.changeAdOpenRecord(advID, AdOpenscreen.builder().clicks(clicks).build());
-                        typeName = "开屏";
-                        break;
-                    }
-                    case "2": {//插屏
-                        adInscreenMapper.changeAdInScreenRecord(advID, AdInscreen.builder().clicks(clicks).build());
-                        typeName = "插屏";
-                        break;
-                    }
-                    case "3": {//信息流
-                        adStreamMapper.changeAdStreamRecord(advID, AdStream.builder().clicks(clicks).build());
-                        typeName = "信息流";
-                        break;
-                    }
-                    case "4": {//横幅
-                        adRowstyleMapper.changeAdRowRecord(advID, AdRowstyle.builder().clicks(clicks).build());
-                        typeName = "横幅";
-                        break;
-                    }
-                    case "5": {//激励广告
-                        LocalDateTime firstClickTime = adEncourageMapper.selectByPrimaryKey(advID).getFirstClickTime();
-                        adEncourageMapper.changeAdEncourageRecordClickTime(advId, firstClickTime, clicks);
-                        typeName = "激励";
-                        break;
-                    }
-                }
-            } catch (AppException e) {
-                SpringRollBackUtil.rollBack();
-                log.error("存储广告点击量和清理redisKEY失败,请检查--> clickCountAndFirstClickTime <--");
-                throw new AppException(ResponseEnum.STORING_AD_CLICK_AND_DELETE_REDIS_KEY_FAILED);
-            }
-            log.info("广告id为" + advId + "的" + typeName + "广告点击次数已计入库");
-        }
-
-
-        if (clicks >= 5) {
-            //清掉redis中关联的key
-            rur.delete(click_key);
-            rur.delete(advType_key);
-            log.warn("广告id为" + advId + "的" + typeName + "广告点击次数已达上限");
-            return -1L;
-        }
+//        if (clicks < 4) {
+//
+//            try {
+//                Long advID = Long.parseLong(advId);
+//                //点击次数<5就取redis中的点击次数存到数据库中 ,>5就清redis
+//                switch (advType) {
+//                    case "1": { //开屏
+//                        adOpenscreenMapper.changeAdOpenRecord(advID, AdOpenscreen.builder().clicks(clicks).build());
+//                        typeName = "开屏";
+//                        break;
+//                    }
+//                    case "2": {//插屏
+//                        adInscreenMapper.changeAdInScreenRecord(advID, AdInscreen.builder().clicks(clicks).build());
+//                        typeName = "插屏";
+//                        break;
+//                    }
+//                    case "3": {//信息流
+//                        adStreamMapper.changeAdStreamRecord(advID, AdStream.builder().clicks(clicks).build());
+//                        typeName = "信息流";
+//                        break;
+//                    }
+//                    case "4": {//横幅
+//                        adRowstyleMapper.changeAdRowRecord(advID, AdRowstyle.builder().clicks(clicks).build());
+//                        typeName = "横幅";
+//                        break;
+//                    }
+//                    case "5": {//激励广告
+//                        LocalDateTime firstClickTime = adEncourageMapper.selectByPrimaryKey(advID).getFirstClickTime();
+//                        adEncourageMapper.changeAdEncourageRecordClickTime(advId, firstClickTime, clicks);
+//                        typeName = "激励";
+//                        break;
+//                    }
+//                }
+//            } catch (AppException e) {
+//                SpringRollBackUtil.rollBack();
+//                log.error("存储广告点击量和清理redisKEY失败,请检查--> clickCountAndFirstClickTime <--");
+//                throw new AppException(ResponseEnum.STORING_AD_CLICK_AND_DELETE_REDIS_KEY_FAILED);
+//            }
+//            log.info("广告id为" + advId + "的" + typeName + "广告点击次数已计入库");
+//        }
+//        if (clicks >= 5) {
+//            //清掉redis中关联的key
+//            rur.delete(click_key);
+//            rur.delete(advType_key);
+//            log.warn("广告id为" + advId + "的" + typeName + "广告点击次数已达上限");
+//            return -1L;
+//        }
         l = rur.incrBy(click_key, 1);//redis中点击次数自增
         return l;
     }

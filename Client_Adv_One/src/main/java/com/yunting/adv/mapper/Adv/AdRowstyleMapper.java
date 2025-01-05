@@ -16,7 +16,7 @@ public interface AdRowstyleMapper {
     //  加横幅首次点击时间
     Long rowStyleFirstClickTime(@Param("advId") String advId, @Param("firstClickTime") LocalDateTime firstClickTime);
 
-    Integer changeAdRowRecord(@Param("targetAdv") Long targetAdv,@Param("changeData") AdRowstyle adRowstyle);
+    Integer changeAdRowRecord(@Param("targetAdv") Long targetAdv, @Param("changeData") AdRowstyle adRowstyle);
 
     List<AdRowstyle> showAdRowRecordlist(@Param("advType") Character advType);
 

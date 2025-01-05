@@ -43,8 +43,8 @@
 
     <insert id="insertExceptionRecord">
         INSERT INTO ${dbName}.exception_recordlsit(player_id, wx_nick_name, game_id, oaid, android_id,
-                                                          device_type, device_detail,
-                                                          except_type, except_info, exception_time)
+                                                   device_type, device_detail,
+                                                   except_type, except_info, exception_time)
         VALUES (#{playerId}, #{wxNickName}, #{gameId},
                 #{oaid}, #{androidId}, #{deviceType}, #{deviceDetail},
                 #{exceptType}, #{exceptInfo}, #{exceptionTime})
@@ -52,8 +52,8 @@
 
     <select id="getWithdrawRecordByPlayerIdAndPackageName"
             resultType="com.yunting.login.dto.WithdrawVo">
-        select withdraw_status, withdraw_money, player_id, withdraw_time, return_money
-        from ${dbName}.withdraw_record
+        select withdraw_status, withdraw_money, withdraw_time, return_money
+        from behind_manage.withdraw_record
         where player_id = #{playerId}
           and package_name = #{packageName}
         order by withdraw_record_id desc

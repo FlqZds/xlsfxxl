@@ -31,14 +31,14 @@ public interface SumMapper {
     Integer addProxyCommissionCount(@Param("proxy") SumProxy sumProxy);
 
     //修改该日某代理的 分销佣金统计数据
-    Integer modifyProxyCommissionCount(@Param("sumProxyAllCash") BigDecimal sumProxyAllCash,@Param("proxyName")String proxyName,@Param("sumDay") LocalDate sumDay);
+    Integer modifyProxyCommissionCount(@Param("sumProxyAllCash") BigDecimal sumProxyAllCash, @Param("proxyName") String proxyName, @Param("sumDay") LocalDate sumDay);
 
 
-    //    记录一条每日行为记录
-    Integer addDayBehaveRecordlist(@Param("dayRecord") DayBehaveRecordlist dayBehaveRecordlist);
+    //    更新一条该用户的当日行为记录
+    Integer updatePlayerDayrecord(@Param("playerId") Long playerId, @Param("retainTime") LocalDateTime retainTime, @Param("pos") String pos, @Param("date") LocalDate date);
 
     //    更新玩家位置信息
-    int updateLocation(@Param("position")String position, @Param("recordTime") LocalDateTime recordTime, @Param("playerId")String playerId);
+    int updateLocation(@Param("position") String position, @Param("recordTime") LocalDateTime recordTime, @Param("playerId") String playerId);
 
 
 }

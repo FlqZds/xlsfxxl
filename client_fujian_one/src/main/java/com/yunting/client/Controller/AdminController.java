@@ -28,7 +28,7 @@ public class AdminController {
     @ApiOperation(value = "发给管理端 对应游戏id的 对应用户id的 某个每日啥啥啥")
     @GetMapping("/anyDetail")
     public ResultMessage sendPlayerAnyDetail(@RequestParam("appid") String appid, @RequestParam("playerId") Long playerId, @RequestParam("condition") String condition, @RequestParam("page") Integer page, @RequestParam("recordTime") String recordTime) {
-        PageInfo pageInfo = adminService.queryPlayerAnyDetailByCondition(appid, playerId, condition, page, recordTime);
+//        PageInfo pageInfo = adminService.queryPlayerAnyDetailByCondition(appid, playerId, condition, page, recordTime);
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
@@ -40,7 +40,7 @@ public class AdminController {
         Map active_map = JSON.to(Map.class, retainActive);
 //        这个类比较好用 ，就统一用它了
         RetainActive active = JSON.to(RetainActive.class, active_map.get("retainActive").toString());
-        PageInfo pageInfo = adminService.queryAllOperation(active);
+//        PageInfo pageInfo = adminService.queryAllOperation(active);
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
@@ -51,7 +51,7 @@ public class AdminController {
         Map active_map = JSON.to(Map.class, retainActive);
 //        这个类比较好用 ，就统一用它了
         RetainActive active = JSON.to(RetainActive.class, active_map.get("retainActive").toString());
-        PageInfo pageInfo = adminService.queryAllMobileInfo(active);
+//        PageInfo pageInfo = adminService.queryAllMobileInfo(active);
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
@@ -63,7 +63,7 @@ public class AdminController {
         Map active_map = JSON.to(Map.class, retainActive);
         RetainActive active = JSON.to(RetainActive.class, active_map.get("retainActive").toString());
 
-        PageInfo pageInfo = adminService.queryRetainActive(active);
+//        PageInfo pageInfo = adminService.queryRetainActive(active);
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
@@ -75,7 +75,7 @@ public class AdminController {
         Map active_map = JSON.to(Map.class, retainActive);
 //        这个类比较好用 ，就统一用它了
         RetainActive active = JSON.to(RetainActive.class, active_map.get("retainActive").toString());
-        PageInfo pageInfo = adminService.queryAllException(active);
+//        PageInfo pageInfo = adminService.queryAllException(active);
         return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
     }
 
@@ -83,7 +83,7 @@ public class AdminController {
     @ApiOperation(value = "发给管理端 对应游戏id的 所有用户的信息")
     @PostMapping("/sendPlayerInfo")
     public ResultMessage sendPlayerInfo(@RequestBody RetainActive active) {
-        PageInfo playerInfos = adminService.sendPlayerInfo(active);
+//        PageInfo playerInfos = adminService.sendPlayerInfo(active);
         return new ResultMessage(ResponseEnum.SUCCESS, playerInfos);
     }
 

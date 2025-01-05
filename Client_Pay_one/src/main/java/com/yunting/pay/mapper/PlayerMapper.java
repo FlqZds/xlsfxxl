@@ -20,10 +20,7 @@ public interface PlayerMapper {
     Player selectPlayerByPlayerId(@Param("playerId") Long playerId);
 
     //  根据支付宝ID查到玩家
-    Long selectPlayerByPayID(@Param("PayID") String PayID);
-
-    //  根据支付宝ID查到玩家
-    Long selectPlayerByRealName(@Param("RealName") String RealName);
+    Long selectPlayerByPayInfo(@Param("PayID") String PayID, @Param("realNmae") String realNmae);
 
     //  根据玩家ID和游戏ID查到玩家微信昵称
     String selectWxNicknameByPlayerId(@Param("playerId") Long playerId, @Param("gameId") Long gameId);

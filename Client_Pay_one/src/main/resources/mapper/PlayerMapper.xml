@@ -39,7 +39,7 @@
                real_name,
                wx_headimgurl,
                player_creat_time,
-               proxy_id,
+               proxy_name,
                status,
                mobile_id,
                in_red,
@@ -56,15 +56,11 @@
     </select>
 
 
-    <select id="selectPlayerByPayID" resultType="java.lang.Long">
+    <select id="selectPlayerByPayInfo" resultType="java.lang.Long">
         select player_id
         from ${dbName}.player
         where pay_login_id = #{PayID}
-    </select>
-    <select id="selectPlayerByRealName" resultType="java.lang.Long">
-        select player_id
-        from ${dbName}.player
-        where real_name = #{RealName}
+          and real_name = #{realNmae}
     </select>
 
     <select id="selectWxNicknameByPlayerId" resultType="java.lang.String">

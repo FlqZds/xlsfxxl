@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
+import com.yunting.common.utils.RedisUtil_Record;
 import com.yunting.common.utils.RedisUtil_session;
 import com.yunting.common.utils.ST;
 import com.yunting.ws.SpringBeanContext;
 import com.yunting.ws.config.websocket.MyConfigurator;
+import com.yunting.ws.dto.PlayerMetaData;
 import com.yunting.ws.entity.UserGatheringSetting;
 import com.yunting.ws.utils.sessionUtils;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,10 +31,10 @@ import static com.yunting.common.utils.FS.heartBeatRespMsg;
 
 @Component("Wso")
 @Slf4j
-@AllArgsConstructor
 @ServerEndpoint(value = "/wso", configurator = MyConfigurator.class)
 public class Wso {
     private static RedisUtil_session rus;
+    private static RedisUtil_Record rur;
     private static sessionUtils gatheringUtil;
     private static ST st;
     private static Gson gson = new Gson();
@@ -51,6 +54,7 @@ public class Wso {
         log.info("HeartDetect初始化中...");
         Wso.gatheringUtil = SpringBeanContext.getContext().getBean(sessionUtils.class);
         Wso.rus = SpringBeanContext.getContext().getBean(RedisUtil_session.class);
+        Wso.rur = SpringBeanContext.getContext().getBean(RedisUtil_Record.class);
         st = SpringBeanContext.getContext().getBean(ST.class);
 
 
@@ -76,17 +80,18 @@ public class Wso {
 
         SESSION_POOL.putIfAbsent(playerID, session);
 
-        rus.setEx(playerID + "State", "", 10, TimeUnit.SECONDS);
-        String s = gson.toJson(new ResultMessage(ResponseEnum.SUCCESS, null));
+        rus.setEx(playerID + "State", "", 7, TimeUnit.SECONDS);
+
+        String s;
+        PlayerMetaData gameSetting = gatheringUtil.getGameSetting(playerID);
+        s = gson.toJson(new ResultMessage(ResponseEnum.SUCCESS, gameSetting));
         session.getAsyncRemote().sendText(s);
-        rus.expire(playerID + "State", 10, TimeUnit.SECONDS);//刷新存活态
         rus.sAdd("WEBSOCKET", playerID);
 
         rus.sRemove("DET", playerID); //从检测列表中移除
 
     }
 
-    private Integer a = 0;
 
     @OnMessage
     public void SendMessage(String message, Session session) throws IOException {
@@ -97,13 +102,10 @@ public class Wso {
 //在线用户的心跳
         if (message.equals(heartBeatRespMsg)) {
             log.info("ID:" + playerID + "| 昵称:" + wxName + "__" + heartBeatRespMsg);
-            rus.expire(playerID + "State", 10, TimeUnit.SECONDS);//刷新存活态
+            rus.expire(playerID + "State", 7, TimeUnit.SECONDS);//刷新存活态
 
             session.getAsyncRemote().sendText(heartBeatMsg);
         }
-
-        Session sessiont = SESSION_POOL.get(playerID);
-        log.info("是否为空:" + Objects.isNull(sessiont));
 
 //管理端通知公告  让redis通知,此时有了通知公告
         if (castNum.get() > 0 && (noticeMSG.isEmpty() == false || noticeMSG.length() >= 3)) {
@@ -128,17 +130,10 @@ public class Wso {
 
 
 // 十二点在线用户留存
-        if (LocalDateTime.now().isEqual(LocalDateTime.now().withHour(00).withMinute(00)) && a == 0) {
+        if (LocalDateTime.now().isEqual(LocalDateTime.now().withHour(16).withMinute(27)) && st.broadCount == 0) {
             log.info("十二点整了,该记录在线的玩家行为记录了");
             session.getAsyncRemote().sendText("西域春纯牛奶");
-            a++;
-        }
-
-//到点不准看广告+周末限制时间段
-        if (st.IS_Weekend()) {
-            if (LocalDateTime.now().isEqual(LocalDateTime.now().withHour(st.Forbid_Begin_Time())) && a == 0) {
-                session.getAsyncRemote().sendText("您已到达不准看广告的时间段");
-            }
+            st.broadCount++;//todo 这个过会儿要改一下变量
         }
 
     }
@@ -148,14 +143,18 @@ public class Wso {
     public void onError(Session session, Throwable throwable) throws IOException {
         log.info(throwable.getMessage() + "");
         log.info(throwable.getCause() + "");
+        String playerID = gatheringUtil.thisSessionBelongsTo(session);
+        String location = rus.hGet(playerID, "pos").toString();
+        gatheringUtil.userExit(playerID, location);
         log.info("池子的人:" + rus.setMembers("WEBSOCKET"));
     }
 
     @OnClose
     public void onClose(Session session) throws IOException {
 //        String playerID = gatheringUtil.thisSessionBelongsTo(session);
-//        String wxName = rus.hGet(playerID, "wxName").toString();
 //        String location = rus.hGet(playerID, "pos").toString();
+//        gatheringUtil.userExit(playerID, location);
+//        String wxName = rus.hGet(playerID, "wxName").toString();
 ////
 //        gatheringUtil.userExit(playerID, location);
 //

@@ -21,14 +21,13 @@
           and sum_day = #{sumDay}
     </update>
 
-    <insert id="addDayBehaveRecordlist">
-        INSERT INTO ${dbName}.day_behave_recordlist ( player_id, app_id, retain_way, todayRed, totalRed
-                                                           , today_encourageAdv_count, service_CallBack_AdvCount
-                                                           , service_CallBack_Reward_Count, retain_time)
-        VALUES (#{dayRecord.playerId}, #{dayRecord.appId}, #{dayRecord.retainWay}, #{dayRecord.todayred},
-                #{dayRecord.totalred},
-                #{dayRecord.todayEncourageAdvCount}, #{dayRecord.serviceCallBackAdvCount},
-                #{dayRecord.serviceCallBackRewardCount}, #{dayRecord.retainTime})
+    <insert id="updatePlayerDayrecord">
+        update yunting_app_test.day_behave_recordlist
+        set location    = #{pos},
+            retain_time = #{retainTime},
+            is_retain=0
+        where player_id = #{playerId}
+        and date(retain_time) = #{date}
     </insert>
 
     <update id="updateLocation">

@@ -16,13 +16,17 @@
     <insert id="insertWithdrawRecord">
         insert into behind_manage.withdraw_record
         (withdraw_record_id, player_id,
+         pay_login_id, real_name,
          wx_nickname, package_name,
          withdraw_status, withdraw_money,
-         return_money, withdraw_time, withdraw_percentage_now)
+         return_money, withdraw_time,
+         withdraw_percentage_now, withdraw_from)
         values (#{withdrawRecordId}, #{playerId},
+                #{payLoginId}, #{realName},
                 #{wxNickname}, #{packageName},
                 #{withdrawStatus}, #{withdrawMoney},
-                #{returnMoney}, #{withdrawTime}, #{withdrawPercentageNow})
+                #{returnMoney}, #{withdrawTime},
+                #{withdrawPercentageNow}, #{withdrawFrom})
     </insert>
 
     <select id="getWithdrawSetting" resultType="com.yunting.pay.entity.WithdrawSetting">

@@ -38,7 +38,8 @@
 
     <update id="streamFirstClickTime">
         update ${dbName}.ad_stream
-        set first_click_time = #{firstClickTime}
+        set first_click_time = #{firstClickTime},
+            clicks= 1
         where ad_stream_id = #{advId}
     </update>
 

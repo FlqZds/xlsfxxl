@@ -18,25 +18,28 @@
     </resultMap>
 
     <insert id="insertAdRowstyle">
-        insert into ad_rowstyle (ad_rowStyle_id, adv_type_id, player_id, app_id, code_bit_id, request_id, adv_ecpm,
+        insert into ${dbName}.ad_rowstyle (adv_type_id, player_id, app_id, code_bit_id,
+        request_id,
+        adv_ecpm,
         clicks, ip, request_time, wx_nick_name,
         errinfo)
-        values (#{ad_rowStyle_id}, #{advTypeId}, #{playerId}, #{appId}, #{codeBitId}, #{requestId}, #{advEcpm},
-        #{clicks}, inet_aton(#{ip}), #{requestTime},#{wxNickName})
-        <selectKey resultType="long" keyProperty="adRowstyleId" order="AFTER" keyColumn="ad_rowStyle_id">
+        values (#{advTypeId}, #{playerId}, #{appId}, #{codeBitId}, #{requestId}, #{advEcpm},
+        #{clicks}, inet_aton(#{ip}), #{requestTime},#{wxNickName},#{errinfo})
+        <selectKey resultType="long" keyProperty="adRowStyleId" order="AFTER" keyColumn="ad_rowStyle_id">
             select @@identity;
         </selectKey>
     </insert>
 
     <update id="changeAdRowRecord">
-        update ad_rowstyle
+        update ${dbName}.ad_rowstyle
         set clicks= #{changeData.clicks}
         where ad_rowStyle_id = #{targetAdv}
     </update>
 
     <update id="rowStyleFirstClickTime">
-        update ad_rowstyle
-        set first_click_time= #{firstClickTime}
+        update ${dbName}.ad_rowstyle
+        set first_click_time= #{firstClickTime},
+            clicks= 1
         where ad_rowStyle_id = #{advId}
     </update>
 
@@ -54,7 +57,7 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_rowstyle
+        from ${dbName}.ad_rowstyle
         where adv_type_id = #{advType}
         order by ad_rowStyle_id desc
     </select>
@@ -73,7 +76,7 @@
                request_time,
                wx_nick_name,
                errinfo
-        from ad_rowstyle
+        from ${dbName}.ad_rowstyle
         where code_bit_id = #{codeId}
     </select>
 

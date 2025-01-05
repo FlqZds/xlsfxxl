@@ -1,5 +1,6 @@
 package com.yunting.sum.mapper;
 
+import com.yunting.sum.entity.DayBehaveRecordlist;
 import com.yunting.sum.entity.SumProxy;
 import com.yunting.sum.entity.total_data.TotalAdn;
 import com.yunting.sum.entity.total_data.TotalAdvlegends;
@@ -37,22 +38,22 @@ public interface AdnMapper {
     //根据名称找到该日 该代理的佣金统计数据
     SumProxy getSumCashByProxyNameAndDate(@Param("proxyName") String proxyName, @Param("date") LocalDate date);
 
-    //    根据日期和广告网络 统计插屏广告ecpm (广告联盟)
+    //    根据日期和广告网络 统计该代理的插屏广告ecpm (广告联盟)
     BigDecimal sumInscreenEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName);
 
-    //    根据日期和广告网络 统计激励广告ecpm (广告联盟)
-    BigDecimal sumEncourageEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName);
+    //    根据日期和广告网络 统计该代理的激励广告ecpm (广告联盟)
+    BigDecimal sumEncourageEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName, @Param("from") String from);
 
 
-    //    根据日期和广告网络 统计开屏广告ecpm (广告联盟)
+    //    根据日期和广告网络 统该代理的计开屏广告ecpm (广告联盟)
     BigDecimal sumOpenEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName);
 
 
-    //    根据日期和广告网络 统计横幅广告ecpm (广告联盟)
+    //    根据日期和广告网络 统计该代理的横幅广告ecpm (广告联盟)
     BigDecimal sumRowStyleEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName);
 
 
-    //    根据日期和广告网络 统计信息流广告ecpm (广告联盟)
+    //    根据日期和广告网络 统计该代理的信息流广告ecpm (广告联盟)
     BigDecimal sumStreamEcpmCount(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("adnName") String adnName, @Param("proxyName") String proxyName);
 
 
@@ -65,5 +66,10 @@ public interface AdnMapper {
 
     Integer addTotalEcpm(@Param("totalEcpm") TotalEcpm totalEcpm);
 
+    //获取所有用户
+    List<String> getAllPlayer(@Param("proxyName") String proxyName);
+
+    //获取该用户当日留存记录
+    TotalProfile getDayBehaveRecordlist(@Param("playerId") String playerId, @Param("date") LocalDate date);
 
 }

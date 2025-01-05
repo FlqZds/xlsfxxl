@@ -53,6 +53,7 @@ public class WlanController {
     @PostMapping("/uIdetfy")
     public ResultMessage loginIdentify(@ApiIgnore @RequestAttribute PlayerDTO playerDTO, @RequestBody infoVO json) {
 
+
         ResultMessage resultMessage = wlanService.storeDeviceAndLocationThenIdentify(playerDTO, json);
         return resultMessage;
     }

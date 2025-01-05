@@ -18,7 +18,7 @@
     </resultMap>
 
     <insert id="insertAdInscreen">
-        insert into ${dbName}.${dbName}.ad_inscreen (ad_inScreen_id, adv_type_id, player_id, app_id, code_bit_id,
+        insert into ${dbName}.ad_inscreen (ad_inScreen_id, adv_type_id, player_id, app_id, code_bit_id,
         request_id, adv_ecpm,clicks,ip, request_time,
         wx_nick_name,errinfo)
         values (#{adInscreenId}, #{advTypeId}, #{playerId}, #{appId}, #{codeBitId}, #{requestId}, #{advEcpm},
@@ -38,7 +38,8 @@
 
     <update id="inScreenFirstClickTime">
         update ${dbName}.ad_inscreen
-        set first_click_time = #{firstClickTime}
+        set first_click_time = #{firstClickTime},
+            clicks= 1
         where ad_inScreen_id = #{advId}
     </update>
 

@@ -5,6 +5,7 @@ import com.yunting.common.Dto.RiskControlSetting;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import javax.annotation.Resource;
 
 
@@ -15,6 +16,8 @@ import javax.annotation.Resource;
 @AllArgsConstructor
 @NoArgsConstructor
 public final class ST {
+    public int broadCount = 0;
+
     @Resource(name = "RedisUtil_Record")
     private RedisUtil_Record rur;
 
@@ -126,15 +129,15 @@ public final class ST {
     /***
      * 禁止看广告的开始时间
      */
-    public int Forbid_Begin_Time() {
-        return Integer.parseInt(rur.get("Forbid_Begin_Time"));
+    public String Forbid_Begin_Time() {
+        return rur.get("Forbid_Begin_Time");
     }
 
     /***
      * 禁止看广告的结束时间
      */
-    public int Forbid_End_Time() {
-        return Integer.parseInt(rur.get("Forbid_End_Time"));
+    public String Forbid_End_Time() {
+        return rur.get("Forbid_End_Time");
     }
 
     /***

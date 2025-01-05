@@ -36,6 +36,8 @@ public class WithdrawRecord {
 
     private String packageName;
 
+    private String withdrawFrom; //提现订单来源
+
     @ApiModelProperty(value = "提现状态", dataType = "Character")
     private Character withdrawStatus;
 

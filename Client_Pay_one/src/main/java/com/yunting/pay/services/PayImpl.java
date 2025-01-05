@@ -16,6 +16,7 @@ import com.yunting.pay.mapper.PlayerMapper;
 import com.yunting.pay.mapper.WithdrawRecordMapper;
 import com.yunting.pay.utils.AliPayUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import static com.yunting.common.results.ResponseEnum.PLAYER_WITHDRAW_FAILED;
 import static com.yunting.common.utils.FS.*;
 import static com.yunting.pay.utils.AliPayUtil.IdentityType;
 
@@ -62,41 +64,39 @@ public class PayImpl implements PayServices {
      * @param playerId  提现的玩家id
      * @param payId  提现的玩家支付宝id
      * @param realName 体现玩家的姓名
+     * @param from  来源 [r=红包提现 o=订单提现]
      */
     @Transactional(rollbackFor = Exception.class)
-    public ResultMessage applyWithdraw(Long playerId, String payId, String realName) {
+    public ResultMessage applyWithdraw(Long playerId, String payId, String realName, String from) {
         ResultMessage resultMessage = new ResultMessage(ResponseEnum.SUCCESS, null);
-        int see_count;
+
         String is_see_enc = rur.get(playerId + "withdraw") + "";
-        see_count = Integer.parseInt(is_see_enc);
-        if (see_count != 88) {
+        if (is_see_enc == null) {
             log.info("玩家提现之前要先去看一个激励广告", new AppException(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE));
             rur.setEx("withdraw" + playerId, "0", 5, TimeUnit.MINUTES);
             return new ResultMessage(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE, null);
         }
 
+        Long thisWithdraw_playerID = playerMapper.selectPlayerByPayInfo(payId, realName); //这个绑定了支付宝信息的玩家的id
+        Player player = playerMapper.selectPlayerByPlayerId(playerId); //要提现的玩家
+
         BigDecimal playerRed_Need_reduce = BigDecimal.ZERO;
-        Player player = playerMapper.selectPlayerByPlayerId(playerId);
-        Long pName = null;
-        Long pID = null;
 
-        String bindPayLoginId = player.getPayLoginId();//玩家已绑定的支付宝id
-        String bindRealName = player.getRealName();//玩家已绑定的姓名
+        String bindPayLoginId = player.getPayLoginId();//提现玩家已绑定的支付宝id
+        String bindRealName = player.getRealName();//提现玩家已绑定的姓名
 
-        pID = playerMapper.selectPlayerByPayID(payId);//查询数据库中是否有人绑定该pay信息
-        pName = playerMapper.selectPlayerByRealName(realName);//查询数据库中是否有人绑定该pay信息
-
-        if (bindPayLoginId != null && bindRealName != null) {
-            if (playerId.equals(player.getPlayerId()) == false) {//但是玩家id和传过来的不是同一个人
-                if (payId.equals(bindPayLoginId) && realName.equals(bindRealName)) {//绑定信息相同
-                    log.warn("该玩家已经被绑定,请勿重复绑定", new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND));
-                    throw new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND);
-                }
+        if (thisWithdraw_playerID != null) {
+            if (playerId.equals(thisWithdraw_playerID) == false) {//查到的玩家id和 传过来支付宝信息查到的用户的id不一致 (该支付宝信息已经被绑定了)
+                log.warn("该玩家已经被绑定,请勿重复绑定", new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND));
+                throw new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND);
             } else { //是同一个人 ,但是这次传的和数据库中的不一样
-                if (payId.equals(bindPayLoginId) == false || realName.equals(bindRealName) == false) {//绑定信息相同
-                    log.warn("您所提交的支付宝账号信息与上次有所不同", new AppException(ResponseEnum.ALIPAY_INFO_DIFFERENCE));
-                    throw new AppException(ResponseEnum.ALIPAY_INFO_DIFFERENCE);
+                if (bindPayLoginId != null && bindRealName != null) {
+                    if (payId.equals(bindPayLoginId) == false || realName.equals(bindRealName) == false) {//绑定信息相同
+                        log.warn("您所提交的支付宝账号信息与上次有所不同", new AppException(ResponseEnum.ALIPAY_INFO_DIFFERENCE));
+                        throw new AppException(ResponseEnum.ALIPAY_INFO_DIFFERENCE);
+                    }
                 }
+
             }
         }
 
@@ -119,10 +119,14 @@ public class PayImpl implements PayServices {
         }
         long l = Long.parseLong(playerTodayCount);
 
-        if (l >= withdrawCount) {
-            log.warn("玩家当日提现次数已超过上限，无法提现", new AppException(ResponseEnum.PLAYER_WITHDRAW_COUNT_OVER_LIMIT));
-            throw new AppException(ResponseEnum.PLAYER_WITHDRAW_COUNT_OVER_LIMIT);
+
+        if (st.isDaily_Withdraw_Switch() == true) {
+            if (l >= withdrawCount) {
+                log.warn("玩家当日提现次数已超过上限，无法提现", new AppException(ResponseEnum.PLAYER_WITHDRAW_COUNT_OVER_LIMIT));
+                throw new AppException(ResponseEnum.PLAYER_WITHDRAW_COUNT_OVER_LIMIT);
+            }
         }
+
 
         if (playerInRed.compareTo(Percentage) == -1) {
             log.warn("用户余额不足,无法提现", new AppException(ResponseEnum.PLAYER_NO_MORE_MONEY));
@@ -144,13 +148,121 @@ public class PayImpl implements PayServices {
             throw new AppException(ResponseEnum.PLAYER_WITHDRAW_MONEY_TOO_SMALL);
         }
 
-        Integer i = transAmount.compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发审核
-        String limitRebackMoney_str = withdrawMapper.getLimitRebackMoney();
-        BigDecimal limitRebackMoney = new BigDecimal(limitRebackMoney_str);//最低返现金额
-        Integer j = transAmount.compareTo(limitRebackMoney); //-1 0 1  <=>   是否触发返现
+        BigDecimal this_is_judge = dayCash.add(transAmount);//当日的+该次要提现的
+        Integer i = this_is_judge.compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发 该日总的免审核提现金额
 
-        //实际返现金额
-        BigDecimal rebackVal = null;
+        String limitRebackMoney_str = withdrawMapper.getLimitRebackMoney();
+        BigDecimal limitRebackMoney = new BigDecimal(limitRebackMoney_str);//最低返现金额 门槛
+        Integer j = transAmount.compareTo(limitRebackMoney); //-1 0 1  <=>   是否触发最低返现
+        BigDecimal rebackVal = thisRedBackVal(dayCash, transAmount, limitRebackMoney, j); //该次提现的返现金额
+
+        WithdrawRecord withdrawRecord = WithdrawRecord.builder()
+                .withdrawMoney(transAmount).returnMoney(rebackVal)
+                .playerId(playerId).packageName(st.PackageName())
+                .withdrawFrom(from)
+                .payLoginId(payId)
+                .realName(realName)
+                .withdrawPercentageNow(String.valueOf(withdrawPercentage))
+                .withdrawTime(LocalDateTime.now()).wxNickname(player.getWxNickname()).build();
+
+        if (player.getPayLoginId() == null || player.getRealName() == null) {
+            //第一次提现的用户直接免密只提0.3
+            withdrawRecord.setWithdrawMoney(limitRed);
+            rebackVal = thisRedBackVal(dayCash, limitRed, limitRebackMoney, j);
+            withdrawRecord.setReturnMoney(rebackVal);
+            transAmount = limitRed;
+            i = -1;
+        }
+
+
+        if (i == -1) {            //免审核的提现
+            BigDecimal redWithDrew = withdrawNojudge(playerId, payId, realName, player, dayRecord, withdrawPercentage, transAmount, rebackVal, withdrawRecord);//提现后的余额
+
+            resultMessage.setMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getMessage());
+            resultMessage.setCode(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getCode());
+            resultMessage.setData(redWithDrew);
+        } else {
+            //审核
+            withdrawRecord.setWithdrawStatus('1');
+            rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
+            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), transAmount);  //当日提现金额累加
+
+            withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
+
+            playerMapper.updatePlayerInRed(playerId, transAmount.multiply(withdrawPercentage).negate());  //玩家余额减少
+            rur.delete(playerId + "withdraw");
+            rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
+            BigDecimal redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());  //提现后余额
+
+            resultMessage.setData(redWithDrew);
+            resultMessage.setMessage(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getMessage());
+            resultMessage.setCode(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getCode());
+            log.info("订单已提交审核");
+        }
+        return resultMessage;
+    }
+
+    /***
+     * 玩家免审核的提现,同时绑定支付宝
+     * @param playerId 玩家id
+     * @param payId 支付宝账户
+     * @param realName 姓名
+     * @param player 玩家信息
+     * @param dayRecord 玩家该日留存记录
+     * @param withdrawPercentage 提现比例
+     * @param transAmount 提现金额
+     * @param rebackVal 返现金额
+     * @param withdrawRecord 该次的提现记录
+     * @return 免审核提现成功后的玩家余额
+     */
+    private BigDecimal withdrawNojudge(Long playerId, String payId, String realName, Player player, DayBehaveRecordlist dayRecord, BigDecimal withdrawPercentage, BigDecimal transAmount, BigDecimal rebackVal, WithdrawRecord withdrawRecord) {
+
+        BigDecimal playerRed_Need_reduce;
+        String OutBizNo = Pay_Order_Header + UUID.randomUUID().toString().replace("-", "");//订单流水号
+        String title = "提现成功! 乐益消消乐祝您龙年行大运,完事皆如意";
+        String remark = "";
+        Participant alipayaccount = new Participant();
+        alipayaccount.setIdentityType(IdentityType);
+        alipayaccount.setIdentity(payId);
+        alipayaccount.setName(realName);
+        transAmount = transAmount.add(rebackVal); //返现 提现金额一起发
+        BigDecimal cash = transAmount.setScale(2, BigDecimal.ROUND_DOWN);
+
+        BigDecimal redWithDrew = BigDecimal.ZERO;  //提现后余额
+        ResultMessage pay = aliPayUtil.pay(OutBizNo, cash, title, remark, alipayaccount);
+
+        if (pay.getCode().equals("66666")) {
+            withdrawRecord.setWithdrawStatus('0');      //该订单为免审核-通过
+            playerRed_Need_reduce = (transAmount.subtract(rebackVal));
+            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), playerRed_Need_reduce);  //当日提现金额累加
+
+            //提现成功,绑定该用户支付宝
+            playerMapper.refreshPlayerRealInfo(playerId, payId, realName);
+            log.info("玩家免审核提现成功,绑定该用户支付宝");
+
+            withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
+
+            playerMapper.updatePlayerInRed(playerId, playerRed_Need_reduce.multiply(withdrawPercentage).negate());  //玩家余额减少
+            redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());
+
+
+            rur.delete(playerId + "withdraw");
+            rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
+        }
+
+        return redWithDrew;
+    }
+
+    /***
+     * 判断触发返现,同时返回该次的返现金额,未触发则返回0
+     * @param dayCash 当日已提现的金额
+     * @param transAmount   该次提现的金额
+     * @param limitRebackMoney 最低返现金额[门槛]
+     * @param j 是否触发返现
+     * @return 返现金额, 未触发=0
+     */
+    private BigDecimal thisRedBackVal(BigDecimal dayCash, BigDecimal transAmount, BigDecimal limitRebackMoney, Integer j) {
+        BigDecimal rebackVal;
         if (j != -1) {
 
             BigDecimal thisRebackPer_end = null;
@@ -185,84 +297,24 @@ public class PayImpl implements PayServices {
             rebackVal = new BigDecimal("0");
             log.info("提现金额:" + transAmount + "金额未触发返现,最低为:" + limitRebackMoney + "触发");
         }
-
-        WithdrawRecord withdrawRecord = WithdrawRecord.builder()
-                .withdrawMoney(transAmount).returnMoney(rebackVal)
-                .playerId(playerId).packageName(st.PackageName())
-                .withdrawPercentageNow(String.valueOf(withdrawPercentage))
-                .withdrawTime(LocalDateTime.now()).wxNickname(player.getWxNickname()).build();
-
-        try {
-
-            if (i != -1) {
-                //审核
-                if (player.getRealName() == null || player.getPayLoginId() == null) {  //提现成功,绑定该用户支付宝
-                    rs.hPutIfAbsent("payInfo", playerId + "payId", payId);
-                    rs.hPutIfAbsent("payInfo", playerId + "realName", realName);
-                }
-
-                withdrawRecord.setWithdrawStatus('1');
-                resultMessage.setMessage(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getMessage());
-                resultMessage.setCode(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getCode());
-            } else {
-                //免审核的提现
-                String OutBizNo = Pay_Order_Header + UUID.randomUUID().toString().replace("-", "");//订单流水号
-                String title = "提现成功! 乐益消消乐祝您龙年行大运,完事皆如意";
-                String remark = "";
-                Participant alipayaccount = new Participant();
-                alipayaccount.setIdentityType(IdentityType);
-                alipayaccount.setIdentity(payId);
-                alipayaccount.setName(realName);
-                transAmount = transAmount.add(rebackVal); //返现 提现金额一起发
-                BigDecimal cash = BigDecimal.ZERO;
-                cash = transAmount.setScale(2, BigDecimal.ROUND_DOWN);
-
-                withdrawRecord.setWithdrawStatus('0');      //该订单为免审核-通过
-                playerRed_Need_reduce = (transAmount.subtract(rebackVal));
-                dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), playerRed_Need_reduce);  //当日提现金额累加
-
-                aliPayUtil.pay(OutBizNo, cash, title, remark, alipayaccount);
-
-                if (bindRealName == null || bindPayLoginId == null) {  //提现成功,绑定该用户支付宝
-                    playerMapper.refreshPlayerRealInfo(playerId, payId, realName);
-                    log.info("玩家免审核提现成功,绑定该用户支付宝");
-                }
-
-                resultMessage.setMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getMessage());
-                resultMessage.setCode(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getCode());
-            }
-            withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
-
-            rur.delete(playerId + "withdraw");
-            playerMapper.updatePlayerInRed(playerId, playerRed_Need_reduce.multiply(withdrawPercentage).negate());  //玩家余额减少
-            rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
-            BigDecimal redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());  //提现后余额
-            resultMessage.setData(redWithDrew);
-        } catch (AppException e) {
-            SpringRollBackUtil.rollBack();
-            log.error("玩家免审核提现失败,错误信息:" + e, new AppException(ResponseEnum.PLAYER_WITHDRAW_FAILED));
-            resultMessage.setMessage(e.getMessage());
-            resultMessage.setCode(e.getCode());
-            return resultMessage;
-        }
-        return resultMessage;
+        return rebackVal;
     }
 
-    /***
-     * 绑定支付宝
-     * playerId 认证的玩家id
-     * payId 支付宝用户id
-     * realName 姓名
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public Integer manIdentify(Long playerId, String payId, String realName) {
-        Long pName = playerMapper.selectPlayerByPayID(payId);
-        Long pID = playerMapper.selectPlayerByRealName(realName);
-        if (pName != null || pID != null) {
-            log.warn("该支付宝账号已被其他玩家绑定", new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND));
-            throw new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND);
-        }
-        int i = playerMapper.refreshPlayerRealInfo(playerId, payId, realName);
-        return i;
-    }
+//    /***
+//     * 绑定支付宝
+//     * playerId 认证的玩家id
+//     * payId 支付宝用户id
+//     * realName 姓名
+//     */
+//    @Transactional(rollbackFor = Exception.class)
+//    public Integer manIdentify(Long playerId, String payId, String realName) {
+//        Long pName = playerMapper.selectPlayerByPayID(payId);
+//        Long pID = playerMapper.selectPlayerByRealName(realName);
+//        if (pName != null || pID != null) {
+//            log.warn("该支付宝账号已被其他玩家绑定", new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND));
+//            throw new AppException(ResponseEnum.PLAYER_ALIPAY_ALREADY_BIND);
+//        }
+//        int i = playerMapper.refreshPlayerRealInfo(playerId, payId, realName);
+//        return i;
+//    }
 }

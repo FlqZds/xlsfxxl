@@ -58,6 +58,7 @@ public enum ResponseEnum {
     ADV_ENCOURAGE_SIGN_ERROR("80502", "激励广告回传签名不匹配,请使用正确的签名"),
     TOKEN_INVALIDATE("80545", "无效Token ,请使用正确的Token"),
     TOKEN_EXPIRE("80501", "Token过期 ,请重新登录"),
+    USER_IS_ONLINE("80497", "您当前将登陆的用户已在线"),
     USER_NO_LOGIN("80401", "用户未登录,请先登录"),
     REGISTER_FAILED("80503", "用户注册失败"),
     BAN_USER_OUT("80504", "您的账号已被封禁，请联系管理员"),
@@ -65,7 +66,7 @@ public enum ResponseEnum {
     GATHERING_OVER_FLOW("80595", "在线人数超出聚集设置上限,请重新登录"),
     PLAYER_NOT_PARTICIPATE_IN_GATHERING("80556", "玩家未参与聚集校验,请先去聚集校验"),
     PLAYER_WITHOUT_UPLOAD_DEVICE_INFO("87662", "玩家似乎未上传设备信息,或未找到该玩家的设备信息"),
-
+    NOTICE_ENABLE_WATCH_ADV("97890", "发送当前时间段是否能观看广告"),
 
     NO_ANY_REDUNDANT_APP("80888", "更多游戏待上新...,敬请期待"),
     //    参数问题
@@ -81,27 +82,26 @@ public enum ResponseEnum {
     BATCH_SUMMARY_DATA_FAILED("66030", "批量添加统计数据出错,请联系管理员"),
     RETAIN_BATCH_INLINE_FAILED("66031", "批量添加在线用户数据出错,请联系管理员"),
 
+    ALIPAY_TRANSFER_SUCCESSFUL("66666", "支付宝转账成功!!!"),
+    PLAYER_NO_REAL_IDENTIFY("55002", "用户未完成实名认证,请优先去实名认证"),
+    GET_RED_PACKET_INFO_FAILED("66071", "查询该玩家红包信息失败"),
 
     PLAYER_NO_SEE_ENCOURAGE("67667", "用户未观看激励广告,请先去观看激励广告再来发起提现"),
-    WITHDRAW_PRE_WATCH("88066", "提现广告已观看,请立马前往提现"),
-    PLAYER_NO_REAL_IDENTIFY("55002", "用户未完成实名认证,请优先去实名认证"),
     PLAYER_WITHDRAW_COUNT_OVER_LIMIT("55090", "玩家提现次数已达上限,请明天再来吧"),
-    PLAYER_NO_MORE_MONEY("66066", "玩家余额不足,请先充值"),
-    GET_RED_PACKET_INFO_FAILED("66071", "查询该玩家红包信息失败"),
-    PLAYER_WITHDRAW_FAILED("66071", "免审核提现失败,请联系管理员"),
     PLAYER_WITHDRAW_ADMIN_FAILED("66070", "审核提现失败,请联系管理员"),
-    PLAYER_WITHDRAW_MONEY_TOO_SMALL("55000", "提现金额太小了"),
+    WITHDRAW_PRE_WATCH("88066", "提现广告已观看,请立马前往提现"),
+    PLAYER_NO_MORE_MONEY("66066", "玩家余额不足,请先充值"),
     PLAYER_WITHDRAW_MONEY_TOO_LARGE("55999", "提现金额过大,该次交易已被拒绝"),
-
-    ALIPAY_TRANSFER_SUCCESSFUL("66666", "支付宝转账成功!!!"),
+    PLAYER_WITHDRAW_MONEY_TOO_SMALL("55000", "提现金额太小了"),
+    PLAYER_WITHDRAW_FAILED("66079", "免审核提现失败,请联系管理员"),
     ALIPAY_CLIENT_INIT_FAILED("66006", "支付宝客户端初始化失败"),
     ALIPAY_TRANSFER_INVOKE_FAILED("55005", "支付宝转账接口调用失败,请联系管理员查看详情"),
     ALIPAY_INFO_DIFFERENCE("55006", "您所提交的支付宝账号信息与上次有所不同"),
     WITHDRAW_ORDER_MENTIONED("66088", "订单已提交审核,请稍候"),
     NO_JUDGE_ORDER_SUCCESSFUL("66077", "免审核订单提现成功"),
-    ALIPAY_TRANSFER_ERROR("" + FS.temp_code, "支付宝转账未成功,原因竟是....." + FS.temp_msg),
     PLAYER_ALIPAY_ALREADY_BIND("55001", "该支付宝账号已被绑定"),
 
+    ALIPAY_TRANSFER_ERROR("" + FS.temp_code, "支付宝转账未成功,原因竟是....." + FS.temp_msg),
 
     SELECT_MASTER_FAILED("66020", "未查到该账号的管理员"),
     SELECT_APPLICATION_FAILED("66021", "查询应用失败"),

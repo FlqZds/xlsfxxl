@@ -16,6 +16,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+<!--        <module>client_fujian_one</module>-->
         <module>Client_WLAN_Parse</module>
         <module>Client_Img_one</module>
         <module>Common</module>

@@ -16,9 +16,8 @@ public class GameMeta {
     private Long playerId;
     @ApiModelProperty(value = "游戏ID")
     private Long gameId;
-    @ApiModelProperty(value = "是否为特殊用户",dataType = "Character")
+    @ApiModelProperty(value = "是否为特殊用户", dataType = "Character")
     private String isSpecial;
-
     @ApiModelProperty(value = "微信头像", example = "1")
     private String wxHeadimgurl;
     @ApiModelProperty(value = "jwToken", example = "qrwhoifqwjreoiqwe")
@@ -31,4 +30,10 @@ public class GameMeta {
     private RiskControlSetting riskControlSetting;
     @ApiModelProperty("地址")
     private String address;
+
+    private int dayOfWeek; //这周星期几
+    private Long beginTimeInterval;//时间(0点 到当前设置开始时间的时间戳[毫秒])
+    private Long endTimeInterval;//时间(0点 到当前设置结束时间的时间戳[毫秒])
+    private boolean forbidSwitch;  //禁止观看广告时间段的开关 1代表关闭,0代表开启
+    private boolean enableWeekend;  //是否周末的开关 1代表关闭,0代表开启
 }

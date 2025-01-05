@@ -8,10 +8,7 @@ import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.*;
-import com.yunting.login.dto.GameMeta;
-import com.yunting.login.dto.PlayerMetaData;
-import com.yunting.login.dto.SignDto;
-import com.yunting.login.dto.WithdrawVo;
+import com.yunting.login.dto.*;
 import com.yunting.login.entity.*;
 import com.yunting.login.mapper.*;
 import com.yunting.login.utils.ExceptionRecording;
@@ -27,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -54,6 +52,9 @@ public class LoginService {
 
     @Resource(name = "RedisUtils")
     private RedisUtils_Wlan rs;
+
+    @Resource(name = "RedisUtil_session")
+    private RedisUtil_session rus;
 
     @Resource(name = "JWTutil")
     JWTutil jwTutil;
@@ -109,12 +110,18 @@ public class LoginService {
      *
      */
     @Transactional(rollbackFor = Exception.class)
-    public DeviceBrand collectionAndUploadMobileInfo(MobileDetail mobileDetail) {
+    public CollectionVo collectionAndUploadMobileInfo(MobileDetail mobileDetail) {
         String deviceName = mobileDetail.getDeviceType();
         this.saveAndDistinct(mobileDetail);
         DeviceBrand approvalBrand = mobileDetailMapper.getAllImapprovalBrand(deviceName);
         log.info("Int_设备信息采集成功,禁用设备表已返回");
-        return approvalBrand;
+        CollectionVo vo = CollectionVo.builder()
+                .appstore(approvalBrand.getAppstore())
+                .installMachine(approvalBrand.getInstallMachine())
+                .time(System.currentTimeMillis())
+                .zeroTime(TimeUtils.getTimeStamp())
+                .build();
+        return vo;
     }
 
 
@@ -161,12 +168,16 @@ public class LoginService {
         Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, st.GameId());
         DayBehaveRecordlist player_day_record = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId); //该玩家当日的留存数据
 
+        if (player_day_record == null) {
+            player_day_record.setTotalred(BigDecimal.ZERO);
+            player_day_record.setTodayred(BigDecimal.ZERO);
+            player_day_record.setTodayEncourageAdvCount(0);
+        }
         BigDecimal totalred = player_day_record.getTotalred(); //玩家总累计红包金额
         BigDecimal todayred = player_day_record.getTodayred(); //玩家当日红包余额
         BigDecimal inRed = player.getInRed();                  //玩家余额
         String payLoginId = player.getPayLoginId(); //支付宝id
         String realName = player.getRealName(); //姓名
-
 //设置
         //截图设置
         playerMetaData.setScreenshotSettingVal(st.Codebit_Max_val());
@@ -238,15 +249,24 @@ public class LoginService {
         }
 
         String openid = wxUtil.getWxOpenID(st.PackageName(), wxCode); //获取微信openID
+        LocalTime beginTime = LocalTime.parse(st.Forbid_Begin_Time()); //获取禁止看广告的时间
+        LocalTime endTime = LocalTime.parse(st.Forbid_End_Time());
 
         MobileDetail md = MobileDetail.builder().deviceType(deviceType).deviceDetail(deviceDetail)
                 .mobileCpu(mobileCpu).mobileCpuFluency(mobileCpuFluency).mobileSystem(mobileSystem).build();
-        Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,安卓系统....)+返回该次的设备id
+        Long mobileID = this.saveAndDistinct(md);//存储+去重(设备型号,更新安卓系统....)+返回该次的设备id
 
         Player player_isRegistered = playerMapper.selectPlayerByWxOpenId(openid);
 
         if (Objects.nonNull(player_isRegistered) == true) { //这里是老用户
             Long player_isRegistered_ID = player_isRegistered.getPlayerId();
+
+            //通过玩家id 查找当前要登录的玩家是否是已在线的玩家  若是,则报错
+            if (Objects.nonNull(rus.get(player_isRegistered + "State"))) {
+                log.error("当前要登录的用户是已在线的用户");
+                return new ResultMessage(ResponseEnum.USER_IS_ONLINE, null);
+            }
+
 
             String special = player_isRegistered.getSpecial();  //玩家的身份/状态
             Character status = player_isRegistered.getStatus();  //玩家是否封禁
@@ -310,10 +330,20 @@ public class LoginService {
             gameMeta.setRiskControlSetting(riskControlSetting);
             gameMeta.setAddress(cityInfo);
 
+            gameMeta.setDayOfWeek(TimeUtils.getDayOfWeek());
+
+            gameMeta.setBeginTimeInterval(TimeUtils.getThisTimeStamp(beginTime.getHour(), beginTime.getMinute()));
+            gameMeta.setEndTimeInterval(TimeUtils.getThisTimeStamp(endTime.getHour(), endTime.getMinute()));
+            gameMeta.setForbidSwitch(st.isForbid_Switch());
+            gameMeta.setEnableWeekend(st.IS_Weekend());
+
+            examIsWatchAdv(gameMeta); //获取此时登录的时间段能否可以看广告
+
             playerMapper.updatePlayerMobileID(player_isRegistered_ID, mobileID);
             log.info("玩家设备id已刷新");
 
-            log.info(player_isRegistered.getWxNickname() + "用户已经存在，将前往登录");
+
+            log.info(player_isRegistered.getWxNickname() + "用户已经存在，开始登录");
             return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
         } else {
 
@@ -330,6 +360,11 @@ public class LoginService {
                 gameMeta.setRiskControlSetting(riskControlSetting);
                 gameMeta.setAddress(cityInfo);
 
+                gameMeta.setDayOfWeek(TimeUtils.getDayOfWeek());
+                gameMeta.setBeginTimeInterval(TimeUtils.getThisTimeStamp(beginTime.getHour(), beginTime.getMinute()));
+                gameMeta.setEndTimeInterval(TimeUtils.getThisTimeStamp(endTime.getHour(), endTime.getMinute()));
+                gameMeta.setForbidSwitch(st.isForbid_Switch());
+                gameMeta.setEnableWeekend(st.IS_Weekend());
 
                 log.info(wxUser.getWxNickname() + "玩家,注册成功");
                 return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
@@ -341,13 +376,46 @@ public class LoginService {
         }
     }
 
+
+    @Resource(name = "RedisUtil_Record")
+    private RedisUtil_Record rur;
+
+    /***
+     *
+     * 判断当前时间段是否可以看广告
+     * @param gameMeta
+     */
+    private void examIsWatchAdv(GameMeta gameMeta) {
+//        if (LocalDate.now().getDayOfWeek().getValue() == 6 || LocalDate.now().getDayOfWeek().getValue() == 7) {
+//            if (st.IS_Weekend() == false) {
+//                log.info("今天是周六,周日,不可以看广告");
+//                gameMeta.setWeekend(false);
+//            } else {
+//                gameMeta.setWeekend(true);
+//            }
+//        } else {
+//            gameMeta.setWeekend(true);
+//        }
+//
+//        if (LocalDateTime.now().isAfter(LocalDateTime.now().withHour(st.Forbid_Begin_Time()))
+//                && LocalDateTime.now().isBefore(LocalDateTime.now().withHour(st.Forbid_End_Time()))) {
+//            if (st.isForbid_Switch()) {
+//                log.info("您已到达不准看广告的时间段");
+//                gameMeta.setForbid(true);
+//            } else {
+//                gameMeta.setForbid(false);
+//            }
+//        } else {
+//            gameMeta.setForbid(false);
+//        }
+    }
+
     /***
      * 添加设备记录
      * <p>
      * (只单纯添加设备记录,没包含去重等任何逻辑)
      * @param dto 玩家的设备信息
      * @param identifiction 玩家的位置
-     *
      */
     @Transactional(rollbackFor = Exception.class)
     public void addDeviceRecord(Player player, SignDto dto, String identifiction) {
@@ -390,10 +458,10 @@ public class LoginService {
             Long mobileID = mobile.getMobileId();
             String localSystem = mobile.getMobileSystem();
             log.info("本地设备系统:" + localSystem);
-            if (localSystem.equals(mobileSystem) == false) {  //其他相同但是设备系统需要更新
-                mobileDetailMapper.changeMobileSystem(mobileID, mobileDetail.getMobileSystem());
-                log.info("该型号设备系统已变更");
-            }
+//            if (localSystem.equals(mobileSystem) == false) {  //其他相同但是设备系统需要更新
+//                mobileDetailMapper.changeMobileSystem(mobileID, mobileDetail.getMobileSystem());
+//                log.info("该型号设备系统已变更");
+//            }
             return mobileID;
         } else   //        如果数据库中没有该型号数据,就新增该型号
         {

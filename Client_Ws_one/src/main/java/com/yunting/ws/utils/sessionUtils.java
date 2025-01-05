@@ -1,17 +1,23 @@
 package com.yunting.ws.utils;
 
+import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.utils.RedisUtil_session;
 import com.yunting.common.utils.RedisUtils_Wlan;
 import com.yunting.common.utils.ST;
 
 import com.yunting.ws.config.websocket.MyConfigurator;
+import com.yunting.ws.dto.PlayerMetaData;
+import com.yunting.ws.entity.DayBehaveRecordlist;
 import com.yunting.ws.entity.Player;
+import com.yunting.ws.entity.ScreenshotTask;
+import com.yunting.ws.mapper.DayBehaveRecordlistMapper;
 import com.yunting.ws.mapper.PlayerMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.websocket.Session;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Component("GatheringUtils")
@@ -25,6 +31,10 @@ public class sessionUtils {
 
     @Resource(name = "PlayerMapper")
     private PlayerMapper playerMapper;
+
+
+    @Resource(name = "DayBehaveRecordlistMapper")
+    private DayBehaveRecordlistMapper dayBehaveMapper;
 
     @Resource(name = "ST")
     private ST st;
@@ -89,4 +99,73 @@ public class sessionUtils {
 
         return playerID;
     }
+
+
+    /***
+     * 通过包名获取游戏设置
+     * @return
+     * 1玩家红包余额
+     * <p>
+     * 2总累计红包金额
+     * <p>
+     * 3今日累计红包金额
+     * <p>
+     * 4此时的提现比例
+     * <p>
+     * 5玩家支付宝id
+     * <p>
+     * 6玩家姓名
+     * <p>
+     * 7玩家任务列表
+     */
+    public PlayerMetaData getGameSetting(String playerID) {
+        Long playerId = Long.parseLong(playerID);
+        PlayerMetaData playerMetaData = new PlayerMetaData();
+
+        ScreenshotTask task = playerMapper.getFirstTaskListByPlayerIdAndGameID(playerId, st.GameId());
+        Player player = playerMapper.selectAliPayInfoByPlayerId(playerId, st.GameId());
+        DayBehaveRecordlist player_day_record = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId); //该玩家当日的留存数据
+
+        if (player_day_record == null) {
+            player_day_record.setTotalred(BigDecimal.ZERO);
+            player_day_record.setTodayred(BigDecimal.ZERO);
+        }
+        BigDecimal totalred = player_day_record.getTotalred(); //玩家总累计红包金额
+        BigDecimal todayred = player_day_record.getTodayred(); //玩家当日红包余额
+        BigDecimal inRed = player.getInRed();                  //玩家余额
+        String payLoginId = player.getPayLoginId(); //支付宝id
+        String realName = player.getRealName(); //姓名
+//设置
+        //截图设置
+        playerMetaData.setScreenshotSettingVal(st.Codebit_Max_val());
+        playerMetaData.setTransLimitDaily(st.Daily_Max_Submit_Num());
+        playerMetaData.setTransRewardCont(st.Daily_Max_Watch_Num());
+        playerMetaData.setMaxRestTime(st.Reset_Max_Time());
+        String shotOptions = st.isShot_Switch() ? "1" : "0";
+        playerMetaData.setScreenshotSettingOptions(shotOptions);
+
+        playerMetaData.setNoticeMSG(st.Notification());
+        playerMetaData.setAdvWatchInterval(st.ADV_Interval());
+        playerMetaData.setWithdrawPercentage(st.Withdraw_Percentage());//提现比例
+//玩家数据
+        playerMetaData.setInRed(String.valueOf(inRed));
+        playerMetaData.setTotalRed(String.valueOf(totalred));
+        playerMetaData.setTodayRed(String.valueOf(todayred));
+//pay
+        playerMetaData.setPayLoginId(payLoginId);
+        playerMetaData.setRealName(realName);
+
+//任务
+        if (task == null || task.getBonus() == null) {
+            playerMetaData.setBonus(BigDecimal.ZERO);
+            playerMetaData.setTaskProcess(0);
+            log.info("玩家:|-" + playerId + "-|,任务金不存在,现已读取游戏设置");
+            return playerMetaData;
+        }
+        playerMetaData.setBonus(task.getBonus());
+        playerMetaData.setTaskProcess(task.getTaskProcess());
+        log.info("玩家:|-" + playerId + "-|已读取游戏设置");
+        return playerMetaData;
+    }
+
 }

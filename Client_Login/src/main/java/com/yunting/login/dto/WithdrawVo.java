@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(description = "设备信息")
+@ApiModel(description = "提现记录信息")
 public class WithdrawVo {
 
     @ApiModelProperty(value = "玩家id", dataType = "Long")

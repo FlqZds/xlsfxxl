@@ -46,12 +46,12 @@ public class DaySummaryCounter {
     //统计该日所有代理的游戏的广告数据
 
     /***
-     * 在凌晨十二点 每天统计前一日  所有代理 (包含子代)的 每种广告联盟的 广告奖励  ecpm
+     * 在凌晨三点 每天统计前一日  所有代理 (包含子代)的 每种广告联盟的 广告奖励  ecpm
      */
-    @Scheduled(cron = "0 0 0 * * ?")  //间隔一天   每天凌晨零点执行任务
+    @Scheduled(cron = "0 0 3 * * ?")  //间隔一天   每天凌晨三点执行任务
     @Transactional(rollbackFor = Exception.class)
     public void getSummary() {
-        log.info("开始统计前一日的代理数据");
+        log.info("开始统计前一日的代理数据和广告联盟数据");
         executeTask.task_summary_all();
     }
 
@@ -67,6 +67,7 @@ public class DaySummaryCounter {
      * 4.新建在线用户表
      *
      */
+    //间隔一天
     @Scheduled(cron = "30 0 0 * * ?")
     //间隔一天  每天凌晨零点执行任务
     public void refreshGameSettingDaily() {
@@ -74,20 +75,6 @@ public class DaySummaryCounter {
         executeTask.task_refresh_GameSetting_Daily();
     }
 
-    /***
-     * 每日12:15分 开始将在线用户map存入mysql中
-     * <P>
-     * 间隔十秒运行一次<P>
-     * 每次存入500条记录<p>
-     * 直至redis的在线用户map中没有数据为止
-     * fixedRate = 10 * 1000
-     */
-    @Scheduled(cron = "0 15 00 * * ?")
-    public void saveOnlinePlayer() {
-        isSave = true;
-        log.info("开始记录在线用户" + LocalDateTime.now());
-        executeTask.task_Save_onlineUser();
-    }
 
     /***
      * 每日23:59分统计新增用户

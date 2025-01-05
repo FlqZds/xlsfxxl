@@ -10,6 +10,7 @@ import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.IpUtils;
 import com.yunting.common.utils.ST;
+import com.yunting.login.dto.CollectionVo;
 import com.yunting.login.dto.PlayerMetaData;
 import com.yunting.login.dto.SignDto;
 import com.yunting.login.dto.WithdrawVo;
@@ -43,12 +44,6 @@ public class ClientController {
         return resultMessage;
     }
 
-    @ApiOperation(value = "获取游戏数据+玩家数据")
-    @PostMapping("/gameSetting")
-    public ResultMessage getGameSetting(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO) {
-        PlayerMetaData playerMetaData = loginService.getGameSetting(playerDTO);
-        return new ResultMessage(ResponseEnum.SUCCESS, playerMetaData);
-    }
 
     @ApiOperation(value = "获取风控参数")
     @GetMapping("/risking")
@@ -83,10 +78,9 @@ public class ClientController {
     @PostMapping("/collection")
     private ResultMessage uploadMobileInfo(@RequestBody MobileDetail mobileDetail) {
 
-        DeviceBrand brandInfo = loginService.collectionAndUploadMobileInfo(mobileDetail);
+        CollectionVo brandInfo = loginService.collectionAndUploadMobileInfo(mobileDetail);
         return new ResultMessage(ResponseEnum.SUCCESS, brandInfo);
     }
-
 
 
 }

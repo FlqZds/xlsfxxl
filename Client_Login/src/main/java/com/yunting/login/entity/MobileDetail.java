@@ -27,5 +27,6 @@ public class MobileDetail {
     private String mobileCpuFluency;
     @ApiModelProperty(value = "设备系统", dataType = "String")
     private String mobileSystem;
+    private boolean getOaid; //是否能获取到oaid
 
 }
