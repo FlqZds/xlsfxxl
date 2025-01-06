@@ -29,7 +29,7 @@ public interface LocationMapper {
     public Integer insertExceptionRecord(ExceptionRecordlsit exceptionRecordlsit);
 
     //根据玩家id,包名,获取该玩家的所有提现记录
-    List<WithdrawVo> getWithdrawRecordByPlayerIdAndPackageName(@Param("playerId") Long playerId, @Param("packageName") String packageName);
+    List<WithdrawVo> getWithdrawRecordByPlayerIdAndPackageName(@Param("playerId") Long playerId, @Param("packageName") String packageName,@Param("page")Integer pageNum);
 
 
 }

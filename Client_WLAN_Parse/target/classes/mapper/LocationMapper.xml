@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.wlan.mapper.LocationMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.wlan.entity.Location">
+        <id column="locate_id" property="locateId" jdbcType="BIGINT"/>
+        <id column="player_id" property="playerId" jdbcType="BIGINT"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="record_time" property="recordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertLocation">
+        INSERT INTO ${dbName}.location(player_id, location,record_time)VALUES
+        (#{playerId},#{location},#{recordTime})
+        <selectKey resultType="long" keyProperty="locateId" order="AFTER" keyColumn="locate_id">
+            select @@identity;
+        </selectKey>
+    </insert>
+
+    <select id="getLocationByPlayerId" resultType="java.lang.String">
+        select location, record_time
+        from ${dbName}.location
+        where player_id = #{playerId}
+        order by locate_id desc
+        limit 1
+    </select>
+
+
+    <select id="getLastLocationByPlayerId" resultType="com.yunting.wlan.entity.Location">
+        select locate_id, player_id, location, record_time
+        from ${dbName}.location
+        where player_id = #{playerId}
+          and date(record_time) = #{today}
+        order by locate_id desc
+        limit 1
+    </select>
+
+
+</mapper>

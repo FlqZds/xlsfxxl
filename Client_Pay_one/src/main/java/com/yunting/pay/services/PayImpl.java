@@ -153,12 +153,14 @@ public class PayImpl implements PayServices {
 
         String limitRebackMoney_str = withdrawMapper.getLimitRebackMoney();
         BigDecimal limitRebackMoney = new BigDecimal(limitRebackMoney_str);//最低返现金额 门槛
-        Integer j = transAmount.compareTo(limitRebackMoney); //-1 0 1  <=>   是否触发最低返现
+        Integer j = this_is_judge.compareTo(limitRebackMoney); //-1 0 1  <=>   是否触发最低返现
         BigDecimal rebackVal = thisRedBackVal(dayCash, transAmount, limitRebackMoney, j); //该次提现的返现金额
 
         WithdrawRecord withdrawRecord = WithdrawRecord.builder()
-                .withdrawMoney(transAmount).returnMoney(rebackVal)
-                .playerId(playerId).packageName(st.PackageName())
+                .withdrawMoney(transAmount)
+                .returnMoney(rebackVal)
+                .playerId(playerId)
+                .packageName(st.PackageName())
                 .withdrawFrom(from)
                 .payLoginId(payId)
                 .realName(realName)
@@ -175,7 +177,7 @@ public class PayImpl implements PayServices {
         }
 
 
-        if (i == -1) {            //免审核的提现
+        if (i != 1) {            //免审核的提现
             BigDecimal redWithDrew = withdrawNojudge(playerId, payId, realName, player, dayRecord, withdrawPercentage, transAmount, rebackVal, withdrawRecord);//提现后的余额
 
             resultMessage.setMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getMessage());
@@ -185,11 +187,11 @@ public class PayImpl implements PayServices {
             //审核
             withdrawRecord.setWithdrawStatus('1');
             rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
-            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), transAmount);  //当日提现金额累加
 
+            BigDecimal playerRed = transAmount.multiply(withdrawPercentage).negate();//玩家余额
+            playerMapper.updatePlayerInRed(playerId, playerRed);  //玩家余额减少
+            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), transAmount, playerRed, playerRed, rebackVal, transAmount);  //当日提现金额,返现金额,当日提现打款金额累加
             withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
-
-            playerMapper.updatePlayerInRed(playerId, transAmount.multiply(withdrawPercentage).negate());  //玩家余额减少
             rur.delete(playerId + "withdraw");
             rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
             BigDecimal redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());  //提现后余额
@@ -234,7 +236,6 @@ public class PayImpl implements PayServices {
         if (pay.getCode().equals("66666")) {
             withdrawRecord.setWithdrawStatus('0');      //该订单为免审核-通过
             playerRed_Need_reduce = (transAmount.subtract(rebackVal));
-            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), playerRed_Need_reduce);  //当日提现金额累加
 
             //提现成功,绑定该用户支付宝
             playerMapper.refreshPlayerRealInfo(playerId, payId, realName);
@@ -242,7 +243,10 @@ public class PayImpl implements PayServices {
 
             withdrawMapper.insertWithdrawRecord(withdrawRecord);              //插入提现记录
 
-            playerMapper.updatePlayerInRed(playerId, playerRed_Need_reduce.multiply(withdrawPercentage).negate());  //玩家余额减少
+            BigDecimal playerRed = playerRed_Need_reduce.multiply(withdrawPercentage).negate();//玩家余额减少
+            playerMapper.updatePlayerInRed(playerId, playerRed);
+            //当日提现打款金额,返现打款金额累加
+            dayBehaveMapper.changeDayBehaveRecordWithdrawCash(dayRecord.getDayId(), playerRed_Need_reduce, playerRed, playerRed, rebackVal, playerRed_Need_reduce);
             redWithDrew = playerMapper.selectInRedByPlayerId(playerId, player.getGameId());
 
 
@@ -288,7 +292,6 @@ public class PayImpl implements PayServices {
             BigDecimal added = dayCash.add(transAmount); //总的+这次的
             added = added.multiply(thisRebackPer_begin);               //计算公式前面那一坨
             added = added.setScale(2, BigDecimal.ROUND_DOWN);
-
 
             rebackVal = added.subtract(toReduce);//返现金额
             log.info("提现金额:" + transAmount + "金额触发返现,返现金额为:" + rebackVal

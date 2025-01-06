@@ -19,7 +19,7 @@ public class DayBehaveRecordlist {
 
     private String appId;
 
-    private String retainWay;
+    private String isRetain;
 
     private BigDecimal todayred;
 

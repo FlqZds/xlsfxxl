@@ -94,15 +94,10 @@ public class MyConfigurator extends ServerEndpointConfig.Configurator {
         PlayerMapper playerMapper = SpringBeanContext.getContext().getBean(PlayerMapper.class);
         RedisUtil_Record rur = SpringBeanContext.getContext().getBean("RedisUtil_Record", RedisUtil_Record.class);
 
-        Player player = playerMapper.selectPlayerByPlayerId(playerid);
-
         try {
-            playerMapper.updatePlayerDayrecord(playerid, LocalDateTime.now(), "pos", LocalDate.now());
-
-            rur.setBit("retain_bitMap", Long.parseLong(playerid), true);
-
-            log.info("用户:" + playerid + " 当日行为记录已留存");
-
+            String no_retain_set = rur.get("No_Retain_Set");
+            playerMapper.updatePlayerDayrecord(playerid, LocalDateTime.now(), LocalDate.now());
+            log.info("用户:" + playerid + " 当日行为记录已更新");
         } catch (Exception e) {
             SpringRollBackUtil.rollBack();
             log.error("用户:" + playerid + " 当日行为记录留存失败");

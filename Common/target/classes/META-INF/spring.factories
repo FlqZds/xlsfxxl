@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yunting.common.interceptor.MyInterceptorAutoConfiguration,\
+  com.yunting.common.configuration.jwTutilConfiguration,\
+  com.yunting.common.configuration.JascksonConfiguration,\
+  com.yunting.common.configuration.rurConfiguration,\
+  com.yunting.common.configuration.RedisTemplateConfig,\
+  com.yunting.common.configuration.RedisConfiguration,\
+  com.yunting.common.configuration.StConfiguration

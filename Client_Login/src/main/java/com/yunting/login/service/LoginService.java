@@ -130,15 +130,12 @@ public class LoginService {
      * @param playerDTO 玩家信息
      * @return 用户提现记录
      */
-    public PageInfo getPlayerWithdrawRecord(PlayerDTO playerDTO, Integer pageNum) {
+    public List getPlayerWithdrawRecord(PlayerDTO playerDTO, Integer pageNum) {
         Long playerId = playerDTO.getPlayerId();
 
-        PageHelper.startPage(pageNum, 50);
-        List<WithdrawVo> record = locationMapper.getWithdrawRecordByPlayerIdAndPackageName(playerId, st.PackageName());
-        PageInfo pageInfo = new PageInfo(record);
-
+        List<WithdrawVo> record = locationMapper.getWithdrawRecordByPlayerIdAndPackageName(playerId, st.PackageName(), pageNum);
         log.info("用户提现记录已返回,第" + pageNum + "页的");
-        return pageInfo;
+        return record;
     }
 
 
@@ -351,10 +348,19 @@ public class LoginService {
             Player wxUser = wxUtil.getWxUser(proxyName, mobileID);/*请求微信拿到用户信息,在这一步表中已经生成新玩家了*/
             try {
                 playerMapper.insertPlayer(wxUser);//保存新玩家
-                this.addDeviceRecord(wxUser, signDto, "1");//保存新设备记录
-                PlayerDTO playerDTO = this.generateToken(wxUser);
-                this.updateLocation(playerDTO, location);
+                PlayerDTO playerDTO = this.generateToken(wxUser);//生成token
 
+                this.generateNewUserDayRecord(playerDTO);//生成新玩家留存记录
+                this.addDeviceRecord(wxUser, signDto, "1");//保存新设备记录
+                //更新|保存位置信息
+                Location location_new = Location.builder()
+                        .playerId(playerDTO.getPlayerId())
+                        .location(location)
+                        .recordTime(LocalDateTime.now())
+                        .build();
+                locationMapper.insertLocation(location_new);
+
+                //返回前端数据
                 GameMeta gameMeta = new GameMeta();
                 BeanUtils.copyProperties(playerDTO, gameMeta);
                 gameMeta.setRiskControlSetting(riskControlSetting);
@@ -377,8 +383,14 @@ public class LoginService {
     }
 
 
-    @Resource(name = "RedisUtil_Record")
-    private RedisUtil_Record rur;
+    public void generateNewUserDayRecord(PlayerDTO playerDTO) {
+        DayBehaveRecordlist dayRecord = DayBehaveRecordlist.builder().appId(st.APPID())
+                .playerId(playerDTO.getPlayerId() + "")
+                .isRetain("0")
+                .build();
+        dayBehaveMapper.insertDayBehaveRecordlist(dayRecord);
+        log.info("新用户" + playerDTO.getPlayerId() + "当日记录已留存");
+    }
 
     /***
      *

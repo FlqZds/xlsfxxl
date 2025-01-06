@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunting.adv.mapper.Adv.AdEncourageMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.adv.entity.Adv.AdEncourage">
+        <id column="adv_encourage_id" jdbcType="BIGINT" property="advEncourageId"/>
+        <result column="adv_type_id" jdbcType="CHAR" property="advTypeId"/>
+        <result column="app_id" jdbcType="BIGINT" property="appID"/>
+        <result column="player_id" jdbcType="BIGINT" property="playerId"/>
+        <result column="wx_nick_name" jdbcType="VARCHAR" property="wxNickName"/>
+        <result column="request_id" jdbcType="VARCHAR" property="requestId"/>
+        <result column="trans_id" jdbcType="VARCHAR" property="transId"/>
+        <result column="code_bit_id" jdbcType="VARCHAR" property="codeBitId"/>
+        <result column="server_callback_time" jdbcType="TIMESTAMP" property="serverCallbackTime"/>
+        <result column="is_server_call" jdbcType="CHAR" property="isServerCall"/>
+        <result column="is_client_call" jdbcType="CHAR" property="isClientCall"/>
+        <result column="client_callback_time" jdbcType="TIMESTAMP" property="clientCallbackTime"/>
+        <result column="request_time" jdbcType="TIMESTAMP" property="requestTime"/>
+        <result column="encourage_from" jdbcType="VARCHAR" property="encourageFrom"/>
+        <result column="encourage_reward" jdbcType="DOUBLE" property="encourageReward"/>
+        <result column="encourage_ecpm" jdbcType="DOUBLE" property="encourageEcpm"/>
+        <result column="first_click_time" jdbcType="TIMESTAMP" property="firstClickTime"/>
+        <result column="click_times" jdbcType="INTEGER" property="clickTimes"/>
+        <result column="ask_adv_put_time" jdbcType="INTEGER" property="askAdvPutTime"/>
+        <result column="get_reward_click_time_date" jdbcType="INTEGER" property="getRewardClickTimeDate"/>
+        <result column="ip" jdbcType="INTEGER" property="ip"/>
+        <result column="is_close_encourage_adv" jdbcType="CHAR" property="isCloseEncourageAdv"/>
+        <result column="is_see_end" jdbcType="CHAR" property="isSeeEnd"/>
+        <result column="is_display_ad" jdbcType="CHAR" property="isDisplayAd"/>
+        <result column="is_old_player" jdbcType="CHAR" property="isOldPlayer"/>
+        <result column="err_info" jdbcType="VARCHAR" property="errInfo"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="exception_operate" jdbcType="VARCHAR" property="exceptionOperate"/>
+    </resultMap>
+
+    <update id="changeAdEncourageRecordClose">
+        update ${dbName}.ad_encourage
+        set click_times            = #{clickCount},
+            is_close_encourage_adv = '0',
+            exception_operate= #{exceptionMsg}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="changeAdEncourageRecordEnoughReward">
+        update ${dbName}.ad_encourage
+        set client_callback_time=#{clientTime},
+            trans_id            = #{transId},
+            is_client_call='0'
+        where adv_encourage_id = #{adEncourageId}
+    </update>
+
+    <update id="changeAdEncourageRecordIsOk">
+        update ${dbName}.ad_encourage
+        set is_see_end = #{changeData}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="changeAdEncourageRecordGetWard">
+        update ${dbName}.ad_encourage
+        set ask_adv_put_time = #{askPutTimeDate}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="loadAndChange">
+        update ${dbName}.ad_encourage
+        set request_time              = #{load.requestTime},
+            encourage_from            = #{load.encourageFrom},
+            get_reward_click_time_date=#{load.getRewardClickTimeDate}
+        where adv_encourage_id = #{load.advEncourageId}
+    </update>
+
+    <update id="watchAndChange">
+        update ${dbName}.ad_encourage
+        set code_bit_id=#{watch.codeBitId},
+            request_id=#{watch.requestId},
+            encourage_ecpm=#{watch.advEcpm},
+            err_info=#{watch.errinfo},
+            is_display_ad= '0'
+        where adv_encourage_id = #{watch.advEncourageId}
+    </update>
+
+    <update id="changeAdEncourageRecordServcer">
+        update ${dbName}.ad_encourage
+        set trans_id=#{transId},
+            server_callback_time=#{serverTime}
+                ,
+            is_server_call= '0'
+        where adv_encourage_id = #{adEncourageId}
+    </update>
+
+    <update id="changeAdEncourageRecordClickTime">
+        update ${dbName}.ad_encourage
+        set first_click_time=#{clickTime},
+            click_times=#{clickCount}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="changeAdEncourageRecordReward">
+        update ${dbName}.ad_encourage
+        set encourage_reward=#{encourageReward}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="compensateAdEncourageClickCount">
+        update ${dbName}.ad_encourage
+        set click_times=#{clickCount},
+            exception_operate= #{exceptionMsg}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+
+    <select id="selectByPrimaryKey" resultType="com.yunting.adv.entity.Adv.AdEncourage">
+        select player_id,
+               is_server_call,
+               is_client_call,
+               is_see_end,
+               is_close_encourage_adv,
+               encourage_ecpm,
+               encourage_from
+        from ${dbName}.ad_encourage
+        where adv_encourage_id = #{advEncourageId}
+    </select>
+
+    <select id="isCloseAdEncourage" resultType="string">
+        select is_close_encourage_adv
+        from ${dbName}.ad_encourage
+        where adv_encourage_id = #{targetAdv}
+    </select>
+
+</mapper>

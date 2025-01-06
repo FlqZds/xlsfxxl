@@ -239,11 +239,11 @@ public class RecordImpl implements RecordService {
 
             Long playerId = playerDTO.getPlayerId();
             String from = loadDto.getEncourageFrom();
-            if (from.equals("提现")) {
+            if (from.equals("提现激励")) {
                 rur.set(playerId + "withdraw", "0");
             }
 
-            if (from.equals("激励") && rur.get(playerId + "withdraw") != null) {  //上一个 红包提现的视频看了却提现失败或者没去提现,然后来看普通激励了
+            if (from.equals("正常激励") && rur.get(playerId + "withdraw") != null) {  //上一个 红包提现的视频看了却提现失败或者没去提现,然后来看普通激励了
                 rur.delete(playerId + "withdraw");
             }
 
@@ -294,8 +294,6 @@ public class RecordImpl implements RecordService {
 
         try {
             adEncourageMapper.changeAdEncourageRecordServcer(adencourageId, trans_id, LocalDateTime.now());
-            Long dayId = dayBehaveRecordMapper.getDayLastDayBehaveRecordlistByPlayerId(adEncourage.getPlayerId()).getDayId();
-            dayBehaveRecordMapper.changeDayBehaveRecordCallbackCount(dayId, 1);
         } catch (Exception e) {
             SpringRollBackUtil.rollBack();
             log.error("修改激励广告服务端回调状态失败，请联系管理员");
@@ -407,6 +405,8 @@ public class RecordImpl implements RecordService {
                     Character isClientCall = adEncourage.getIsClientCall();  //是否被客户端回调
                     Character isServerCall = adEncourage.getIsServerCall();  //是否被服务端回调
                     String isSeeEnd = adEncourage.getIsSeeEnd();  //是否看完
+
+                    Long dayId = dayBehaveRecordMapper.getDayLastDayBehaveRecordlistByPlayerId(playerDTO.getPlayerId()).getDayId();//获取用户的该日留存记录id
 //计算传输红包值
                     Double encourageEcpm = adEncourage.getEncourageEcpm();
                     double rewardMaxVal = st.Reward_Limit();
@@ -414,6 +414,10 @@ public class RecordImpl implements RecordService {
 
                     try {
                         adEncourageMapper.changeAdEncourageRecordClose(advID, clickCount, exceptionMsg);
+
+                        if (isServerCall == '1') {//计数无服务端回调的数量 ,不分类型
+                            dayBehaveRecordMapper.changeDayBehaveRecordNoCallbackCount(dayId, 1);
+                        }
                     } catch (Exception e) {
                         SpringRollBackUtil.rollBack();
                         log.error("修改激励广告关闭状态失败，请联系管理员");
@@ -427,26 +431,32 @@ public class RecordImpl implements RecordService {
                         encourageEcpm = rewardMaxVal;  //大于的ecpm都按 最大奖励上限来算
                     }
 
-
                     // 该次的广告是提现,然后已看激励,需要告知前端跳转去提现
                     String s = rur.get(playerDTO.getPlayerId() + "withdraw");
                     if (s != null && withdrawCount == 3) {
+                        // 提现广告默认无奖励的
+                        dayBehaveRecordMapper.changeDayBehaveRecordDefaultNoneRewardCount(dayId, 1);
                         rur.set(playerDTO.getPlayerId() + "withdraw", "88");
                         return new ResultMessage(ResponseEnum.WITHDRAW_PRE_WATCH, null);
                     }
-                    try {
+                    try {//正常激励的
+
                         if (rewardCount == 4) //满足奖励条件了
                         {
                             redValue = BigDecimal.valueOf(encourageEcpm).multiply(BigDecimal.valueOf(userAdvPercentage)).multiply(Percentage).divide(BigDecimal.valueOf(10));
 //                        redVal = (encourageEcpm * userAdvPercentage * 0.01) / 10;
                             adEncourageMapper.changeAdEncourageRecordReward(advID, redValue);
 //                        该玩家的当日服务端回调发放奖励次数,红包总数,当日红包总数   <|>    玩家的余额 的更新
-                            Long dayId = dayBehaveRecordMapper.getDayLastDayBehaveRecordlistByPlayerId(playerDTO.getPlayerId()).getDayId();
                             dayBehaveRecordMapper.changeDayBehaveRecordCallbackRewardCount(dayId, 1, redValue, redValue);
                             playerMapper.updatePlayerInRed(playerDTO.getPlayerId(), redValue);
 
                             log.info(advID + "激励广告正常关闭，广告奖励值已入库,该玩家行为数据,当前红包余额都已改变");
                             break;
+                        } else {
+                            //未满足奖励条件的,记录未发放奖励数量
+                            if (isServerCall == '0') {
+                                dayBehaveRecordMapper.changeDayBehaveRecordNoRewardCount(dayId, 1);
+                            }
                         }
                     } catch (AppException e) {
                         SpringRollBackUtil.rollBack();
@@ -458,9 +468,6 @@ public class RecordImpl implements RecordService {
                 }
             }
         }
-//清掉redis中关联的key
-        log.info("开始清理_该广告的相关类型标记_同时清理对应点击量记录,该次关闭的类型:" + isRemedy);
-        rur.delete(advId + "click");
         return new ResultMessage(ResponseEnum.SUCCESS, redValue);
     }
 
@@ -475,6 +482,7 @@ public class RecordImpl implements RecordService {
      */
     public Integer judgeWard(Character isClientCall, Character isServerCall, String isSeeEnd, String isCloseEncourageAdv) {
         Integer a = 0;
+
         if (isClientCall == '0') {
             a++;
         }

@@ -7,6 +7,7 @@ import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.results.ResultMessage;
 import com.yunting.common.utils.RedisUtil_session;
+import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
 import com.yunting.ws.entity.OperationRecordlist;
 import com.yunting.ws.entity.Player;
@@ -34,6 +35,8 @@ public class Adminimpl implements AdminService {
     @Resource(name = "PlayerMapper")
     private PlayerMapper playerMapper;
 
+    @Resource(name = "ST")
+    private ST st;
 
     @Resource(name = "RedisUtil_session")
     private RedisUtil_session rus;
@@ -56,6 +59,7 @@ public class Adminimpl implements AdminService {
         String power = player.getSpecial();
 
         OperationRecordlist operationRecord = OperationRecordlist.builder()
+                .appid(Long.parseLong(st.GameId()))
                 .operationReason(condition.getOperationMsg()).operationTime(LocalDateTime.now())
                 .wxOpenId(player.getWxOpenId()).playerId(player.getPlayerId()).wxNickname(player.getWxNickname())
                 .build();

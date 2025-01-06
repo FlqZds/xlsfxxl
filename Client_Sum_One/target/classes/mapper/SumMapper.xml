@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.sum.mapper.SumMapper">
+    <insert id="addNewPlayerCount">
+        insert into behind_manage.sum_count_newplayer
+            (sum_day, new_player_Count, proxy_name, appid)
+        values (#{newPlayer.sumDay}, #{newPlayer.newPlayerCount}, #{newPlayer.proxyName}, #{newPlayer.appid})
+    </insert>
+
+    <insert id="addProxyCommissionCount">
+        insert into behind_manage.sum_proxy
+            (sum_day, sum_proxy_cash, proxy_name, adn_name)
+        values (#{proxy.sumDay}, #{proxy.sumProxyCash}, #{proxy.proxyName}, #{proxy.adnName})
+    </insert>
+
+    <update id="modifyProxyCommissionCount">
+        update behind_manage.sum_proxy
+        set sum_proxy_all_cash = #{sumProxyAllCash}
+        where proxy_name = #{proxyName}
+          and adn_name = 'all'
+          and sum_day = #{sumDay}
+    </update>
+
+    <insert id="updatePlayerDayrecord">
+        update yunting_app_test.day_behave_recordlist
+        set location    = #{pos},
+            retain_time = #{retainTime},
+            is_retain=0
+        where player_id = #{playerId}
+        and date(retain_time) = #{date}
+    </insert>
+
+    <update id="updateLocation">
+        update ${dbName}.location
+        set location=#{position},
+            record_time=#{recordTime}
+        where player_id = #{playerId}
+    </update>
+
+
+    <select id="getThisDayNewPlayer" resultType="java.lang.Long">
+        select count(day_behave_recordlist.player_id)
+        from ${dbName}.day_behave_recordlist
+                 left join ${dbName}.player
+                           on day_behave_recordlist.player_id = player.player_id
+        where day_behave_recordlist.app_id = #{gameID}
+          and player.proxy_name = #{proxyName}
+          and day_behave_recordlist.retain_time between #{startDate}
+            and #{endDate}
+    </select>
+
+    <select id="getThisDayEncourageProxyCommission" resultType="java.math.BigDecimal">
+        select count(enc.encourage_reward)
+        from ${dbName}.ad_encourage enc
+                 left join behind_manage.admin_codebit cod on cod.code_bit_id = enc.code_bit_id
+                 left join ${dbName}.player pl on pl.player_id = enc.player_id
+                 left join behind_manage.adn on cod.adn_id = adn.id
+        where pl.proxy_name = #{proxyName}
+          and adn.adn_name = #{adnName}
+          and encourage_reward > 0
+          and enc.request_time between #{startDate} and #{endDate};
+    </select>
+
+</mapper>

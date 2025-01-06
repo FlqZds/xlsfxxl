@@ -66,8 +66,11 @@ public interface AdnMapper {
 
     Integer addTotalEcpm(@Param("totalEcpm") TotalEcpm totalEcpm);
 
+    //获取该代理所有用户
+    List<String> getThisProxyAllPlayer(@Param("proxyName") String proxyName);
+
     //获取所有用户
-    List<String> getAllPlayer(@Param("proxyName") String proxyName);
+    List<String> getAllPlayer();
 
     //获取该用户当日留存记录
     TotalProfile getDayBehaveRecordlist(@Param("playerId") String playerId, @Param("date") LocalDate date);

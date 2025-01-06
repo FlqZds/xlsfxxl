@@ -61,8 +61,7 @@ public class ClientController {
     @PutMapping("/cashrd/{pageNum}")
     public ResultMessage getRiskControlSetting(@ApiIgnore @RequestAttribute("playerDTO") PlayerDTO playerDTO,
                                                @PathVariable("pageNum") Integer pageNum) {
-        PageInfo pageInfo = loginService.getPlayerWithdrawRecord(playerDTO, pageNum);
-        return new ResultMessage(ResponseEnum.SUCCESS, pageInfo);
+        return new ResultMessage(ResponseEnum.SUCCESS, loginService.getPlayerWithdrawRecord(playerDTO, pageNum));
     }
 
 //    @ApiOperation(value = "手动添加设备信息")

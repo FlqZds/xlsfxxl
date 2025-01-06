@@ -27,7 +27,7 @@ public interface PlayerMapper {
     Integer addDayBehaveRecordlist(@Param("dayRecord") DayBehaveRecordlist dayBehaveRecordlist);
 
     //    更新一条该用户的当日行为记录
-    Integer updatePlayerDayrecord(@Param("playerId") String playerId, @Param("retainTime") LocalDateTime retainTime, @Param("pos") String pos, @Param("date") LocalDate date);
+    Integer updatePlayerDayrecord(@Param("playerId") String playerId, @Param("retainTime") LocalDateTime retainTime, @Param("date") LocalDate date);
 
 
     //    通过玩家ID查到该玩家最后一条位置信息

@@ -3,13 +3,17 @@ package com.yunting.sum.service;
 
 import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.Dto.RiskControlSetting;
+import com.yunting.common.exception.AppException;
+import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.utils.RedisUtil_Record;
 import com.yunting.common.utils.ST;
 import com.yunting.sum.entity.setting.*;
 import com.yunting.sum.mapper.SettingUpdateMapper;
 import com.yunting.sum.mapper.SumMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -35,9 +39,17 @@ public class UpdateService {
      * @param location  位置信息
      *
      */
+    @Transactional(rollbackFor = Exception.class)
     public void refreshOnline(PlayerDTO playerDTO, String location) {
         Long playerId = playerDTO.getPlayerId();
+        Boolean isMember = rur.sIsMember("No_Retain_Set", playerId + "");//是否有留存
+        if (isMember) {
+            log.warn(playerId + "该用户今天已经在数据库有留存过");
+            return;
+        }
         sumMapper.updatePlayerDayrecord(playerId, LocalDateTime.now(), location, LocalDate.now());
+        sumMapper.updateLocation(location, LocalDateTime.now(), playerId + "");
+        rur.sRemove("No_Retain_Set", playerId);
         log.info(playerDTO.getPlayerId() + "用户数据已留存");
     }
 

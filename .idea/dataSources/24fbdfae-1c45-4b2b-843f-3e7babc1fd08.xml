@@ -1088,7 +1088,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <SourceTextLength>75</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Interval>&apos;1&apos; DAY</Interval>
-      <Starts>&apos;2024-01-05 15:20:00&apos;</Starts>
+      <Starts>&apos;2024-01-06 03:00:00&apos;</Starts>
       <Preserve>1</Preserve>
       <Status>enabled</Status>
       <LastExecuted>2025-01-05.15:20:00</LastExecuted>
@@ -2909,73 +2909,73 @@ app_id</ColNames>
     </column>
     <column id="669" parent="323" name="server_CallBack_no">
       <Position>7</Position>
-      <Comment>当日无服务端回调广告数量</Comment>
+      <Comment>当日无服务端回调广告数量  (三种类型的都记)</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
     <column id="670" parent="323" name="service_CallBack_AdvCount">
       <Position>8</Position>
-      <Comment>当日有服务端回调未发放奖励广告数量</Comment>
+      <Comment>当日服务端回调且无奖励数量    (正常激励的)</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
     <column id="671" parent="323" name="service_CallBack_Reward_Count">
       <Position>9</Position>
-      <Comment>当日服务端回调且有发放奖励数量</Comment>
+      <Comment>当日服务端回调且有奖励数量</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="672" parent="323" name="retain_time">
+    <column id="672" parent="323" name="service_CallBack_default_none_ward_Count">
       <Position>10</Position>
+      <Comment>当日服务端回调且默认无奖励数量       </Comment>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <column id="673" parent="323" name="retain_time">
+      <Position>11</Position>
       <Comment>记录本次留存登录时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="673" parent="323" name="retain_way">
-      <Position>11</Position>
-      <Comment>留存方式(0是自然日,1是24小时)</Comment>
-      <DataType>char(1)|0s</DataType>
-    </column>
     <column id="674" parent="323" name="day_cash">
       <Position>12</Position>
-      <Comment>当日提现打款金额</Comment>
+      <Comment>当日提现金额(触发了审核的+免审核的)</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="675" parent="323" name="day_withdraw_judge">
+    <column id="675" parent="323" name="day_withdraw">
       <Position>13</Position>
+      <Comment>当日提现打款金额</Comment>
+      <DataType>decimal(10,2 digit)|0s</DataType>
+    </column>
+    <column id="676" parent="323" name="day_withdraw_judge">
+      <Position>14</Position>
       <Comment>当日提现审核金额</Comment>
       <DataType>decimal(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="676" parent="323" name="day_rebate">
-      <Position>14</Position>
+    <column id="677" parent="323" name="day_rebate">
+      <Position>15</Position>
       <Comment>当日返现打款金额</Comment>
       <DataType>decimal(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="677" parent="323" name="day_rebate_judge">
-      <Position>15</Position>
+    <column id="678" parent="323" name="day_rebate_judge">
+      <Position>16</Position>
       <Comment>当日返现审核的金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="678" parent="323" name="day_charge_rebate">
-      <Position>16</Position>
+    <column id="679" parent="323" name="day_charge_rebate">
+      <Position>17</Position>
       <Comment>当日充值返现金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="679" parent="323" name="is_retain">
-      <Position>17</Position>
+    <column id="680" parent="323" name="is_retain">
+      <Position>18</Position>
       <Comment>该日是否留存(默认所有用户每日都有留存数据,该日没上线的用户就为1,上线过的就是0)</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
-    </column>
-    <column id="680" parent="323" name="location">
-      <Position>18</Position>
-      <Comment>该次留存位置</Comment>
-      <DataType>varchar(125)|0s</DataType>
     </column>
     <index id="681" parent="323" name="player_id">
       <ColNames>player_id

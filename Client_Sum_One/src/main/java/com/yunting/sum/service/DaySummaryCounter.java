@@ -1,37 +1,17 @@
 package com.yunting.sum.service;
 
 
-import com.yunting.common.Dto.RiskControlSetting;
-import com.yunting.common.exception.AppException;
-import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.utils.RedisUtil_Record;
-import com.yunting.common.utils.ST;
-import com.yunting.common.utils.SpringRollBackUtil;
-import com.yunting.sum.entity.SumCountNewplayer;
-import com.yunting.sum.entity.SumProxy;
-import com.yunting.sum.entity.setting.*;
-import com.yunting.sum.entity.total_data.TotalAdn;
-import com.yunting.sum.entity.total_data.TotalAdvlegends;
-import com.yunting.sum.entity.total_data.TotalEcpm;
 import com.yunting.sum.mapper.AdnMapper;
-import com.yunting.sum.mapper.SettingUpdateMapper;
 import com.yunting.sum.mapper.SumMapper;
 import com.yunting.sum.util.ExecuteTask;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-
-import static com.yunting.common.utils.FS.*;
+import java.util.List;
 
 @Slf4j
 @Component("DaySummaryCounter")
@@ -54,6 +34,28 @@ public class DaySummaryCounter {
         log.info("开始统计前一日的代理数据和广告联盟数据");
         executeTask.task_summary_all();
     }
+
+    /***
+     * 每天该时间查到所有用户,默认是没有留存的set<p>
+     * 放入redis的set中,十二点那边留存了就减掉
+     * <P>
+     * 这个定时器23:40-23:57之间执行比较好
+     * <P>
+     * 新用户注册的时候默认留存了也不需要放进来
+     */
+    @Scheduled(fixedDelay = 1000 * 60 * 60 * 24)  //间隔一天   每天凌晨执行任务
+    public void markNoRetainUser() {
+        List<String> allPlayer = adnMapper.getAllPlayer();
+        for (String s : allPlayer) {
+            rur.sAdd("No_Retain_Set", s);
+        }
+    }
+
+    @Resource(name = "RedisUtil_Record")
+    private RedisUtil_Record rur;
+
+    @Resource(name = "AdnMapper")
+    AdnMapper adnMapper;
 
 
     /***

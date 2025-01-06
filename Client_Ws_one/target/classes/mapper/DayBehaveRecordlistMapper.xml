@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunting.ws.mapper.DayBehaveRecordlistMapper">
+    <resultMap id="BaseResultMap" type="com.yunting.ws.entity.DayBehaveRecordlist">
+        <id column="day_id" property="dayId" jdbcType="CHAR"/>
+        <result column="player_id" property="playerId" jdbcType="CHAR"/>
+        <result column="app_id" property="appId" jdbcType="CHAR"/>
+        <result column="todayRed" property="todayred" jdbcType="DECIMAL"/>
+        <result column="totalRed" property="totalred" jdbcType="DECIMAL"/>
+        <result column="today_encourageAdv_count" property="todayEncourageAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_AdvCount" property="serviceCallBackAdvCount" jdbcType="INTEGER"/>
+        <result column="service_CallBack_Reward_Count" property="serviceCallBackRewardCount" jdbcType="INTEGER"/>
+        <result column="retain_time" property="retainTime" jdbcType="TIMESTAMP"/>
+        <result column="retain_way" property="retainWay" jdbcType="CHAR"/>
+        <result column="day_cash" property="dayCash" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="getDayLastDayBehaveRecordlistByPlayerId" resultType="com.yunting.ws.entity.DayBehaveRecordlist">
+        SELECT todayRed,
+               totalRed,
+               day_cash
+        FROM ${dbName}.day_behave_recordlist
+        WHERE player_id = #{playerId}
+        group by player_id, date(retain_time)
+        order by day_id desc
+        limit 1
+    </select>
+
+
+</mapper>

@@ -1,12 +1,9 @@
 package com.yunting.sum.util;
 
 import com.yunting.common.Dto.RiskControlSetting;
-import com.yunting.common.exception.AppException;
-import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.utils.RedisUtil_Record;
 import com.yunting.common.utils.ST;
 import com.yunting.common.utils.SpringRollBackUtil;
-import com.yunting.sum.entity.DayBehaveRecordlist;
 import com.yunting.sum.entity.SumCountNewplayer;
 import com.yunting.sum.entity.SumProxy;
 import com.yunting.sum.entity.setting.*;
@@ -17,41 +14,25 @@ import com.yunting.sum.entity.total_data.TotalProfile;
 import com.yunting.sum.mapper.AdnMapper;
 import com.yunting.sum.mapper.SettingUpdateMapper;
 import com.yunting.sum.mapper.SumMapper;
-import com.yunting.sum.service.DaySummaryCounter;
-import io.swagger.annotations.ExampleProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.Trigger;
-import org.springframework.scheduling.TriggerContext;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import static com.yunting.common.utils.FS.*;
 
@@ -165,7 +146,6 @@ public class ExecuteTask {
 
 
                 //其他
-                rur.setBit("Retain_Way", Long.parseLong(st.GameId()), retain_Way);
                 rur.set("Daily_Active_Level", activeStandard);
                 rur.set("Reset_Max_Time", resetMaxTime);
                 rur.setBit("isIS_Weekend", Long.parseLong(st.GameId()), is_Weekend);
@@ -234,20 +214,11 @@ public class ExecuteTask {
                     sumMapper.modifyProxyCommissionCount(myCash, proxyName, LocalDate.now());
                     log.info(LocalDate.now() + proxyName + "_自己+子代当日红包奖励统计:" + myCash);
                 }
-
-                //清除该日redis的用户留存记录
-                rur.delete("retain_bitMap");
-                rur.setBit("retain_bitMap", 0, true);
-
-                rur.hPutIfAbsent("inLine_user", "0", ADN_bd);
-                log.info(LocalDate.now() + "用户留存表已重置");
-                log.info(LocalDate.now() + "在线用户表已新建");
-
             }
         };
         scheduledExecutorService.execute(runnable);
 
-//        scheduledExecutorService.shutdown();
+        scheduledExecutorService.shutdown();
         log.info("记载在线用户任务已关闭");
     }
 
@@ -659,7 +630,7 @@ public class ExecuteTask {
                         log.info(LocalDate.now() + proxyName + "_所有广告代理当日红包奖励统计:" + sumProxyCash);
 
                         //获取该代理的所有用户
-                        List<String> myMember = adnMapper.getAllPlayer(proxyName);
+                        List<String> myMember = adnMapper.getThisProxyAllPlayer(proxyName);
                         //通过该用户的留存记录统计该用户前一日的详细数据
                         for (String mbID : myMember) {
                             TotalProfile mbDayrecord = adnMapper.getDayBehaveRecordlist(mbID, startTime.toLocalDate());

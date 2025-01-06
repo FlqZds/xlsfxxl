@@ -1,0 +1,74 @@
+server:
+  port: 7770
+
+  tomcat:
+    remoteip:
+      remote-ip-header: X-Real-IP
+      host-header: X-Forwarded-Host
+      protocol-header: X-Forwarded-Proto
+  forward-headers-strategy: framework
+
+
+spring:
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
+
+  #  redis 配置
+  redis:
+    #    redis  连接池
+    lettuce:
+      pool:
+        max-active: 20  #连接池最大连接数（使用负值表示没有限制,默认8）
+        min-idle: 0     #空闲连接
+        max-idle: 8 # 连接最大空闲时间（毫秒），超时则关闭，默认8
+        max-wait: -1  #最大等待时间，超时则报错，负值无限制，默认-1
+  #  数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource #引入druid数据源
+    url: jdbc:mysql://127.0.0.1:3306/yunting_app_test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+
+    druid:
+      initial-size: 10
+      max-active: 50
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+  profiles:
+    active: dev
+
+
+
+# mybatis　相关　ｘｍｌ文件在哪里　驼峰　　分页插件　打印ｓｑｌ语句的日志
+mybatis:
+  # 扫描映射文件
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 开启驼峰映射配置
+    map-underscore-to-camel-case: true
+  configuration-properties:
+    dbName: yunting_app_test
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   # 打印sql语句
+
+
+#logback日志配置
+logging:
+  level:
+    root: info
+
+# ========================== ↓↓↓↓↓↓ forest配置 ↓↓↓↓↓↓ ==========================
+forest:
+  bean-id: config0 # 在spring上下文中bean的id, 默认值为forestConfiguration
+  backend: okhttp3 # 后端HTTP API： okhttp3 【支持`okhttp3`/`httpclient`】
+  max-connections: 300 # 连接池最大连接数，默认值为500
+  max-route-connections: 500 # 每个路由的最大连接数，默认值为500
+  timeout: 3000 # 请求超时时间，单位为毫秒, 默认值为3000
+  connect-timeout: 3000 # 连接超时时间，单位为毫秒, 默认值为2000
+  retry-count: 0 # 请求失败后重试次数，默认为0次不重试
+  ssl-protocol: SSLv3 # 单向验证的HTTPS的默认SSL协议，默认为SSLv3
+  logEnabled: false # 打开或关闭日志，默认为true

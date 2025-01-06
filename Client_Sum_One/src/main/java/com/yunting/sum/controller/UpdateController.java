@@ -44,7 +44,5 @@ public class UpdateController {
         return new ResultMessage(ResponseEnum.SUCCESS, null);
     }
 
-    @Resource(name = "ExecuteTask")
-    private ExecuteTask executeTask;
 
 }
