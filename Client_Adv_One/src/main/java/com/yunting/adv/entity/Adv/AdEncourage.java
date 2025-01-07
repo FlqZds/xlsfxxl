@@ -45,10 +45,10 @@ public class AdEncourage {
 
 
     @ApiModelProperty(value = "是否被服务端回调", dataType = "Character")
-    private Character isServerCall ;
+    private String isServerCall ;
 
     @ApiModelProperty(value = "是否被客户端回调", dataType = "Character")
-    private Character isClientCall ;
+    private String isClientCall ;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "被客户端回调时间", dataType = "LocalDateTime")

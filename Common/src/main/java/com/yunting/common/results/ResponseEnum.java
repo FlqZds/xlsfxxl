@@ -101,7 +101,6 @@ public enum ResponseEnum {
     NO_JUDGE_ORDER_SUCCESSFUL("66077", "免审核订单提现成功"),
     PLAYER_ALIPAY_ALREADY_BIND("55001", "该支付宝账号已被绑定"),
 
-    ALIPAY_TRANSFER_ERROR("" + FS.temp_code, "支付宝转账未成功,原因竟是....." + FS.temp_msg),
 
     SELECT_MASTER_FAILED("66020", "未查到该账号的管理员"),
     SELECT_APPLICATION_FAILED("66021", "查询应用失败"),

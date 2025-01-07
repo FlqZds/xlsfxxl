@@ -1,6 +1,7 @@
 com\yunting\wlan\dto\DeviceDTO.class
 com\yunting\wlan\entity\MobileDetail$MobileDetailBuilder.class
 com\yunting\wlan\entity\UserGatheringSetting.class
+com\yunting\wlan\dto\timeVo$timeVoBuilder.class
 com\yunting\wlan\mapper\PlayerMapper.class
 com\yunting\wlan\WlanApplicationOne.class
 com\yunting\wlan\mapper\DeviceRecordlistMapper.class
@@ -15,6 +16,7 @@ com\yunting\wlan\entity\DeviceRecordlist$DeviceRecordlistBuilder.class
 com\yunting\wlan\controller\WlanController.class
 com\yunting\wlan\dto\infoVO.class
 com\yunting\wlan\dto\SignDto$SignDtoBuilder.class
+com\yunting\wlan\dto\timeVo.class
 com\yunting\wlan\mapper\MobileDetailMapper.class
 com\yunting\wlan\entity\Location.class
 com\yunting\wlan\dto\infoVO$infoVOBuilder.class

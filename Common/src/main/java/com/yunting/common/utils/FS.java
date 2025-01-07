@@ -11,8 +11,6 @@ public final class FS {
     public static String temp_code = "";
     public static String temp_msg = "";
 
-    //订单图片类型
-    public static final String Order_Status = "1A";
     //图片订单状态
     public static final String IMG_TYPE = ".jpeg";
 
@@ -25,17 +23,10 @@ public final class FS {
     //    管理端默认登录头像
     public final static String DEFAULT_AVATAR = "https://zdsflq.oss-cn-beijing.aliyuncs.com/avatar/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.svg";
 
-    //swagger 客户端组默认标题
-    public final static String CLient_Title = "客户端对接-API文档";
-    public final static String CLient_Description = "本文档描述了对接c端的接口基本概述";
-
-    //swagger 管理端组默认标题
-    public final static String Admin_Title = "管理端对接-API文档";
-    public final static String Admin_Description = "本文档描述了对接c端的接口基本概述";
-
-    //swagger 管理端组默认标题
-    public final static String AdvRecord_Title = "广告记录对接-API文档";
-    public final static String AdvRecord_Description = "本文档描述了对接c端的广告记录接口的基本概述";
+    //激励广告类型
+    public static final String NormalEnc = "正常激励";
+    public static final String WithDrawEnc = "提现激励";
+    public static final String OrderEnc = "订单激励";
 
     //服务端发送心跳的间隔，单位为minus
     public static final int serverHeartBearDuration = 1;

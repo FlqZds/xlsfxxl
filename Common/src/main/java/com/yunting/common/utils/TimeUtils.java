@@ -6,6 +6,16 @@ import java.time.*;
 
 @Component("TimeUtils")
 public class TimeUtils {
+
+    /***
+     * 获取当天剩余时间(秒)
+     */
+    public static long ONE_DAY_MILLISECONDS() {
+        return LocalDateTime.now().until(LocalDateTime.now().plusDays(1).withHour(00).withMinute(00).withSecond(00),
+                java.time.temporal.ChronoUnit.SECONDS);
+    }
+
+
     /***
      * 获取0点到当前时间的时间戳
      * @return

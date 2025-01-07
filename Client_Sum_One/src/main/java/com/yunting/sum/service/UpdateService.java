@@ -7,6 +7,7 @@ import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
 import com.yunting.common.utils.RedisUtil_Record;
 import com.yunting.common.utils.ST;
+import com.yunting.common.utils.TimeUtils;
 import com.yunting.sum.entity.setting.*;
 import com.yunting.sum.mapper.SettingUpdateMapper;
 import com.yunting.sum.mapper.SumMapper;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service("UpdateService")
 @Slf4j
@@ -42,15 +44,16 @@ public class UpdateService {
     @Transactional(rollbackFor = Exception.class)
     public void refreshOnline(PlayerDTO playerDTO, String location) {
         Long playerId = playerDTO.getPlayerId();
-        Boolean isMember = rur.sIsMember("No_Retain_Set", playerId + "");//是否有留存
-        if (isMember) {
+        String isRetain = rur.get("No_Retain" + playerId);//是否有留存
+        if (isRetain != null) {
             log.warn(playerId + "该用户今天已经在数据库有留存过");
             return;
+        } else {
+            sumMapper.updatePlayerDayrecord(playerId, LocalDateTime.now(), location, LocalDate.now());
+            sumMapper.updateLocation(location, LocalDateTime.now(), playerId + "");
+            rur.setEx("No_Retain" + playerId, location, TimeUtils.ONE_DAY_MILLISECONDS(), TimeUnit.SECONDS);
+            log.info(playerDTO.getPlayerId() + "用户数据已留存");
         }
-        sumMapper.updatePlayerDayrecord(playerId, LocalDateTime.now(), location, LocalDate.now());
-        sumMapper.updateLocation(location, LocalDateTime.now(), playerId + "");
-        rur.sRemove("No_Retain_Set", playerId);
-        log.info(playerDTO.getPlayerId() + "用户数据已留存");
     }
 
     @Resource(name = "SumMapper")

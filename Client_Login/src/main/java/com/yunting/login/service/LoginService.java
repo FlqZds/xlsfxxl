@@ -338,8 +338,10 @@ public class LoginService {
 
             playerMapper.updatePlayerMobileID(player_isRegistered_ID, mobileID);
             log.info("玩家设备id已刷新");
-
-
+            String isRetain = rur.get("No_Retain" + player_isRegistered_ID);//是否有留存
+            if (isRetain == null) {
+                rur.setEx("No_Retain" + player_isRegistered_ID, location, TimeUtils.ONE_DAY_MILLISECONDS(), TimeUnit.SECONDS);
+            }
             log.info(player_isRegistered.getWxNickname() + "用户已经存在，开始登录");
             return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
         } else {
@@ -349,10 +351,9 @@ public class LoginService {
             try {
                 playerMapper.insertPlayer(wxUser);//保存新玩家
                 PlayerDTO playerDTO = this.generateToken(wxUser);//生成token
-
                 this.generateNewUserDayRecord(playerDTO);//生成新玩家留存记录
                 this.addDeviceRecord(wxUser, signDto, "1");//保存新设备记录
-                //更新|保存位置信息
+                //保存位置信息
                 Location location_new = Location.builder()
                         .playerId(playerDTO.getPlayerId())
                         .location(location)
@@ -373,6 +374,7 @@ public class LoginService {
                 gameMeta.setEnableWeekend(st.IS_Weekend());
 
                 log.info(wxUser.getWxNickname() + "玩家,注册成功");
+                rur.setEx("No_Retain" + playerDTO.getPlayerId(), location, TimeUtils.ONE_DAY_MILLISECONDS(), TimeUnit.SECONDS);
                 return new ResultMessage(ResponseEnum.SUCCESS, gameMeta);
             } catch (Exception e) {
                 SpringRollBackUtil.rollBack();
@@ -382,6 +384,8 @@ public class LoginService {
         }
     }
 
+    @Resource(name = "RedisUtil_Record")
+    private RedisUtil_Record rur;
 
     public void generateNewUserDayRecord(PlayerDTO playerDTO) {
         DayBehaveRecordlist dayRecord = DayBehaveRecordlist.builder().appId(st.APPID())

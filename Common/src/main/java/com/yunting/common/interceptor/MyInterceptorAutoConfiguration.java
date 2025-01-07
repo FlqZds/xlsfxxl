@@ -32,6 +32,7 @@ public class MyInterceptorAutoConfiguration implements WebMvcConfigurer {
         list.add("/sum/addMobile/");
 
         list.add("/net/operateUser");
+        list.add("/Withdraw/cl/ww");
 
         list.add("/Client/collection");
         list.add("/Client/signOn");

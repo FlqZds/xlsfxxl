@@ -28,7 +28,7 @@ public interface DayBehaveRecordlistMapper {
     Integer changeDayBehaveRecordNoRewardCount(@Param("dayid") Long dayId, @Param("noRewardCount") Integer noRewardCount);
 
     //    改变玩家当日行为记录 (服务端回调默认未发放奖励总数)
-    Integer changeDayBehaveRecordDefaultNoneRewardCount(@Param("dayid") Long dayId, @Param("noneReward") Integer noneReward);
+    Integer changeDayBehaveRecordDefaultNoneRewardCount(@Param("dayid") Long dayId, @Param("defaultNoneReward") Integer noneReward);
 
 
     //获取奖励设置

@@ -3,10 +3,7 @@ package com.yunting.ws.config.websocket;
 import com.yunting.common.Dto.PlayerDTO;
 import com.yunting.common.exception.AppException;
 import com.yunting.common.results.ResponseEnum;
-import com.yunting.common.utils.JWTutil;
-import com.yunting.common.utils.RedisUtil_Record;
-import com.yunting.common.utils.ST;
-import com.yunting.common.utils.SpringRollBackUtil;
+import com.yunting.common.utils.*;
 import com.yunting.ws.SpringBeanContext;
 import com.yunting.ws.entity.DayBehaveRecordlist;
 import com.yunting.ws.entity.Player;
@@ -24,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootConfiguration
 @Slf4j
@@ -95,9 +93,16 @@ public class MyConfigurator extends ServerEndpointConfig.Configurator {
         RedisUtil_Record rur = SpringBeanContext.getContext().getBean("RedisUtil_Record", RedisUtil_Record.class);
 
         try {
-            String no_retain_set = rur.get("No_Retain_Set");
-            playerMapper.updatePlayerDayrecord(playerid, LocalDateTime.now(), LocalDate.now());
-            log.info("用户:" + playerid + " 当日行为记录已更新");
+            String isRetain = rur.get("No_Retain" + playerid);
+            if (isRetain != null && isRetain.contains("_")) {
+                return;
+            }
+            if (isRetain != null && isRetain.contains("_") == false) {
+                isRetain = isRetain + "_" + LocalDateTime.now();
+                playerMapper.updatePlayerDayrecord(playerid, LocalDateTime.now(), LocalDate.now());
+                rur.setEx("No_Retain" + playerid, isRetain, TimeUtils.ONE_DAY_MILLISECONDS(), TimeUnit.SECONDS);
+                log.info("用户:" + playerid + " 当日行为记录已更新");
+            }
         } catch (Exception e) {
             SpringRollBackUtil.rollBack();
             log.error("用户:" + playerid + " 当日行为记录留存失败");

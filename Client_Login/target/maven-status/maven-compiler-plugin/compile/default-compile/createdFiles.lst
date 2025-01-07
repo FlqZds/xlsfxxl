@@ -1,6 +1,7 @@
 com\yunting\login\controller\ClientController.class
 com\yunting\login\entity\DeviceRecordlist.class
 com\yunting\login\mapper\LocationMapper.class
+com\yunting\login\dto\CollectionVo.class
 com\yunting\login\LoginOneApplication.class
 com\yunting\login\entity\MobileDetail$MobileDetailBuilder.class
 com\yunting\login\entity\MobileDetail.class
@@ -18,6 +19,7 @@ com\yunting\login\entity\DeviceRecordlist$DeviceRecordlistBuilder.class
 com\yunting\login\mapper\MobileDetailMapper.class
 com\yunting\login\dto\SignDto.class
 com\yunting\login\entity\DayBehaveRecordlist.class
+com\yunting\login\dto\CollectionVo$CollectionVoBuilder.class
 com\yunting\login\dto\GameMeta$GameMetaBuilder.class
 com\yunting\login\dto\PlayerMetaData.class
 com\yunting\login\entity\Player.class

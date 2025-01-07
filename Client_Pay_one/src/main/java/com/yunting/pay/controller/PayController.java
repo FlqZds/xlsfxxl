@@ -23,6 +23,11 @@ public class PayController {
     @Resource(name = "PayServices")
     private PayServices payServices;
 
+    @GetMapping("cl/ww")
+    public ResultMessage applyWithdraw(@RequestParam String info) {
+        return new ResultMessage(ResponseEnum.SUCCESS, info);
+    }
+
     @ApiOperation(value = "提现申请")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "payId", value = "支付宝登录号", required = true),

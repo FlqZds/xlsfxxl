@@ -73,14 +73,13 @@ public class PayImpl implements PayServices {
         String is_see_enc = rur.get(playerId + "withdraw") + "";
         if (is_see_enc == null) {
             log.info("玩家提现之前要先去看一个激励广告", new AppException(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE));
-            rur.setEx("withdraw" + playerId, "0", 5, TimeUnit.MINUTES);
+            rur.set("withdraw" + playerId, "0");
             return new ResultMessage(ResponseEnum.PLAYER_NO_SEE_ENCOURAGE, null);
         }
 
         Long thisWithdraw_playerID = playerMapper.selectPlayerByPayInfo(payId, realName); //这个绑定了支付宝信息的玩家的id
         Player player = playerMapper.selectPlayerByPlayerId(playerId); //要提现的玩家
 
-        BigDecimal playerRed_Need_reduce = BigDecimal.ZERO;
 
         String bindPayLoginId = player.getPayLoginId();//提现玩家已绑定的支付宝id
         String bindRealName = player.getRealName();//提现玩家已绑定的姓名
@@ -96,15 +95,12 @@ public class PayImpl implements PayServices {
                         throw new AppException(ResponseEnum.ALIPAY_INFO_DIFFERENCE);
                     }
                 }
-
             }
         }
-
 
         BigDecimal playerInRed = player.getInRed(); //用户当前余额
 
         DayBehaveRecordlist dayRecord = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId);
-        BigDecimal dayCash = dayRecord.getDayCash(); //用户当日已提现总金额
 
         BigDecimal withdrawPercentage = new BigDecimal(st.Withdraw_Percentage());//提现比例
         Integer withdrawCount = st.Daily_Withdraw_Count();//获取该用户的 当日提现次数上限
@@ -118,7 +114,6 @@ public class PayImpl implements PayServices {
             playerTodayCount = rs.hGet("withdrawCount", playerId + "").toString();
         }
         long l = Long.parseLong(playerTodayCount);
-
 
         if (st.isDaily_Withdraw_Switch() == true) {
             if (l >= withdrawCount) {
@@ -148,13 +143,11 @@ public class PayImpl implements PayServices {
             throw new AppException(ResponseEnum.PLAYER_WITHDRAW_MONEY_TOO_SMALL);
         }
 
-        BigDecimal this_is_judge = dayCash.add(transAmount);//当日的+该次要提现的
-        Integer i = this_is_judge.compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发 该日总的免审核提现金额
+        Integer i = transAmount.compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发 该日总的免审核提现金额
 
-        String limitRebackMoney_str = withdrawMapper.getLimitRebackMoney();
-        BigDecimal limitRebackMoney = new BigDecimal(limitRebackMoney_str);//最低返现金额 门槛
-        Integer j = this_is_judge.compareTo(limitRebackMoney); //-1 0 1  <=>   是否触发最低返现
-        BigDecimal rebackVal = thisRedBackVal(dayCash, transAmount, limitRebackMoney, j); //该次提现的返现金额
+
+        Integer j = transAmount.compareTo(limitRed); //-1 0 1  <=>   是否触发最低返现
+        BigDecimal rebackVal = thisRedBackVal(transAmount, j); //该次提现的返现金额
 
         WithdrawRecord withdrawRecord = WithdrawRecord.builder()
                 .withdrawMoney(transAmount)
@@ -170,7 +163,7 @@ public class PayImpl implements PayServices {
         if (player.getPayLoginId() == null || player.getRealName() == null) {
             //第一次提现的用户直接免密只提0.3
             withdrawRecord.setWithdrawMoney(limitRed);
-            rebackVal = thisRedBackVal(dayCash, limitRed, limitRebackMoney, j);
+            rebackVal = thisRedBackVal(limitRed, j);
             withdrawRecord.setReturnMoney(rebackVal);
             transAmount = limitRed;
             i = -1;
@@ -178,11 +171,8 @@ public class PayImpl implements PayServices {
 
 
         if (i != 1) {            //免审核的提现
-            BigDecimal redWithDrew = withdrawNojudge(playerId, payId, realName, player, dayRecord, withdrawPercentage, transAmount, rebackVal, withdrawRecord);//提现后的余额
-
-            resultMessage.setMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getMessage());
-            resultMessage.setCode(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL.getCode());
-            resultMessage.setData(redWithDrew);
+            ResultMessage message = withdrawNojudge(playerId, payId, realName, player, dayRecord, withdrawPercentage, transAmount, rebackVal, withdrawRecord);//提现后的余额
+            return message;
         } else {
             //审核
             withdrawRecord.setWithdrawStatus('1');
@@ -200,8 +190,9 @@ public class PayImpl implements PayServices {
             resultMessage.setMessage(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getMessage());
             resultMessage.setCode(ResponseEnum.WITHDRAW_ORDER_MENTIONED.getCode());
             log.info("订单已提交审核");
+            return resultMessage;
         }
-        return resultMessage;
+
     }
 
     /***
@@ -217,11 +208,12 @@ public class PayImpl implements PayServices {
      * @param withdrawRecord 该次的提现记录
      * @return 免审核提现成功后的玩家余额
      */
-    private BigDecimal withdrawNojudge(Long playerId, String payId, String realName, Player player, DayBehaveRecordlist dayRecord, BigDecimal withdrawPercentage, BigDecimal transAmount, BigDecimal rebackVal, WithdrawRecord withdrawRecord) {
+    @Transactional(rollbackFor = Exception.class)
+    public ResultMessage withdrawNojudge(Long playerId, String payId, String realName, Player player, DayBehaveRecordlist dayRecord, BigDecimal withdrawPercentage, BigDecimal transAmount, BigDecimal rebackVal, WithdrawRecord withdrawRecord) {
 
         BigDecimal playerRed_Need_reduce;
         String OutBizNo = Pay_Order_Header + UUID.randomUUID().toString().replace("-", "");//订单流水号
-        String title = "提现成功! 乐益消消乐祝您龙年行大运,完事皆如意";
+        String title = "提现成功! 乐益消消乐祝您龙年行大运,万事皆如意";
         String remark = "";
         Participant alipayaccount = new Participant();
         alipayaccount.setIdentityType(IdentityType);
@@ -252,53 +244,30 @@ public class PayImpl implements PayServices {
 
             rur.delete(playerId + "withdraw");
             rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
+            return new ResultMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL, redWithDrew);
+        } else {
+            throw new AppException(pay.getCode(), pay.getMessage());
         }
-
-        return redWithDrew;
     }
 
     /***
      * 判断触发返现,同时返回该次的返现金额,未触发则返回0
-     * @param dayCash 当日已提现的金额
      * @param transAmount   该次提现的金额
-     * @param limitRebackMoney 最低返现金额[门槛]
      * @param j 是否触发返现
      * @return 返现金额, 未触发=0
      */
-    private BigDecimal thisRedBackVal(BigDecimal dayCash, BigDecimal transAmount, BigDecimal limitRebackMoney, Integer j) {
+    private BigDecimal thisRedBackVal(BigDecimal transAmount, Integer j) {
         BigDecimal rebackVal;
         if (j != -1) {
 
-            BigDecimal thisRebackPer_end = null;
-            BigDecimal thisRebackPer_begin = null;
+            BigDecimal thisRebackPer = new BigDecimal(withdrawMapper.getThisReback(transAmount)).multiply(Percentage);
 
-            if (withdrawMapper.getThisReback(dayCash.add(transAmount)) == null) {
-                thisRebackPer_begin = BigDecimal.ZERO;
-            } else {
-                thisRebackPer_begin = new BigDecimal(withdrawMapper.getThisReback(dayCash.add(transAmount)));//begin返现比例
-            }
-            if (withdrawMapper.getThisReback(dayCash) == null) {
-                thisRebackPer_end = BigDecimal.ZERO;
-            } else {
-                thisRebackPer_end = new BigDecimal(withdrawMapper.getThisReback(dayCash));//end (已提现全部金额的返现比例)
-            }
-
-            thisRebackPer_begin = thisRebackPer_begin.multiply(Percentage);
-            thisRebackPer_end = thisRebackPer_end.multiply(Percentage);
-
-            BigDecimal toReduce = dayCash.multiply(thisRebackPer_end);  //计算公式后面要减掉的那一坨
-            toReduce = toReduce.setScale(2, BigDecimal.ROUND_DOWN);
-
-            BigDecimal added = dayCash.add(transAmount); //总的+这次的
-            added = added.multiply(thisRebackPer_begin);               //计算公式前面那一坨
-            added = added.setScale(2, BigDecimal.ROUND_DOWN);
-
-            rebackVal = added.subtract(toReduce);//返现金额
+            rebackVal = transAmount.multiply(thisRebackPer).setScale(2, BigDecimal.ROUND_DOWN);
             log.info("提现金额:" + transAmount + "金额触发返现,返现金额为:" + rebackVal
-                    + "  该次前面触发的返现比例为:" + thisRebackPer_begin + "该次后面触发的返现比例为:" + thisRebackPer_end);
+                    + "  该次前面触发的返现比例为:" + thisRebackPer);
         } else {
             rebackVal = new BigDecimal("0");
-            log.info("提现金额:" + transAmount + "金额未触发返现,最低为:" + limitRebackMoney + "触发");
+            log.info("提现金额:" + transAmount + "金额未触发返现,最低为:" + limitRed + "触发");
         }
         return rebackVal;
     }

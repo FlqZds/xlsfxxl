@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.yunting.common.utils.FS.Percentage;
+import static com.yunting.common.utils.FS.*;
 
 @Slf4j
 @Service("RecordImpl")
@@ -239,11 +239,11 @@ public class RecordImpl implements RecordService {
 
             Long playerId = playerDTO.getPlayerId();
             String from = loadDto.getEncourageFrom();
-            if (from.equals("提现激励")) {
+            if (from.equals(WithDrawEnc)) {
                 rur.set(playerId + "withdraw", "0");
             }
 
-            if (from.equals("正常激励") && rur.get(playerId + "withdraw") != null) {  //上一个 红包提现的视频看了却提现失败或者没去提现,然后来看普通激励了
+            if (from.equals(NormalEnc) && rur.get(playerId + "withdraw") != null) {  //上一个 红包提现的视频看了却提现失败或者没去提现,然后来看普通激励了
                 rur.delete(playerId + "withdraw");
             }
 
@@ -402,8 +402,8 @@ public class RecordImpl implements RecordService {
                 if (Objects.equals(isRemedy, "1")) { //正常关闭广告
 
 //判断是否给用户奖励
-                    Character isClientCall = adEncourage.getIsClientCall();  //是否被客户端回调
-                    Character isServerCall = adEncourage.getIsServerCall();  //是否被服务端回调
+                    String isClientCall = adEncourage.getIsClientCall();  //是否被客户端回调
+                    String isServerCall = adEncourage.getIsServerCall();  //是否被服务端回调
                     String isSeeEnd = adEncourage.getIsSeeEnd();  //是否看完
 
                     Long dayId = dayBehaveRecordMapper.getDayLastDayBehaveRecordlistByPlayerId(playerDTO.getPlayerId()).getDayId();//获取用户的该日留存记录id
@@ -415,7 +415,7 @@ public class RecordImpl implements RecordService {
                     try {
                         adEncourageMapper.changeAdEncourageRecordClose(advID, clickCount, exceptionMsg);
 
-                        if (isServerCall == '1') {//计数无服务端回调的数量 ,不分类型
+                        if (isServerCall.equals("1")) {//计数无服务端回调的数量 ,不分类型
                             dayBehaveRecordMapper.changeDayBehaveRecordNoCallbackCount(dayId, 1);
                         }
                     } catch (Exception e) {
@@ -433,12 +433,19 @@ public class RecordImpl implements RecordService {
 
                     // 该次的广告是提现,然后已看激励,需要告知前端跳转去提现
                     String s = rur.get(playerDTO.getPlayerId() + "withdraw");
+                    log.info("广告类型" + s + "满足提现条件:" + withdrawCount + "cl:" + isClientCall + "是否关闭" + isCloseEncourageAdv + "_isSee看完" + isSeeEnd);
                     if (s != null && withdrawCount == 3) {
                         // 提现广告默认无奖励的
                         dayBehaveRecordMapper.changeDayBehaveRecordDefaultNoneRewardCount(dayId, 1);
-                        rur.set(playerDTO.getPlayerId() + "withdraw", "88");
                         return new ResultMessage(ResponseEnum.WITHDRAW_PRE_WATCH, null);
                     }
+
+                    if (s != null && withdrawCount != 3) {
+                        // 提现广告默认无奖励的
+                        dayBehaveRecordMapper.changeDayBehaveRecordDefaultNoneRewardCount(dayId, 1);
+                        return new ResultMessage(ResponseEnum.WITHDRAW_PRE_WATCH, -1);
+                    }
+
                     try {//正常激励的
 
                         if (rewardCount == 4) //满足奖励条件了
@@ -454,7 +461,7 @@ public class RecordImpl implements RecordService {
                             break;
                         } else {
                             //未满足奖励条件的,记录未发放奖励数量
-                            if (isServerCall == '0') {
+                            if (isServerCall.equals("0")) {
                                 dayBehaveRecordMapper.changeDayBehaveRecordNoRewardCount(dayId, 1);
                             }
                         }
@@ -480,13 +487,13 @@ public class RecordImpl implements RecordService {
      * @param isCloseEncourageAdv 是否关闭了广告
      * @return
      */
-    public Integer judgeWard(Character isClientCall, Character isServerCall, String isSeeEnd, String isCloseEncourageAdv) {
+    public Integer judgeWard(String isClientCall, String isServerCall, String isSeeEnd, String isCloseEncourageAdv) {
         Integer a = 0;
 
-        if (isClientCall == '0') {
+        if (isClientCall.equals("0")) {
             a++;
         }
-        if (isServerCall == '0') {
+        if (isServerCall.equals("0")) {
             a++;
         }
         if (isSeeEnd.equals("0")) {
@@ -505,9 +512,9 @@ public class RecordImpl implements RecordService {
      * @param isCloseEncourageAdv 是否关闭了广告
      * @return
      */
-    public Integer judgeWithDraw(Character isClientCall, String isSeeEnd, String isCloseEncourageAdv) {
+    public Integer judgeWithDraw(String isClientCall, String isSeeEnd, String isCloseEncourageAdv) {
         Integer a = 0;
-        if (isClientCall == '0') {
+        if (isClientCall.equals("0")) {
             a++;
         }
         if (isSeeEnd.equals("0")) {

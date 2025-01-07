@@ -5,7 +5,6 @@ com\yunting\sum\entity\DayBehaveRecordlist.class
 com\yunting\sum\entity\DeviceBrand$DeviceBrandBuilder.class
 com\yunting\sum\entity\total_data\TotalAdn$TotalAdnBuilder.class
 com\yunting\sum\entity\setting\UserGatheringSetting.class
-com\yunting\sum\util\ExecuteTask$3.class
 com\yunting\sum\service\UpdateService.class
 com\yunting\sum\entity\setting\ScreenshotSetting.class
 com\yunting\sum\entity\setting\UserRewardSetting$UserRewardSettingBuilder.class

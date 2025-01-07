@@ -5,4 +5,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.yunting.common.configuration.rurConfiguration,\
   com.yunting.common.configuration.RedisTemplateConfig,\
   com.yunting.common.configuration.RedisConfiguration,\
-  com.yunting.common.configuration.StConfiguration
+  com.yunting.common.configuration.StConfiguration,\
+  com.yunting.common.exception.ControllerException

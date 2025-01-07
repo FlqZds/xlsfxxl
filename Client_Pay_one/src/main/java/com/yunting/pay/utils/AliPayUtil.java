@@ -150,11 +150,11 @@ public class AliPayUtil {
             log.error("订单支付时间:" + response.getTransDate());
             log.error("转账单据状态:" + response.getStatus());
 
-            FS.temp_code = response.getSubCode();
+            FS.temp_code = response.getCode();
             FS.temp_msg = response.getSubMsg();
             log.info("支付码:" + FS.temp_code);
             log.info("支付信息:" + FS.temp_msg);
-            throw new AppException(ResponseEnum.ALIPAY_TRANSFER_ERROR);
+            return new ResultMessage(response.getCode(), response.getSubMsg(), null);
         }
     }
 }

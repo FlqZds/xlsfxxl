@@ -37,13 +37,13 @@
 
     <update id="changeDayBehaveRecordNoRewardCount">
         update ${dbName}.day_behave_recordlist
-        set service_CallBack_AdvCount = service_CallBack_AdvCount + #{noCallbackCount}
+        set service_CallBack_AdvCount = service_CallBack_AdvCount + #{noRewardCount}
         WHERE day_id = #{dayid}
     </update>
 
     <update id="changeDayBehaveRecordDefaultNoneRewardCount">
         update ${dbName}.day_behave_recordlist
-        set service_CallBack_default_none_ward_Count = day_behave_recordlist.service_CallBack_default_none_ward_Count +#{noneReward}
+        set service_CallBack_default_none_ward_Count = day_behave_recordlist.service_CallBack_default_none_ward_Count +#{defaultNoneReward}
         WHERE day_id = #{dayid}
     </update>
 

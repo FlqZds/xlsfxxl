@@ -35,28 +35,6 @@ public class DaySummaryCounter {
         executeTask.task_summary_all();
     }
 
-    /***
-     * 每天该时间查到所有用户,默认是没有留存的set<p>
-     * 放入redis的set中,十二点那边留存了就减掉
-     * <P>
-     * 这个定时器23:40-23:57之间执行比较好
-     * <P>
-     * 新用户注册的时候默认留存了也不需要放进来
-     */
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 24)  //间隔一天   每天凌晨执行任务
-    public void markNoRetainUser() {
-        List<String> allPlayer = adnMapper.getAllPlayer();
-        for (String s : allPlayer) {
-            rur.sAdd("No_Retain_Set", s);
-        }
-    }
-
-    @Resource(name = "RedisUtil_Record")
-    private RedisUtil_Record rur;
-
-    @Resource(name = "AdnMapper")
-    AdnMapper adnMapper;
-
 
     /***
      * 每日十二点后延迟十秒
