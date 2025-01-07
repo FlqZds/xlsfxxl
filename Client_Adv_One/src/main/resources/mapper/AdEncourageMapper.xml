@@ -40,6 +40,19 @@
         where adv_encourage_id = #{targetAdv}
     </update>
 
+    <update id="changeAdEncourageRecordCloseEffective">
+        update ${dbName}.ad_encourage
+        set effective_adv_reward= #{effective}
+        where adv_encourage_id = #{targetAdv}
+    </update>
+
+    <update id="changeAdEncourageRecordCloseEffectiveWhileOne">
+        update ${dbName}.ad_encourage
+        set effective_adv_reward= '0'
+        where adv_encourage_id = #{targetAdv}
+          and effective_adv_reward = '1'
+    </update>
+
     <update id="changeAdEncourageRecordEnoughReward">
         update ${dbName}.ad_encourage
         set client_callback_time=#{clientTime},

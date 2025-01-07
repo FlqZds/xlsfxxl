@@ -1084,622 +1084,623 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <table id="332" parent="11" name="total_advlegends"/>
     <table id="333" parent="11" name="total_ecpm"/>
     <table id="334" parent="11" name="total_profile"/>
-    <scheduled-event id="335" parent="11" name="batch_add_player_dayrecord">
+    <table id="335" parent="11" name="withdraw_record"/>
+    <scheduled-event id="336" parent="11" name="batch_add_player_dayrecord">
       <SourceTextLength>75</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Interval>&apos;1&apos; DAY</Interval>
       <Starts>&apos;2024-01-06 03:00:00&apos;</Starts>
       <Preserve>1</Preserve>
       <Status>enabled</Status>
-      <LastExecuted>2025-01-05.15:20:00</LastExecuted>
+      <LastExecuted>2025-01-07.03:00:12</LastExecuted>
     </scheduled-event>
-    <column id="336" parent="288" name="action_id">
+    <column id="337" parent="288" name="action_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="337" parent="288" name="right_code">
+    <column id="338" parent="288" name="right_code">
       <Position>2</Position>
       <Comment>权限码</Comment>
       <DataType>char(20)|0s</DataType>
     </column>
-    <column id="338" parent="288" name="righttext">
+    <column id="339" parent="288" name="righttext">
       <Position>3</Position>
       <Comment>动作权限文本描述</Comment>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="339" parent="288" name="is_parent">
+    <column id="340" parent="288" name="is_parent">
       <Position>4</Position>
       <Comment>0: 父节点 1:子节点</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="340" parent="288" name="parentid">
+    <column id="341" parent="288" name="parentid">
       <Position>5</Position>
       <Comment>父Id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="341" parent="288" name="PRIMARY">
+    <key id="342" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>action_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="342" parent="289" name="adv_id">
+    <column id="343" parent="289" name="adv_id">
       <Position>1</Position>
       <Comment>广告位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="343" parent="289" name="app_id">
+    <column id="344" parent="289" name="app_id">
       <Position>2</Position>
       <Comment>应用id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="344" parent="289" name="adv_type_id">
+    <column id="345" parent="289" name="adv_type_id">
       <Position>3</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="345" parent="289" name="adv_secret">
+    <column id="346" parent="289" name="adv_secret">
       <Position>4</Position>
       <Comment>广告位密钥</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="346" parent="290" name="code_bit_id">
+    <column id="347" parent="290" name="code_bit_id">
       <Position>1</Position>
       <Comment>代码位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="347" parent="290" name="adv_id">
+    <column id="348" parent="290" name="adv_id">
       <Position>2</Position>
       <Comment>广告位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="348" parent="290" name="info">
+    <column id="349" parent="290" name="info">
       <Position>3</Position>
       <Comment>对代码位的描述</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="349" parent="290" name="adn_id">
+    <column id="350" parent="290" name="adn_id">
       <Position>4</Position>
       <Comment>广告网络</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <key id="350" parent="290" name="PRIMARY">
+    <key id="351" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code_bit_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="351" parent="291" name="fun_id">
+    <column id="352" parent="291" name="fun_id">
       <Position>1</Position>
       <Comment>功能id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="352" parent="291" name="amdin_fun_center_name">
+    <column id="353" parent="291" name="amdin_fun_center_name">
       <Position>2</Position>
       <Comment>应用中心功能菜单</Comment>
       <DataType>varchar(40)|0s</DataType>
     </column>
-    <column id="353" parent="291" name="admin_fun__center_url">
+    <column id="354" parent="291" name="admin_fun__center_url">
       <Position>3</Position>
       <Comment>应用中心功能路径</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <key id="354" parent="291" name="PRIMARY">
+    <key id="355" parent="291" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fun_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="355" parent="292" name="menu_id">
+    <column id="356" parent="292" name="menu_id">
       <Position>1</Position>
       <Comment>菜单id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="356" parent="292" name="menu_title">
+    <column id="357" parent="292" name="menu_title">
       <Position>2</Position>
       <Comment>菜单名称</Comment>
       <DataType>varchar(75)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="357" parent="292" name="menu_router">
+    <column id="358" parent="292" name="menu_router">
       <Position>3</Position>
       <Comment>菜单路由</Comment>
       <DataType>varchar(300)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="358" parent="292" name="menu_icon">
+    <column id="359" parent="292" name="menu_icon">
       <Position>4</Position>
       <Comment>菜单图标</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="359" parent="292" name="menu_type">
+    <column id="360" parent="292" name="menu_type">
       <Position>5</Position>
       <Comment>是否父节点，0父节点 , 1子节点</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="360" parent="292" name="menu_parentID">
+    <column id="361" parent="292" name="menu_parentID">
       <Position>6</Position>
       <Comment>父菜单id</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <key id="361" parent="292" name="PRIMARY">
+    <key id="362" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>menu_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="362" parent="293" name="role_act_id">
+    <column id="363" parent="293" name="role_act_id">
       <Position>1</Position>
       <Comment>动作权限_角色id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="363" parent="293" name="role">
+    <column id="364" parent="293" name="role">
       <Position>2</Position>
       <Comment>管理员类型</Comment>
       <DataType>tinyint(4)|0s</DataType>
     </column>
-    <column id="364" parent="293" name="action_id">
+    <column id="365" parent="293" name="action_id">
       <Position>3</Position>
       <Comment>动作权限id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="365" parent="293" name="PRIMARY">
+    <key id="366" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>role_act_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="366" parent="294" name=" roleMenu_id">
+    <column id="367" parent="294" name=" roleMenu_id">
       <Position>1</Position>
       <Comment>角色和菜单建立关系的id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="367" parent="294" name="roleId">
+    <column id="368" parent="294" name="roleId">
       <Position>2</Position>
       <Comment>角色id</Comment>
       <DataType>tinyint(4)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="368" parent="294" name="menuId">
+    <column id="369" parent="294" name="menuId">
       <Position>3</Position>
       <Comment>菜单id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="369" parent="294" name="PRIMARY">
+    <key id="370" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames> roleMenu_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="370" parent="295" name="id">
+    <column id="371" parent="295" name="id">
       <Position>1</Position>
       <Comment>广告商id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="371" parent="295" name="adn_name">
+    <column id="372" parent="295" name="adn_name">
       <Position>2</Position>
       <Comment>广告商名称</Comment>
       <DataType>varchar(30)|0s</DataType>
     </column>
-    <key id="372" parent="295" name="PRIMARY">
+    <key id="373" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="373" parent="296" name="id">
+    <column id="374" parent="296" name="id">
       <Position>1</Position>
       <Comment>广告类型id，1是开屏，2是插屏，3是信息流，4是横幅，5是激励</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="374" parent="296" name="adv_type_name">
+    <column id="375" parent="296" name="adv_type_name">
       <Position>2</Position>
       <Comment>广告类型名称</Comment>
       <DataType>char(3)|0s</DataType>
     </column>
-    <column id="375" parent="297" name="application_id">
+    <column id="376" parent="297" name="application_id">
       <Position>1</Position>
       <Comment>游戏唯一标识</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="376" parent="297" name="package_name">
+    <column id="377" parent="297" name="package_name">
       <Position>2</Position>
       <Comment>游戏包名</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="377" parent="297" name="application_name">
+    <column id="378" parent="297" name="application_name">
       <Position>3</Position>
       <Comment>游戏名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="378" parent="297" name="application_desc">
+    <column id="379" parent="297" name="application_desc">
       <Position>4</Position>
       <Comment>游戏简介</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="379" parent="297" name="download_location">
+    <column id="380" parent="297" name="download_location">
       <Position>5</Position>
       <Comment>应用管理的前端地址</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="380" parent="297" name="application_create_time">
+    <column id="381" parent="297" name="application_create_time">
       <Position>6</Position>
       <Comment>应用添加的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="381" parent="297" name="status">
+    <column id="382" parent="297" name="status">
       <Position>7</Position>
       <Comment>运行状态 //true - 1代表关闭，false - 0代表正常开启,前端是true，后端是1</Comment>
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="382" parent="297" name="info">
+    <column id="383" parent="297" name="info">
       <Position>8</Position>
       <Comment>运行信息</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;运行中&apos;</DefaultExpression>
     </column>
-    <column id="383" parent="297" name="qq_group">
+    <column id="384" parent="297" name="qq_group">
       <Position>9</Position>
       <Comment>官方QQ群</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="384" parent="297" name="appid">
+    <column id="385" parent="297" name="appid">
       <Position>10</Position>
       <Comment>微信id</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="385" parent="297" name="app_secret">
+    <column id="386" parent="297" name="app_secret">
       <Position>11</Position>
       <Comment>微信secret</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="386" parent="297" name="is_global_gath">
+    <column id="387" parent="297" name="is_global_gath">
       <Position>12</Position>
       <Comment>是否全局聚集(0为全局聚集 ,1为不全局聚集)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="387" parent="297" name="db_name">
+    <column id="388" parent="297" name="db_name">
       <Position>13</Position>
       <Comment>数据库名称</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <index id="388" parent="297" name="pkname_pk">
+    <index id="389" parent="297" name="pkname_pk">
       <Comment>包名唯一</Comment>
       <ColNames>package_name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="389" parent="297" name="game_pk">
+    <index id="390" parent="297" name="game_pk">
       <Comment>应用名称唯一</Comment>
       <ColNames>application_name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="390" parent="297" name="PRIMARY">
+    <key id="391" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>application_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="391" parent="297" name="pkname_pk">
+    <key id="392" parent="297" name="pkname_pk">
       <ColNames>package_name</ColNames>
       <UnderlyingIndexName>pkname_pk</UnderlyingIndexName>
     </key>
-    <key id="392" parent="297" name="game_pk">
+    <key id="393" parent="297" name="game_pk">
       <ColNames>application_name</ColNames>
       <UnderlyingIndexName>game_pk</UnderlyingIndexName>
     </key>
-    <column id="393" parent="298" name="brand_id">
+    <column id="394" parent="298" name="brand_id">
       <Position>1</Position>
       <DataType>int(11) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="394" parent="298" name="brand_name">
+    <column id="395" parent="298" name="brand_name">
       <Position>2</Position>
       <Comment>设备品牌</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="395" parent="298" name="install_machine">
+    <column id="396" parent="298" name="install_machine">
       <Position>3</Position>
       <Comment>安装器(包名)</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="396" parent="298" name="appstore">
+    <column id="397" parent="298" name="appstore">
       <Position>4</Position>
       <Comment>应用市场(包名)</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <key id="397" parent="298" name="PRIMARY">
+    <key id="398" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>brand_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="398" parent="299" name="app_setting_id">
+    <column id="399" parent="299" name="app_setting_id">
       <Position>1</Position>
       <Comment>游戏设置id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="399" parent="299" name="appid">
+    <column id="400" parent="299" name="appid">
       <Position>2</Position>
       <Comment>应用id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="400" parent="299" name="package_name">
+    <column id="401" parent="299" name="package_name">
       <Position>3</Position>
       <Comment>应用包名</Comment>
       <DataType>varchar(80)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="401" parent="299" name="app_name">
+    <column id="402" parent="299" name="app_name">
       <Position>4</Position>
       <Comment>应用名称</Comment>
       <DataType>varchar(80)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="402" parent="299" name="adv_watch_interval">
+    <column id="403" parent="299" name="adv_watch_interval">
       <Position>5</Position>
       <Comment>对应请求广告与收下奖励时间间隔</Comment>
       <DataType>char(3)|0s</DataType>
     </column>
-    <column id="403" parent="299" name="user_reward_setting_id">
+    <column id="404" parent="299" name="user_reward_setting_id">
       <Position>6</Position>
       <Comment>用户奖励比例设置id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="404" parent="299" name="anti__ad_setting_id">
+    <column id="405" parent="299" name="anti__ad_setting_id">
       <Position>7</Position>
       <Comment>限制用户观看广告设置id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="405" parent="299" name="user_gathering_setting_id">
+    <column id="406" parent="299" name="user_gathering_setting_id">
       <Position>8</Position>
       <Comment>用户聚集限制设置id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="406" parent="299" name="screenshot_setting_id">
+    <column id="407" parent="299" name="screenshot_setting_id">
       <Position>9</Position>
       <Comment>游戏截图设置id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="407" parent="299" name="device_System_Condition">
+    <column id="408" parent="299" name="device_System_Condition">
       <Position>10</Position>
       <Comment>设备系统低于此以下禁止登录</Comment>
       <DataType>int(1)|0s</DataType>
     </column>
-    <column id="408" parent="299" name="retain_way">
+    <column id="409" parent="299" name="retain_way">
       <Position>11</Position>
       <Comment>留存方式 （0是自然日记录 ，1是24小时记录）</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="409" parent="299" name="reset_max_time">
+    <column id="410" parent="299" name="reset_max_time">
       <Position>12</Position>
       <Comment>应用后台最大闲置时长</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="410" parent="299" name="prohibt_see_adv_start">
+    <column id="411" parent="299" name="prohibt_see_adv_start">
       <Position>13</Position>
       <Comment>禁止观看广告时间的时间段，起始时间</Comment>
       <DataType>varchar(5)|0s</DataType>
     </column>
-    <column id="411" parent="299" name="prohibt_see_adv_end">
+    <column id="412" parent="299" name="prohibt_see_adv_end">
       <Position>14</Position>
       <Comment>禁止观看广告时间的时间段，终止时间</Comment>
       <DataType>varchar(5)|0s</DataType>
     </column>
-    <column id="412" parent="299" name="is_enable_prohibt">
+    <column id="413" parent="299" name="is_enable_prohibt">
       <Position>15</Position>
       <Comment>是否启用功能 ：禁止观看广告时间段</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="413" parent="299" name="is_anchor_weekend">
+    <column id="414" parent="299" name="is_anchor_weekend">
       <Position>16</Position>
       <Comment>是否启用功能 ：周末是否限制时间段</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="414" parent="299" name="active_standard">
+    <column id="415" parent="299" name="active_standard">
       <Position>17</Position>
       <Comment>当日活跃标准（观看激励广告次数）</Comment>
       <DataType>char(3)|0s</DataType>
     </column>
-    <column id="415" parent="299" name="notice_msg">
+    <column id="416" parent="299" name="notice_msg">
       <Position>18</Position>
       <Comment>通知公告</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="416" parent="299" name="PRIMARY">
+    <key id="417" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>app_setting_id
 package_name
 app_name</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="417" parent="300" name="gb_id">
+    <column id="418" parent="300" name="gb_id">
       <Position>1</Position>
       <Comment>全局聚集的id</Comment>
       <DataType>int(11) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="418" parent="300" name="gb_gath_choice">
+    <column id="419" parent="300" name="gb_gath_choice">
       <Position>2</Position>
       <Comment>全局聚集选择项 (大范围还是小范围,0为小,1为大)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="419" parent="300" name="gb_gath_l">
+    <column id="420" parent="300" name="gb_gath_l">
       <Position>3</Position>
       <Comment>全局聚集大范围人数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="420" parent="300" name="gb_gath_s">
+    <column id="421" parent="300" name="gb_gath_s">
       <Position>4</Position>
       <Comment>小范围人数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="421" parent="300" name="gb_mac_usr">
+    <column id="422" parent="300" name="gb_mac_usr">
       <Position>5</Position>
       <Comment>允许同mac在线用户</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="422" parent="300" name="gb_model_lm">
+    <column id="423" parent="300" name="gb_model_lm">
       <Position>6</Position>
       <Comment>同型号设备数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="423" parent="300" name="PRIMARY">
+    <key id="424" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>gb_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="424" parent="301" name="img_id">
+    <column id="425" parent="301" name="img_id">
       <Position>1</Position>
       <Comment>图片主键id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="425" parent="301" name="img_url">
+    <column id="426" parent="301" name="img_url">
       <Position>2</Position>
       <Comment>访问图片的url</Comment>
       <DataType>varchar(200)|0s</DataType>
     </column>
-    <column id="426" parent="301" name="directory">
+    <column id="427" parent="301" name="directory">
       <Position>3</Position>
       <Comment>哪个目录下</Comment>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="427" parent="301" name="fileName">
+    <column id="428" parent="301" name="fileName">
       <Position>4</Position>
       <Comment>文件名称</Comment>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="428" parent="301" name="fileHash">
+    <column id="429" parent="301" name="fileHash">
       <Position>5</Position>
       <Comment>文件hash值</Comment>
       <DataType>varchar(85)|0s</DataType>
     </column>
-    <column id="429" parent="301" name="img_business">
+    <column id="430" parent="301" name="img_business">
       <Position>6</Position>
       <Comment>商户名</Comment>
       <DataType>varchar(15)|0s</DataType>
     </column>
-    <column id="430" parent="301" name="img_business_id">
+    <column id="431" parent="301" name="img_business_id">
       <Position>7</Position>
       <Comment>商户单号</Comment>
       <DataType>varchar(37)|0s</DataType>
     </column>
-    <column id="431" parent="301" name="img_money">
+    <column id="432" parent="301" name="img_money">
       <Position>8</Position>
       <Comment>充值金额</Comment>
       <DataType>varchar(5)|0s</DataType>
     </column>
-    <column id="432" parent="301" name="img_trans">
+    <column id="433" parent="301" name="img_trans">
       <Position>9</Position>
       <Comment>交易单号</Comment>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="433" parent="301" name="img_pay_time">
+    <column id="434" parent="301" name="img_pay_time">
       <Position>10</Position>
       <Comment>充值时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="434" parent="301" name="img_type">
+    <column id="435" parent="301" name="img_type">
       <Position>11</Position>
       <Comment>图片类型, o来源 t订单 g游戏截图</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="435" parent="301" name="img_order_id">
+    <column id="436" parent="301" name="img_order_id">
       <Position>12</Position>
       <Comment>该图属于哪笔订单</Comment>
       <DataType>varchar(38)|0s</DataType>
     </column>
-    <column id="436" parent="301" name="player_id">
+    <column id="437" parent="301" name="player_id">
       <Position>13</Position>
       <Comment>上传者</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="437" parent="301" name="uploadTime">
+    <column id="438" parent="301" name="uploadTime">
       <Position>14</Position>
       <Comment>该图上传日期</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="438" parent="301" name="is_approval">
+    <column id="439" parent="301" name="is_approval">
       <Position>15</Position>
       <Comment>该图片是否通过,默认i是inapproval,未通过a是approval,通过</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;i&apos;</DefaultExpression>
     </column>
-    <column id="439" parent="301" name="adv_encourage_id">
+    <column id="440" parent="301" name="adv_encourage_id">
       <Position>16</Position>
       <Comment>对应激励广告id</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <key id="440" parent="301" name="PRIMARY">
+    <key id="441" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>img_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="441" parent="302" name="order_id">
+    <column id="442" parent="302" name="order_id">
       <Position>1</Position>
       <Comment>订单id</Comment>
       <DataType>varchar(38)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="442" parent="302" name="order_player_id">
+    <column id="443" parent="302" name="order_player_id">
       <Position>2</Position>
       <Comment>该笔订单由谁发起</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
     </column>
-    <column id="443" parent="302" name="withdraw_percentage">
+    <column id="444" parent="302" name="withdraw_percentage">
       <Position>3</Position>
       <Comment>当时的提现比例</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="444" parent="302" name="androidID">
+    <column id="445" parent="302" name="androidID">
       <Position>4</Position>
       <Comment>安卓id</Comment>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="445" parent="302" name="wxName">
+    <column id="446" parent="302" name="wxName">
       <Position>5</Position>
       <Comment>wx微信昵称</Comment>
       <DataType>varchar(59)|0s</DataType>
     </column>
-    <column id="446" parent="302" name="application_name">
+    <column id="447" parent="302" name="application_name">
       <Position>6</Position>
       <Comment>应用名称</Comment>
       <DataType>varchar(35)|0s</DataType>
     </column>
-    <column id="447" parent="302" name="packageName">
+    <column id="448" parent="302" name="packageName">
       <Position>7</Position>
       <Comment>包名,哪个游戏中提交的订单,哪个游戏的包名</Comment>
       <DataType>varchar(25)|0s</DataType>
     </column>
-    <column id="448" parent="302" name="appid">
+    <column id="449" parent="302" name="appid">
       <Position>8</Position>
       <Comment>应用id,哪个游戏的id,</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="449" parent="302" name="is_get">
+    <column id="450" parent="302" name="is_get">
       <Position>9</Position>
       <Comment>订单状态&#xd;
 (0是已领取,1是待领取 ,x是待通过,y是已通过,b是驳回)&#xd;
@@ -1707,1925 +1708,1997 @@ app_name</ColNames>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;x&apos;</DefaultExpression>
     </column>
-    <column id="450" parent="302" name="back_reason">
+    <column id="451" parent="302" name="back_reason">
       <Position>10</Position>
       <Comment>订单状态为b(back)时,订单有驳回原因</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="451" parent="302" name="order_business">
+    <column id="452" parent="302" name="order_business">
       <Position>11</Position>
       <Comment>商户名</Comment>
       <DataType>varchar(15)|0s</DataType>
     </column>
-    <column id="452" parent="302" name="order_money">
+    <column id="453" parent="302" name="order_money">
       <Position>12</Position>
       <Comment>订单金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="453" parent="302" name="order_business_id">
+    <column id="454" parent="302" name="order_business_id">
       <Position>13</Position>
       <Comment>商户单号</Comment>
       <DataType>varchar(35)|0s</DataType>
     </column>
-    <column id="454" parent="302" name="order_trans_id">
+    <column id="455" parent="302" name="order_trans_id">
       <Position>14</Position>
       <Comment>交易单号</Comment>
       <DataType>varchar(40)|0s</DataType>
     </column>
-    <column id="455" parent="302" name="order_pay_time">
+    <column id="456" parent="302" name="order_pay_time">
       <Position>15</Position>
       <Comment>充值时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="456" parent="302" name="adv_encourage_id">
+    <column id="457" parent="302" name="adv_encourage_id">
       <Position>16</Position>
       <Comment>激励广告id</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <index id="457" parent="302" name="transIndex">
+    <index id="458" parent="302" name="transIndex">
       <Comment>订单号是唯一的</Comment>
       <ColNames>order_trans_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="458" parent="302" name="PRIMARY">
+    <key id="459" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="459" parent="302" name="transIndex">
+    <key id="460" parent="302" name="transIndex">
       <ColNames>order_trans_id</ColNames>
       <UnderlyingIndexName>transIndex</UnderlyingIndexName>
     </key>
-    <column id="460" parent="303" name="admin_id">
+    <column id="461" parent="303" name="admin_id">
       <Position>1</Position>
       <Comment>管理员id</Comment>
       <DataType>varchar(38)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="461" parent="303" name="admin_account">
+    <column id="462" parent="303" name="admin_account">
       <Position>2</Position>
       <Comment>管理员账号</Comment>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="462" parent="303" name="admin_pwd">
+    <column id="463" parent="303" name="admin_pwd">
       <Position>3</Position>
       <Comment>管理员密码</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="463" parent="303" name="role">
+    <column id="464" parent="303" name="role">
       <Position>4</Position>
       <Comment> 管理员类型</Comment>
       <DataType>tinyint(4)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="464" parent="303" name="PRIMARY">
+    <key id="465" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>admin_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="465" parent="304" name="mobile_id">
+    <column id="466" parent="304" name="mobile_id">
       <Position>1</Position>
       <DataType>int(11) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="466" parent="304" name="device_name">
+    <column id="467" parent="304" name="device_name">
       <Position>2</Position>
       <Comment>设备名称</Comment>
       <DataType>varchar(140)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="467" parent="304" name="device_type">
+    <column id="468" parent="304" name="device_type">
       <Position>3</Position>
       <Comment>手机品牌</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="468" parent="304" name="device_detail">
+    <column id="469" parent="304" name="device_detail">
       <Position>4</Position>
       <Comment>手机型号</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="469" parent="304" name="mobile_cpu">
+    <column id="470" parent="304" name="mobile_cpu">
       <Position>5</Position>
       <Comment>CPU</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="470" parent="304" name="mobile_cpu_fluency">
+    <column id="471" parent="304" name="mobile_cpu_fluency">
       <Position>6</Position>
       <Comment>CPU频率</Comment>
       <DataType>varchar(200)|0s</DataType>
     </column>
-    <column id="471" parent="304" name="mobile_system">
+    <column id="472" parent="304" name="mobile_system">
       <Position>7</Position>
       <Comment>&#x7f;设备系统</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <key id="472" parent="304" name="PRIMARY">
+    <key id="473" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>mobile_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="473" parent="305" name="proxy_game_id">
+    <column id="474" parent="305" name="proxy_game_id">
       <Position>1</Position>
       <Comment>代理和他对应代理游戏的id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="474" parent="305" name="proxy_package">
+    <column id="475" parent="305" name="proxy_package">
       <Position>2</Position>
       <Comment>代理他代理的这个游戏的包名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="475" parent="305" name="master_id">
+    <column id="476" parent="305" name="master_id">
       <Position>3</Position>
       <Comment>该代理的id</Comment>
       <DataType>varchar(35)|0s</DataType>
     </column>
-    <column id="476" parent="305" name="proxy_game_time">
+    <column id="477" parent="305" name="proxy_game_time">
       <Position>4</Position>
       <Comment>该代理什么时候代理的这个游戏</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="477" parent="305" name="proxy_game_cash">
+    <column id="478" parent="305" name="proxy_game_cash">
       <Position>5</Position>
       <Comment>该代理在这个游戏中的余额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <key id="478" parent="305" name="PRIMARY">
+    <key id="479" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>proxy_game_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="479" parent="306" name="master_id">
+    <column id="480" parent="306" name="master_id">
       <Position>1</Position>
       <Comment>对应master的id</Comment>
       <DataType>varchar(38)|0s</DataType>
     </column>
-    <column id="480" parent="306" name="proxy_name">
+    <column id="481" parent="306" name="proxy_name">
       <Position>2</Position>
       <Comment> 团队标识(32位随机uuid)</Comment>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="481" parent="306" name="balance">
+    <column id="482" parent="306" name="balance">
       <Position>3</Position>
       <Comment>账户所有游戏的总余额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="482" parent="306" name="proxy_create_time">
+    <column id="483" parent="306" name="proxy_create_time">
       <Position>4</Position>
       <Comment>该代理被创建的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="483" parent="306" name="proxy_status">
+    <column id="484" parent="306" name="proxy_status">
       <Position>5</Position>
       <Comment>代理团队的状态 ，0为开，1为关</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="484" parent="306" name="enable_two_proxy">
+    <column id="485" parent="306" name="enable_two_proxy">
       <Position>6</Position>
       <Comment>代表该代理是一级还是二级(0为一级，1为二级）</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="485" parent="306" name="proxy_flag">
+    <column id="486" parent="306" name="proxy_flag">
       <Position>7</Position>
       <Comment>标识渠道还是代理  p代表代理,c代表渠道     channel和proxy</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="486" parent="306" name="proxyGamePropotion">
+    <column id="487" parent="306" name="proxyGamePropotion">
       <Position>8</Position>
       <Comment>该代理的比例</Comment>
       <DataType>double(10,2 digit)|0s</DataType>
     </column>
-    <column id="487" parent="306" name="calculateWay">
+    <column id="488" parent="306" name="calculateWay">
       <Position>9</Position>
       <Comment>该代理的计算方式(一级代理才会有) 0代表提现方式,1代表奖励方式</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="488" parent="307" name="son_master_id">
+    <column id="489" parent="307" name="son_master_id">
       <Position>1</Position>
       <Comment>二级代理的id</Comment>
       <DataType>varchar(38)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="489" parent="307" name="proxy_name">
+    <column id="490" parent="307" name="proxy_name">
       <Position>2</Position>
       <Comment>团队标识</Comment>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="490" parent="307" name="parent_id">
+    <column id="491" parent="307" name="parent_id">
       <Position>3</Position>
       <Comment>该二级代理属于哪个一级代理(对应的团队标识）</Comment>
       <DataType>varchar(38)|0s</DataType>
     </column>
-    <column id="491" parent="307" name="proxy_status">
+    <column id="492" parent="307" name="proxy_status">
       <Position>4</Position>
       <Comment>代理团队的状态，0为开，1为关</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="492" parent="307" name="proxy_create_time">
+    <column id="493" parent="307" name="proxy_create_time">
       <Position>5</Position>
       <Comment>该代理被创建的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="493" parent="307" name="proxy_proportion">
+    <column id="494" parent="307" name="proxy_proportion">
       <Position>6</Position>
       <Comment>代理比例</Comment>
       <DataType>double(20,4 digit)|0s</DataType>
     </column>
-    <column id="494" parent="307" name="balance">
+    <column id="495" parent="307" name="balance">
       <Position>7</Position>
       <Comment>账户余额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <key id="495" parent="307" name="PRIMARY">
+    <key id="496" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>son_master_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="496" parent="308" name="risk_controll_id">
+    <column id="497" parent="308" name="risk_controll_id">
       <Position>1</Position>
       <Comment>风控参数id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="497" parent="308" name="package_name">
+    <column id="498" parent="308" name="package_name">
       <Position>2</Position>
       <Comment>应用包名</Comment>
       <DataType>varchar(80)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="498" parent="308" name="root_enable">
+    <column id="499" parent="308" name="root_enable">
       <Position>3</Position>
       <Comment>是否可以开启root (0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="499" parent="308" name="no_barrier">
+    <column id="500" parent="308" name="no_barrier">
       <Position>4</Position>
       <Comment>无障碍(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="500" parent="308" name="usb">
+    <column id="501" parent="308" name="usb">
       <Position>5</Position>
       <Comment>是否开启usb(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="501" parent="308" name="otg">
+    <column id="502" parent="308" name="otg">
       <Position>6</Position>
       <Comment>是否开启otg(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="502" parent="308" name="adb">
+    <column id="503" parent="308" name="adb">
       <Position>7</Position>
       <Comment>是否开启adb(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="503" parent="308" name="simulator">
+    <column id="504" parent="308" name="simulator">
       <Position>8</Position>
       <Comment>模拟器和云手机Enable</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="504" parent="308" name="bluetooth">
+    <column id="505" parent="308" name="bluetooth">
       <Position>9</Position>
       <Comment>是否开启蓝牙(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="505" parent="308" name="charge">
+    <column id="506" parent="308" name="charge">
       <Position>10</Position>
       <Comment>是否充电(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="506" parent="308" name="vpn">
+    <column id="507" parent="308" name="vpn">
       <Position>11</Position>
       <Comment>是否使用VPN(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="507" parent="308" name="sim">
+    <column id="508" parent="308" name="sim">
       <Position>12</Position>
       <Comment>用户设备是否存在SIM卡(0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="508" parent="308" name="hotdot">
+    <column id="509" parent="308" name="hotdot">
       <Position>13</Position>
       <Comment>用户是否开启热点 (0 是开启 ，1是关闭)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <key id="509" parent="308" name="PRIMARY">
+    <key id="510" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>risk_controll_id
 package_name</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="510" parent="309" name="screenshot_setting_id">
+    <column id="511" parent="309" name="screenshot_setting_id">
       <Position>1</Position>
       <Comment>截图设置id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="511" parent="309" name="game_id">
+    <column id="512" parent="309" name="game_id">
       <Position>2</Position>
       <Comment>游戏id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="512" parent="309" name="screenshot_setting_val">
+    <column id="513" parent="309" name="screenshot_setting_val">
       <Position>3</Position>
       <Comment>代码位ecpm值大于</Comment>
       <DataType>double(10,2 digit)|0s</DataType>
     </column>
-    <column id="513" parent="309" name="trans_limit_daily">
+    <column id="514" parent="309" name="trans_limit_daily">
       <Position>4</Position>
       <Comment>当日允许用户提交截图订单上限</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="514" parent="309" name="trans_reward_cont">
+    <column id="515" parent="309" name="trans_reward_cont">
       <Position>5</Position>
       <Comment>&#xd;
 领取奖励观看广告次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="515" parent="309" name="screenshot_setting_options">
+    <column id="516" parent="309" name="screenshot_setting_options">
       <Position>6</Position>
       <Comment>截图选项1代表关闭,0代表开启</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <key id="516" parent="309" name="PRIMARY">
+    <key id="517" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>screenshot_setting_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="517" parent="310" name="sum_id">
+    <column id="518" parent="310" name="sum_id">
       <Position>1</Position>
       <Comment>统计唯一id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="518" parent="310" name="proxy_name">
+    <column id="519" parent="310" name="proxy_name">
       <Position>2</Position>
       <Comment>团队标识</Comment>
       <DataType>varchar(38)|0s</DataType>
     </column>
-    <column id="519" parent="310" name="sum_day">
+    <column id="520" parent="310" name="sum_day">
       <Position>3</Position>
       <Comment>哪一天</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="520" parent="310" name="new_player_Count">
+    <column id="521" parent="310" name="new_player_Count">
       <Position>4</Position>
       <Comment>该日新用户的个数</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="521" parent="310" name="appid">
+    <column id="522" parent="310" name="appid">
       <Position>5</Position>
       <Comment>属于哪个游戏的统计</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <key id="522" parent="310" name="PRIMARY">
+    <key id="523" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sum_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="523" parent="311" name="sum_proxy_id">
+    <column id="524" parent="311" name="sum_proxy_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="524" parent="311" name="sum_proxy_cash">
+    <column id="525" parent="311" name="sum_proxy_cash">
       <Position>2</Position>
       <Comment>该日代理分销红包奖励</Comment>
       <DataType>decimal(10,6 digit)|0s</DataType>
     </column>
-    <column id="525" parent="311" name="sum_proxy_all_cash">
+    <column id="526" parent="311" name="sum_proxy_all_cash">
       <Position>3</Position>
       <Comment>代理+子级代理的该日总红包奖励</Comment>
       <DataType>decimal(10,6 digit)|0s</DataType>
     </column>
-    <column id="526" parent="311" name="sum_proxy_commission">
+    <column id="527" parent="311" name="sum_proxy_commission">
       <Position>4</Position>
       <Comment>该代理当日佣金</Comment>
       <DataType>decimal(10,6 digit)|0s</DataType>
     </column>
-    <column id="527" parent="311" name="sum_day">
+    <column id="528" parent="311" name="sum_day">
       <Position>5</Position>
       <Comment>该日</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="528" parent="311" name="proxy_name">
+    <column id="529" parent="311" name="proxy_name">
       <Position>6</Position>
       <Comment>哪个代理</Comment>
       <DataType>varchar(38)|0s</DataType>
     </column>
-    <column id="529" parent="311" name="adn_name">
+    <column id="530" parent="311" name="adn_name">
       <Position>7</Position>
       <Comment>哪个广告联盟</Comment>
       <DataType>varchar(30)|0s</DataType>
     </column>
-    <key id="530" parent="311" name="PRIMARY">
+    <key id="531" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sum_proxy_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="531" parent="312" name="user_gathering_id">
+    <column id="532" parent="312" name="user_gathering_id">
       <Position>1</Position>
       <Comment>聚集设置id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="532" parent="312" name="gathering_choice">
+    <column id="533" parent="312" name="gathering_choice">
       <Position>2</Position>
       <Comment>聚集选择项(0是小范围,1是大范围)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="533" parent="312" name="gathering_population_large">
+    <column id="534" parent="312" name="gathering_population_large">
       <Position>3</Position>
       <Comment>聚集大范围限制的人数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="534" parent="312" name="gathering_population_small">
+    <column id="535" parent="312" name="gathering_population_small">
       <Position>4</Position>
       <Comment>聚集小范围限制的人数</Comment>
       <DataType>int(3)|0s</DataType>
     </column>
-    <column id="535" parent="312" name="same_mac_population">
+    <column id="536" parent="312" name="same_mac_population">
       <Position>5</Position>
       <Comment>允许同一个mac地址在线用户数量</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="536" parent="312" name="gathering_deviceLimit">
+    <column id="537" parent="312" name="gathering_deviceLimit">
       <Position>6</Position>
       <Comment>聚集手机同型号限制的设备数量</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <key id="537" parent="312" name="PRIMARY">
+    <key id="538" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_gathering_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="538" parent="313" name="user_reward_setting_id">
+    <column id="539" parent="313" name="user_reward_setting_id">
       <Position>1</Position>
       <Comment>用户奖励比例设置id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="539" parent="313" name="get_reward_max_val">
+    <column id="540" parent="313" name="get_reward_max_val">
       <Position>2</Position>
       <Comment>用户可获取奖励最高值</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="540" parent="313" name="user_adv_percentage">
+    <column id="541" parent="313" name="user_adv_percentage">
       <Position>3</Position>
       <Comment>用户广告比例（%）</Comment>
       <DataType>double(20,4 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="541" parent="313" name="PRIMARY">
+    <key id="542" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_reward_setting_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="542" parent="314" name="withdraw_reback_id">
+    <column id="543" parent="314" name="withdraw_reback_id">
       <Position>1</Position>
       <Comment>用户返现比例id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="543" parent="314" name="withdraw_reback_percentage">
+    <column id="544" parent="314" name="withdraw_reback_percentage">
       <Position>2</Position>
       <Comment>用户返现比例</Comment>
       <DataType>double|0s</DataType>
     </column>
-    <column id="544" parent="314" name="withdraw_money_min">
+    <column id="545" parent="314" name="withdraw_money_min">
       <Position>3</Position>
       <Comment>用户提现金额最小值</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="545" parent="314" name="withdraw_money_max">
+    <column id="546" parent="314" name="withdraw_money_max">
       <Position>4</Position>
       <Comment>用户提现金额最大值</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <key id="546" parent="314" name="PRIMARY">
+    <key id="547" parent="314" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>withdraw_reback_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="547" parent="315" name="withdraw_record_id">
+    <column id="548" parent="315" name="withdraw_record_id">
       <Position>1</Position>
       <Comment>提现记录id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="548" parent="315" name="player_id">
+    <column id="549" parent="315" name="player_id">
       <Position>2</Position>
       <Comment>玩家id</Comment>
       <DataType>bigint(6) unsigned zerofill|0s</DataType>
     </column>
-    <column id="549" parent="315" name="wx_nickname">
+    <column id="550" parent="315" name="wx_nickname">
       <Position>3</Position>
       <Comment>&#xd;
 玩家昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="550" parent="315" name="package_name">
+    <column id="551" parent="315" name="package_name">
       <Position>4</Position>
       <Comment>哪个游戏</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="551" parent="315" name="withdraw_status">
+    <column id="552" parent="315" name="withdraw_status">
       <Position>5</Position>
       <Comment> 提现状态 0正常通过，1审核,2驳回</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="552" parent="315" name="withdraw_money">
+    <column id="553" parent="315" name="withdraw_money">
       <Position>6</Position>
       <Comment>提现金额</Comment>
       <DataType>decimal(20,2 digit)|0s</DataType>
     </column>
-    <column id="553" parent="315" name="return_money">
+    <column id="554" parent="315" name="return_money">
       <Position>7</Position>
       <Comment>返现金额</Comment>
       <DataType>decimal(20,2 digit)|0s</DataType>
     </column>
-    <column id="554" parent="315" name="withdraw_time">
+    <column id="555" parent="315" name="withdraw_time">
       <Position>8</Position>
       <Comment>提现订单的生成时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="555" parent="315" name="withdraw_percentage_now">
+    <column id="556" parent="315" name="withdraw_percentage_now">
       <Position>9</Position>
       <Comment>订单生成时当时提现比例</Comment>
       <DataType>varchar(8)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="556" parent="315" name="withdraw_from">
+    <column id="557" parent="315" name="withdraw_from">
       <Position>10</Position>
       <Comment>提现订单的来源(红包提现 ,订单提现)</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="557" parent="315" name="pay_login_id">
+    <column id="558" parent="315" name="pay_login_id">
       <Position>11</Position>
       <DataType>varchar(64)|0s</DataType>
     </column>
-    <column id="558" parent="315" name="real_name">
+    <column id="559" parent="315" name="real_name">
       <Position>12</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <key id="559" parent="315" name="PRIMARY">
+    <key id="560" parent="315" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>withdraw_record_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="560" parent="316" name="withdraw_setting_id">
+    <column id="561" parent="316" name="withdraw_setting_id">
       <Position>1</Position>
       <Comment>提现配置的id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="561" parent="316" name="package_name">
+    <column id="562" parent="316" name="package_name">
       <Position>2</Position>
       <Comment>包名</Comment>
       <DataType>varchar(70)|0s</DataType>
     </column>
-    <column id="562" parent="316" name="withdraw_percentage">
+    <column id="563" parent="316" name="withdraw_percentage">
       <Position>3</Position>
       <Comment>提现比例</Comment>
       <DataType>double(10,2 digit)|0s</DataType>
     </column>
-    <column id="563" parent="316" name="withdraw_count">
+    <column id="564" parent="316" name="withdraw_count">
       <Position>4</Position>
       <Comment>每日提现次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="564" parent="316" name="withdraw_nojudge_money">
+    <column id="565" parent="316" name="withdraw_nojudge_money">
       <Position>5</Position>
       <Comment>用户免审核提现总金额&#xd;
 </Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="565" parent="316" name="withdraw_reback_id">
+    <column id="566" parent="316" name="withdraw_reback_id">
       <Position>6</Position>
       <Comment>用户返现比例id</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="566" parent="316" name="count_switch">
+    <column id="567" parent="316" name="count_switch">
       <Position>7</Position>
       <Comment>是否启用每日提现次数开关(0是启用,1是不启用)</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <index id="567" parent="316" name="bagname">
+    <index id="568" parent="316" name="bagname">
       <Comment>给包名加唯一索引,防止重复的游戏提现配置</Comment>
       <ColNames>package_name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="568" parent="316" name="PRIMARY">
+    <key id="569" parent="316" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>withdraw_setting_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="569" parent="316" name="bagname">
+    <key id="570" parent="316" name="bagname">
       <ColNames>package_name</ColNames>
       <UnderlyingIndexName>bagname</UnderlyingIndexName>
     </key>
-    <column id="570" parent="317" name="adv_encourage_id">
+    <column id="571" parent="317" name="adv_encourage_id">
       <Position>1</Position>
       <Comment>激励广告id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="571" parent="317" name="adv_type_id">
+    <column id="572" parent="317" name="adv_type_id">
       <Position>2</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <DefaultExpression>&apos;5&apos;</DefaultExpression>
     </column>
-    <column id="572" parent="317" name="app_id">
+    <column id="573" parent="317" name="app_id">
       <Position>3</Position>
       <Comment>应用id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="573" parent="317" name="player_id">
+    <column id="574" parent="317" name="player_id">
       <Position>4</Position>
       <Comment>用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="574" parent="317" name="wx_nick_name">
+    <column id="575" parent="317" name="wx_nick_name">
       <Position>5</Position>
       <Comment>微信昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="575" parent="317" name="request_id">
+    <column id="576" parent="317" name="request_id">
       <Position>6</Position>
       <Comment>广告请求id</Comment>
       <DataType>varchar(70)|0s</DataType>
     </column>
-    <column id="576" parent="317" name="trans_id">
+    <column id="577" parent="317" name="trans_id">
       <Position>7</Position>
       <Comment>穿山甲的唯一交易id</Comment>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <column id="577" parent="317" name="code_bit_id">
+    <column id="578" parent="317" name="code_bit_id">
       <Position>8</Position>
       <Comment>该广告属于哪个代码位</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="578" parent="317" name="server_callback_time">
+    <column id="579" parent="317" name="server_callback_time">
       <Position>9</Position>
       <Comment>被服务端回调时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="579" parent="317" name="is_server_call">
+    <column id="580" parent="317" name="is_server_call">
       <Position>10</Position>
       <Comment>是否服务端回调 0是有 1是无</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="580" parent="317" name="is_client_call">
+    <column id="581" parent="317" name="is_client_call">
       <Position>11</Position>
       <Comment>是否客户端回调 0是有 1是无</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="581" parent="317" name="client_callback_time">
+    <column id="582" parent="317" name="client_callback_time">
       <Position>12</Position>
       <Comment>被客户端回调时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="582" parent="317" name="request_time">
+    <column id="583" parent="317" name="request_time">
       <Position>13</Position>
       <Comment>请求时间 （广告被用户点开查看的时间）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="583" parent="317" name="encourage_from">
+    <column id="584" parent="317" name="encourage_from">
       <Position>14</Position>
       <Comment>该激励广告的来源</Comment>
       <DataType>varchar(50)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="584" parent="317" name="encourage_reward">
+    <column id="585" parent="317" name="encourage_reward">
       <Position>15</Position>
       <Comment>广告奖励</Comment>
       <DataType>double(20,5 digit)|0s</DataType>
       <DefaultExpression>0.00000</DefaultExpression>
     </column>
-    <column id="585" parent="317" name="encourage_ecpm">
+    <column id="586" parent="317" name="encourage_ecpm">
       <Position>16</Position>
       <Comment>看此激励广告可获得的ecpm</Comment>
       <DataType>double(20,6 digit)|0s</DataType>
       <DefaultExpression>0.000000</DefaultExpression>
     </column>
-    <column id="586" parent="317" name="first_click_time">
+    <column id="587" parent="317" name="first_click_time">
       <Position>17</Position>
       <Comment>看广告的第一次点击时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="587" parent="317" name="click_times">
+    <column id="588" parent="317" name="click_times">
       <Position>18</Position>
       <Comment>该次广告点击量（用户的行为，他看这一次广告，点击了多少下（客户端传给我的））</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="588" parent="317" name="ask_adv_put_time">
+    <column id="589" parent="317" name="ask_adv_put_time">
       <Position>19</Position>
       <Comment>看广告点击按钮按压时长 (开红包)</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="589" parent="317" name="get_reward_click_time_date">
+    <column id="590" parent="317" name="get_reward_click_time_date">
       <Position>20</Position>
       <Comment>收下奖励点击按钮按压时长</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="590" parent="317" name="ip">
+    <column id="591" parent="317" name="ip">
       <Position>21</Position>
       <Comment>看此次广告的ip</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="591" parent="317" name="is_close_encourage_adv">
+    <column id="592" parent="317" name="effective_adv_reward">
       <Position>22</Position>
+      <Comment>有效奖励(0为有效奖励,1为无效奖励, 在客户端回调,且为1的时候被修改)</Comment>
+      <DataType>char(1)|0s</DataType>
+    </column>
+    <column id="593" parent="317" name="is_close_encourage_adv">
+      <Position>23</Position>
       <Comment>是否关闭广告 0是关 ,1是没关</Comment>
       <DataType>char(2)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="592" parent="317" name="is_see_end">
-      <Position>23</Position>
+    <column id="594" parent="317" name="is_see_end">
+      <Position>24</Position>
       <Comment>是否完整观看视频  0是完整  1是不完整</Comment>
       <DataType>char(2)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="593" parent="317" name="is_display_ad">
-      <Position>24</Position>
+    <column id="595" parent="317" name="is_display_ad">
+      <Position>25</Position>
       <Comment>是否展示广告  0是展示  1是不展示</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="594" parent="317" name="is_old_player">
-      <Position>25</Position>
+    <column id="596" parent="317" name="is_old_player">
+      <Position>26</Position>
       <Comment>是否新老用户  0是新 1是老</Comment>
       <DataType>char(1)|0s</DataType>
     </column>
-    <column id="595" parent="317" name="exception_operate">
-      <Position>26</Position>
+    <column id="597" parent="317" name="exception_operate">
+      <Position>27</Position>
       <Comment>异常操作信息</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="596" parent="317" name="err_info">
-      <Position>27</Position>
+    <column id="598" parent="317" name="err_info">
+      <Position>28</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="597" parent="317" name="address">
-      <Position>28</Position>
+    <column id="599" parent="317" name="address">
+      <Position>29</Position>
       <Comment>位置信息</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <index id="598" parent="317" name="request_id">
+    <index id="600" parent="317" name="request_id">
       <ColNames>request_id
 trans_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="599" parent="317" name="player_id">
+    <index id="601" parent="317" name="player_id">
       <Comment>组合索引</Comment>
       <ColNames>adv_type_id
 player_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="600" parent="317" name="adv_type_id">
+    <index id="602" parent="317" name="adv_type_id">
       <ColNames>adv_type_id
 wx_nick_name</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="601" parent="317" name="request_time">
+    <index id="603" parent="317" name="request_time">
       <ColNames>adv_type_id
 request_time</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="602" parent="317" name="adv_type_id_2">
+    <index id="604" parent="317" name="adv_type_id_2">
       <ColNames>adv_type_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="603" parent="317" name="PRIMARY">
+    <key id="605" parent="317" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>adv_encourage_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="604" parent="317" name="request_id">
+    <key id="606" parent="317" name="request_id">
       <ColNames>request_id
 trans_id</ColNames>
       <UnderlyingIndexName>request_id</UnderlyingIndexName>
     </key>
-    <column id="605" parent="318" name="ad_inScreen_id">
+    <column id="607" parent="318" name="ad_inScreen_id">
       <Position>1</Position>
       <Comment>插屏广告id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="606" parent="318" name="adv_type_id">
+    <column id="608" parent="318" name="adv_type_id">
       <Position>2</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;2&apos;</DefaultExpression>
     </column>
-    <column id="607" parent="318" name="player_id">
+    <column id="609" parent="318" name="player_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="608" parent="318" name="app_id">
+    <column id="610" parent="318" name="app_id">
       <Position>4</Position>
       <Comment>应用id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="609" parent="318" name="code_bit_id">
+    <column id="611" parent="318" name="code_bit_id">
       <Position>5</Position>
       <Comment>代码位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="610" parent="318" name="request_id">
+    <column id="612" parent="318" name="request_id">
       <Position>6</Position>
       <Comment>请求id</Comment>
       <DataType>varchar(50)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="611" parent="318" name="adv_ecpm">
+    <column id="613" parent="318" name="adv_ecpm">
       <Position>7</Position>
       <Comment>ecpm</Comment>
       <DataType>double(20,6 digit)|0s</DataType>
       <DefaultExpression>0.000000</DefaultExpression>
     </column>
-    <column id="612" parent="318" name="clicks">
+    <column id="614" parent="318" name="clicks">
       <Position>8</Position>
       <Comment>点击次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="613" parent="318" name="ip">
+    <column id="615" parent="318" name="ip">
       <Position>9</Position>
       <Comment>ip</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="614" parent="318" name="first_click_time">
+    <column id="616" parent="318" name="first_click_time">
       <Position>10</Position>
       <Comment>看广告第一次点击的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="615" parent="318" name="request_time">
+    <column id="617" parent="318" name="request_time">
       <Position>11</Position>
       <Comment>请求时间 （广告被用户点开查看的时间）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="616" parent="318" name="wx_nick_name">
+    <column id="618" parent="318" name="wx_nick_name">
       <Position>12</Position>
       <Comment>用户昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="617" parent="318" name="errinfo">
+    <column id="619" parent="318" name="errinfo">
       <Position>13</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <key id="618" parent="318" name="PRIMARY">
+    <key id="620" parent="318" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ad_inScreen_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="619" parent="319" name="ad_openScreen_id">
+    <column id="621" parent="319" name="ad_openScreen_id">
       <Position>1</Position>
       <Comment>开屏广告id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="620" parent="319" name="adv_type_id">
+    <column id="622" parent="319" name="adv_type_id">
       <Position>2</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="621" parent="319" name="player_id">
+    <column id="623" parent="319" name="player_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="622" parent="319" name="app_id">
+    <column id="624" parent="319" name="app_id">
       <Position>4</Position>
       <Comment>应用id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="623" parent="319" name="code_bit_id">
+    <column id="625" parent="319" name="code_bit_id">
       <Position>5</Position>
       <Comment>代码位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="624" parent="319" name="request_id">
+    <column id="626" parent="319" name="request_id">
       <Position>6</Position>
       <Comment>请求id</Comment>
       <DataType>varchar(50)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="625" parent="319" name="adv_ecpm">
+    <column id="627" parent="319" name="adv_ecpm">
       <Position>7</Position>
       <Comment>ecpm</Comment>
       <DataType>double(20,6 digit)|0s</DataType>
     </column>
-    <column id="626" parent="319" name="clicks">
+    <column id="628" parent="319" name="clicks">
       <Position>8</Position>
       <Comment>点击次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="627" parent="319" name="ip">
+    <column id="629" parent="319" name="ip">
       <Position>9</Position>
       <Comment>ip</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="628" parent="319" name="first_click_time">
+    <column id="630" parent="319" name="first_click_time">
       <Position>10</Position>
       <Comment>看广告第一次点击的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="629" parent="319" name="request_time">
+    <column id="631" parent="319" name="request_time">
       <Position>11</Position>
       <Comment>请求时间 （广告被用户点开查看的时间）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="630" parent="319" name="wx_nick_name">
+    <column id="632" parent="319" name="wx_nick_name">
       <Position>12</Position>
       <Comment>用户昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="631" parent="319" name="errinfo">
+    <column id="633" parent="319" name="errinfo">
       <Position>13</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <key id="632" parent="319" name="PRIMARY">
+    <key id="634" parent="319" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ad_openScreen_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="633" parent="320" name="ad_rowStyle_id">
+    <column id="635" parent="320" name="ad_rowStyle_id">
       <Position>1</Position>
       <Comment>横幅广告id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="634" parent="320" name="adv_type_id">
+    <column id="636" parent="320" name="adv_type_id">
       <Position>2</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;4&apos;</DefaultExpression>
     </column>
-    <column id="635" parent="320" name="player_id">
+    <column id="637" parent="320" name="player_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="636" parent="320" name="app_id">
+    <column id="638" parent="320" name="app_id">
       <Position>4</Position>
       <Comment>应用id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="637" parent="320" name="code_bit_id">
+    <column id="639" parent="320" name="code_bit_id">
       <Position>5</Position>
       <Comment>代码位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="638" parent="320" name="request_id">
+    <column id="640" parent="320" name="request_id">
       <Position>6</Position>
       <Comment>请求id</Comment>
       <DataType>varchar(50)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="639" parent="320" name="adv_ecpm">
+    <column id="641" parent="320" name="adv_ecpm">
       <Position>7</Position>
       <Comment>ecpm</Comment>
       <DataType>double(20,6 digit)|0s</DataType>
     </column>
-    <column id="640" parent="320" name="clicks">
+    <column id="642" parent="320" name="clicks">
       <Position>8</Position>
       <Comment>点击次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="641" parent="320" name="ip">
+    <column id="643" parent="320" name="ip">
       <Position>9</Position>
       <Comment>ip</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="642" parent="320" name="first_click_time">
+    <column id="644" parent="320" name="first_click_time">
       <Position>10</Position>
       <Comment>看广告第一次点击的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="643" parent="320" name="request_time">
+    <column id="645" parent="320" name="request_time">
       <Position>11</Position>
       <Comment>请求时间 （广告被用户点开查看的时间）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="644" parent="320" name="wx_nick_name">
+    <column id="646" parent="320" name="wx_nick_name">
       <Position>12</Position>
       <Comment>用户昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="645" parent="320" name="errinfo">
+    <column id="647" parent="320" name="errinfo">
       <Position>13</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <key id="646" parent="320" name="PRIMARY">
+    <key id="648" parent="320" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ad_rowStyle_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="647" parent="321" name="ad_stream_id">
+    <column id="649" parent="321" name="ad_stream_id">
       <Position>1</Position>
       <Comment>信息流广告id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="648" parent="321" name="adv_type_id">
+    <column id="650" parent="321" name="adv_type_id">
       <Position>2</Position>
       <Comment>广告类型</Comment>
       <DataType>char(3)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;3&apos;</DefaultExpression>
     </column>
-    <column id="649" parent="321" name="player_id">
+    <column id="651" parent="321" name="player_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="650" parent="321" name="app_id">
+    <column id="652" parent="321" name="app_id">
       <Position>4</Position>
       <Comment>应用id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="651" parent="321" name="code_bit_id">
+    <column id="653" parent="321" name="code_bit_id">
       <Position>5</Position>
       <Comment>代码位id</Comment>
       <DataType>varchar(30)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="652" parent="321" name="request_id">
+    <column id="654" parent="321" name="request_id">
       <Position>6</Position>
       <Comment>请求id</Comment>
       <DataType>varchar(50)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="653" parent="321" name="adv_ecpm">
+    <column id="655" parent="321" name="adv_ecpm">
       <Position>7</Position>
       <Comment>ecpm</Comment>
       <DataType>double(20,6 digit)|0s</DataType>
     </column>
-    <column id="654" parent="321" name="clicks">
+    <column id="656" parent="321" name="clicks">
       <Position>8</Position>
       <Comment>点击次数</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="655" parent="321" name="ip">
+    <column id="657" parent="321" name="ip">
       <Position>9</Position>
       <Comment>ip</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="656" parent="321" name="first_click_time">
+    <column id="658" parent="321" name="first_click_time">
       <Position>10</Position>
       <Comment>看广告第一次点击的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="657" parent="321" name="request_time">
+    <column id="659" parent="321" name="request_time">
       <Position>11</Position>
       <Comment>请求时间 （广告被用户点开查看的时间）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="658" parent="321" name="wx_nick_name">
+    <column id="660" parent="321" name="wx_nick_name">
       <Position>12</Position>
       <Comment>用户昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="659" parent="321" name="errinfo">
+    <column id="661" parent="321" name="errinfo">
       <Position>13</Position>
       <Comment>错误信息</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <key id="660" parent="321" name="PRIMARY">
+    <key id="662" parent="321" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ad_stream_id
 app_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="661" parent="322" name="id">
+    <column id="663" parent="322" name="id">
       <Position>1</Position>
       <Comment>广告类型id，1是开屏，2是插屏，3是信息流，4是横幅，5是激励</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="662" parent="322" name="adv_type_name">
+    <column id="664" parent="322" name="adv_type_name">
       <Position>2</Position>
       <Comment>广告类型名称</Comment>
       <DataType>char(3)|0s</DataType>
     </column>
-    <column id="663" parent="323" name="day_id">
+    <column id="665" parent="323" name="day_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="664" parent="323" name="app_id">
+    <column id="666" parent="323" name="app_id">
       <Position>2</Position>
       <Comment>哪款应用</Comment>
       <DataType>char(17)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;12419&apos;</DefaultExpression>
     </column>
-    <column id="665" parent="323" name="player_id">
+    <column id="667" parent="323" name="player_id">
       <Position>3</Position>
       <Comment>玩家id</Comment>
       <DataType>char(17)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="666" parent="323" name="todayRed">
+    <column id="668" parent="323" name="todayRed">
       <Position>4</Position>
       <Comment>当日红包总值（不确定下次是否上线，所以这次默认为最后一次）</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="667" parent="323" name="totalRed">
+    <column id="669" parent="323" name="totalRed">
       <Position>5</Position>
       <Comment>从注册到这次的红包总值</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="668" parent="323" name="today_encourageAdv_count">
+    <column id="670" parent="323" name="today_encourageAdv_count">
       <Position>6</Position>
       <Comment>当日观看激励广告数量</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="669" parent="323" name="server_CallBack_no">
+    <column id="671" parent="323" name="server_CallBack_no">
       <Position>7</Position>
       <Comment>当日无服务端回调广告数量  (三种类型的都记)</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="670" parent="323" name="service_CallBack_AdvCount">
+    <column id="672" parent="323" name="service_CallBack_AdvCount">
       <Position>8</Position>
       <Comment>当日服务端回调且无奖励数量    (正常激励的)</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="671" parent="323" name="service_CallBack_Reward_Count">
+    <column id="673" parent="323" name="service_CallBack_Reward_Count">
       <Position>9</Position>
       <Comment>当日服务端回调且有奖励数量</Comment>
       <DataType>int(6)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="672" parent="323" name="service_CallBack_default_none_ward_Count">
+    <column id="674" parent="323" name="service_CallBack_default_none_ward_Count">
       <Position>10</Position>
-      <Comment>当日服务端回调且默认无奖励数量       </Comment>
+      <Comment>当日服务端回调且默认无奖励数量 </Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="673" parent="323" name="retain_time">
+    <column id="675" parent="323" name="retain_time">
       <Position>11</Position>
       <Comment>记录本次留存登录时间</Comment>
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="674" parent="323" name="day_cash">
+    <column id="676" parent="323" name="day_cash">
       <Position>12</Position>
       <Comment>当日提现金额(触发了审核的+免审核的)</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="675" parent="323" name="day_withdraw">
+    <column id="677" parent="323" name="day_withdraw">
       <Position>13</Position>
       <Comment>当日提现打款金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="676" parent="323" name="day_withdraw_judge">
+    <column id="678" parent="323" name="day_withdraw_judge">
       <Position>14</Position>
       <Comment>当日提现审核金额</Comment>
       <DataType>decimal(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="677" parent="323" name="day_rebate">
+    <column id="679" parent="323" name="day_rebate">
       <Position>15</Position>
       <Comment>当日返现打款金额</Comment>
       <DataType>decimal(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="678" parent="323" name="day_rebate_judge">
+    <column id="680" parent="323" name="day_rebate_judge">
       <Position>16</Position>
       <Comment>当日返现审核的金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="679" parent="323" name="day_charge_rebate">
+    <column id="681" parent="323" name="day_charge_rebate">
       <Position>17</Position>
       <Comment>当日充值返现金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="680" parent="323" name="is_retain">
+    <column id="682" parent="323" name="is_retain">
       <Position>18</Position>
       <Comment>该日是否留存(默认所有用户每日都有留存数据,该日没上线的用户就为1,上线过的就是0)</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <index id="681" parent="323" name="player_id">
+    <index id="683" parent="323" name="player_id">
       <ColNames>player_id
 retain_time
 day_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="682" parent="323" name="PRIMARY">
+    <key id="684" parent="323" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>day_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="683" parent="324" name="device_id">
+    <column id="685" parent="324" name="device_id">
       <Position>1</Position>
       <Comment>设备记录id</Comment>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="684" parent="324" name="player_id">
+    <column id="686" parent="324" name="player_id">
       <Position>2</Position>
       <Comment> 游戏用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="685" parent="324" name="wx_nickname">
+    <column id="687" parent="324" name="wx_nickname">
       <Position>3</Position>
       <Comment> 微信昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="686" parent="324" name="oaid">
+    <column id="688" parent="324" name="oaid">
       <Position>4</Position>
       <Comment> oaid</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="687" parent="324" name="android_id">
+    <column id="689" parent="324" name="android_id">
       <Position>5</Position>
       <Comment> android ID</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="688" parent="324" name="device_type">
+    <column id="690" parent="324" name="device_type">
       <Position>6</Position>
       <Comment> 手机品牌</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="689" parent="324" name="device_detail">
+    <column id="691" parent="324" name="device_detail">
       <Position>7</Position>
       <Comment>机型</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="690" parent="324" name="firstLoginTime">
+    <column id="692" parent="324" name="firstLoginTime">
       <Position>8</Position>
       <Comment>该设备第一次登录的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="691" parent="324" name="identifiction">
+    <column id="693" parent="324" name="identifiction">
       <Position>9</Position>
       <Comment>该设备此次登录的身份  默认1，1就是普通用户登录&#xd;
 0是特殊用户登录, a是更换设备后的异常登录</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="692" parent="324" name="appid">
+    <column id="694" parent="324" name="appid">
       <Position>10</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="693" parent="324" name="mobile_system">
+    <column id="695" parent="324" name="mobile_system">
       <Position>11</Position>
       <Comment>&#x7f;设备系统</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <key id="694" parent="324" name="PRIMARY">
+    <key id="696" parent="324" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>device_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="695" parent="325" name="exception_id">
+    <column id="697" parent="325" name="exception_id">
       <Position>1</Position>
       <Comment>异常统计的id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="696" parent="325" name="player_id">
+    <column id="698" parent="325" name="player_id">
       <Position>2</Position>
       <Comment>用户id</Comment>
       <DataType>char(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="697" parent="325" name="wx_nick_name">
+    <column id="699" parent="325" name="wx_nick_name">
       <Position>3</Position>
       <Comment>昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="698" parent="325" name="game_id">
+    <column id="700" parent="325" name="game_id">
       <Position>4</Position>
       <Comment>哪款游戏</Comment>
       <DataType>char(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="699" parent="325" name="oaid">
+    <column id="701" parent="325" name="oaid">
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="700" parent="325" name="android_id">
+    <column id="702" parent="325" name="android_id">
       <Position>6</Position>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="701" parent="325" name="device_type">
+    <column id="703" parent="325" name="device_type">
       <Position>7</Position>
       <Comment>品牌</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="702" parent="325" name="device_detail">
+    <column id="704" parent="325" name="device_detail">
       <Position>8</Position>
       <Comment>型号</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="703" parent="325" name="except_type">
+    <column id="705" parent="325" name="except_type">
       <Position>9</Position>
       <Comment>异常类型</Comment>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <column id="704" parent="325" name="except_info">
+    <column id="706" parent="325" name="except_info">
       <Position>10</Position>
       <Comment>异常描述</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="705" parent="325" name="exception_time">
+    <column id="707" parent="325" name="exception_time">
       <Position>11</Position>
       <Comment>异常记录登记在册的时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <key id="706" parent="325" name="PRIMARY">
+    <key id="708" parent="325" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>exception_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="707" parent="326" name="locate_id">
+    <column id="709" parent="326" name="locate_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="708" parent="326" name="player_id">
+    <column id="710" parent="326" name="player_id">
       <Position>2</Position>
       <DataType>bigint(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="709" parent="326" name="location">
+    <column id="711" parent="326" name="location">
       <Position>3</Position>
       <Comment>游戏用户的位置信息</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="710" parent="326" name="record_time">
+    <column id="712" parent="326" name="record_time">
       <Position>4</Position>
       <Comment>此次位置信息记录的时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="711" parent="326" name="PRIMARY">
+    <key id="713" parent="326" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>locate_id
 player_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="712" parent="327" name="incre_id">
+    <column id="714" parent="327" name="incre_id">
       <Position>1</Position>
       <Comment>自增id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="713" parent="327" name="record_no_oaid_id">
+    <column id="715" parent="327" name="record_no_oaid_id">
       <Position>2</Position>
       <Comment>该字段记录的是对应该条信息对应mobile_detail表的哪个设备id</Comment>
       <DataType>int(11) unsigned|0s</DataType>
     </column>
-    <column id="714" parent="327" name="device_name">
+    <column id="716" parent="327" name="device_name">
       <Position>3</Position>
       <Comment>设备名称</Comment>
       <DataType>varchar(140)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="715" parent="327" name="device_type">
+    <column id="717" parent="327" name="device_type">
       <Position>4</Position>
       <Comment>手机品牌</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="716" parent="327" name="device_detail">
+    <column id="718" parent="327" name="device_detail">
       <Position>5</Position>
       <Comment>手机型号</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="717" parent="327" name="mobile_cpu">
+    <column id="719" parent="327" name="mobile_cpu">
       <Position>6</Position>
       <Comment>CPU</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="718" parent="327" name="mobile_cpu_fluency">
+    <column id="720" parent="327" name="mobile_cpu_fluency">
       <Position>7</Position>
       <Comment>CPU频率</Comment>
       <DataType>varchar(200)|0s</DataType>
     </column>
-    <column id="719" parent="327" name="record_date">
+    <column id="721" parent="327" name="record_date">
       <Position>8</Position>
       <Comment>该条记录的日期</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <key id="720" parent="327" name="PRIMARY">
+    <key id="722" parent="327" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>incre_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="721" parent="328" name="operation_id">
+    <column id="723" parent="328" name="operation_id">
       <Position>1</Position>
       <Comment>封禁id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="722" parent="328" name="wx_open_id">
+    <column id="724" parent="328" name="wx_open_id">
       <Position>2</Position>
       <Comment>微信openID</Comment>
       <DataType>varchar(125)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="723" parent="328" name="player_id">
+    <column id="725" parent="328" name="player_id">
       <Position>3</Position>
       <Comment>玩家id</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="724" parent="328" name="wx_nickname">
+    <column id="726" parent="328" name="wx_nickname">
       <Position>4</Position>
       <Comment>微信昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="725" parent="328" name="operation_reason">
+    <column id="727" parent="328" name="operation_reason">
       <Position>5</Position>
       <Comment>封禁原因</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="726" parent="328" name="operation_time">
+    <column id="728" parent="328" name="operation_time">
       <Position>6</Position>
       <Comment>封禁时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="727" parent="328" name="operation_type">
+    <column id="729" parent="328" name="operation_type">
       <Position>7</Position>
       <Comment>操作类型</Comment>
       <DataType>char(10)|0s</DataType>
     </column>
-    <column id="728" parent="328" name="appid">
+    <column id="730" parent="328" name="appid">
       <Position>8</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <key id="729" parent="328" name="PRIMARY">
+    <key id="731" parent="328" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>operation_id
 wx_open_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="730" parent="329" name="player_id">
+    <column id="732" parent="329" name="player_id">
       <Position>1</Position>
       <Comment>游戏用户id，标识游戏用户是唯一的</Comment>
       <DataType>bigint(6) unsigned zerofill|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="731" parent="329" name="wx_open_id">
+    <column id="733" parent="329" name="wx_open_id">
       <Position>2</Position>
       <Comment>微信openID，标识唯一的微信用户</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="732" parent="329" name="pay_login_id">
+    <column id="734" parent="329" name="pay_login_id">
       <Position>3</Position>
       <Comment>支付宝登录id</Comment>
       <DataType>varchar(64)|0s</DataType>
     </column>
-    <column id="733" parent="329" name="game_id">
+    <column id="735" parent="329" name="game_id">
       <Position>4</Position>
       <Comment>游戏id       这个用户是哪个游戏的</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="734" parent="329" name="wx_nickname">
+    <column id="736" parent="329" name="wx_nickname">
       <Position>5</Position>
       <Comment>微信昵称</Comment>
       <DataType>varchar(125)|0s</DataType>
     </column>
-    <column id="735" parent="329" name="real_name">
+    <column id="737" parent="329" name="real_name">
       <Position>6</Position>
       <Comment>人名</Comment>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="736" parent="329" name="wx_headimgurl">
+    <column id="738" parent="329" name="wx_headimgurl">
       <Position>7</Position>
       <Comment>微信头像</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="737" parent="329" name="player_creat_time">
+    <column id="739" parent="329" name="player_creat_time">
       <Position>8</Position>
       <Comment>创建时间 （也就是第一次登入游戏的时间，判断新老用户的）</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="738" parent="329" name="proxy_name">
+    <column id="740" parent="329" name="proxy_name">
       <Position>9</Position>
       <Comment> 默认0是属于我们的用户，有代理团队，就是代理团队的id</Comment>
       <DataType>varchar(32)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="739" parent="329" name="status">
+    <column id="741" parent="329" name="status">
       <Position>10</Position>
       <Comment>用户状态 （是否被封禁 1是正常用户，0是被封禁用户）</Comment>
       <DataType>char(2)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="740" parent="329" name="mobile_id">
+    <column id="742" parent="329" name="mobile_id">
       <Position>11</Position>
       <Comment>设备型号ID</Comment>
       <DataType>bigint(10)|0s</DataType>
     </column>
-    <column id="741" parent="329" name="in_red">
+    <column id="743" parent="329" name="in_red">
       <Position>12</Position>
       <Comment>红包余额</Comment>
       <DataType>decimal(20,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="742" parent="329" name="special">
+    <column id="744" parent="329" name="special">
       <Position>13</Position>
       <Comment>是否特殊用户 0特殊用户</Comment>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <key id="743" parent="329" name="PRIMARY">
+    <key id="745" parent="329" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>player_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="744" parent="330" name="task_id">
+    <column id="746" parent="330" name="task_id">
       <Position>1</Position>
       <Comment>玩家要完成任务的id</Comment>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="745" parent="330" name="task_count">
+    <column id="747" parent="330" name="task_count">
       <Position>2</Position>
       <Comment>玩家提交订单的数量</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="746" parent="330" name="task_date">
+    <column id="748" parent="330" name="task_date">
       <Position>3</Position>
       <Comment>该任务发布时间</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="747" parent="330" name="game_id">
+    <column id="749" parent="330" name="game_id">
       <Position>4</Position>
       <Comment>该任务属于哪个游戏</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="748" parent="330" name="player_id">
+    <column id="750" parent="330" name="player_id">
       <Position>5</Position>
       <Comment>该任务属于哪个玩家</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="749" parent="330" name="task_process">
+    <column id="751" parent="330" name="task_process">
       <Position>6</Position>
       <Comment>任务完成进度</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="750" parent="330" name="task_end_time">
+    <column id="752" parent="330" name="task_end_time">
       <Position>7</Position>
       <Comment>任务完成时间</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="751" parent="330" name="bonus">
+    <column id="753" parent="330" name="bonus">
       <Position>8</Position>
       <Comment>该任务完成总计能得到的钱</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <key id="752" parent="330" name="PRIMARY">
+    <key id="754" parent="330" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>task_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="753" parent="331" name="total_adn_id">
+    <column id="755" parent="331" name="total_adn_id">
       <Position>1</Position>
       <Comment>总的广告统计的id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="754" parent="331" name="total_encourage">
+    <column id="756" parent="331" name="total_encourage">
       <Position>2</Position>
       <Comment>激励广告</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="755" parent="331" name="total_adn_open">
+    <column id="757" parent="331" name="total_adn_open">
       <Position>3</Position>
       <Comment>开屏广告</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="756" parent="331" name="total_adn_in">
+    <column id="758" parent="331" name="total_adn_in">
       <Position>4</Position>
       <Comment>插屏广告</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="757" parent="331" name="total_adn_row">
+    <column id="759" parent="331" name="total_adn_row">
       <Position>5</Position>
       <Comment>横幅</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="758" parent="331" name="total_adn_stream">
+    <column id="760" parent="331" name="total_adn_stream">
       <Position>6</Position>
       <Comment>信息流</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="759" parent="331" name="total_adn_withdraw">
+    <column id="761" parent="331" name="total_adn_withdraw">
       <Position>7</Position>
       <Comment>提现激励</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="760" parent="331" name="total_adn_ecpm">
+    <column id="762" parent="331" name="total_adn_ecpm">
       <Position>8</Position>
       <Comment>ECPM</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="761" parent="331" name="total_adn_date">
+    <column id="763" parent="331" name="total_adn_date">
       <Position>9</Position>
       <Comment>日期</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="762" parent="331" name="total_adn_type">
+    <column id="764" parent="331" name="total_adn_type">
       <Position>10</Position>
       <Comment>属于哪种广告网络类型的</Comment>
       <DataType>varchar(13)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="763" parent="331" name="appid">
+    <column id="765" parent="331" name="appid">
       <Position>11</Position>
       <Comment>属于哪个游戏</Comment>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="764" parent="331" name="proxy_name">
+    <column id="766" parent="331" name="proxy_name">
       <Position>12</Position>
       <Comment>该条记录属于哪个代理的</Comment>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <key id="765" parent="331" name="PRIMARY">
+    <key id="767" parent="331" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>total_adn_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="766" parent="332" name="total_advlegends_id">
+    <column id="768" parent="332" name="total_advlegends_id">
       <Position>1</Position>
       <Comment>广告联盟统计ID</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="767" parent="332" name="total_ecpm">
+    <column id="769" parent="332" name="total_ecpm">
       <Position>2</Position>
       <Comment>总Ecpm</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="768" parent="332" name="baidu">
+    <column id="770" parent="332" name="baidu">
       <Position>3</Position>
       <Comment>百度</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="769" parent="332" name="you_liang_hui">
+    <column id="771" parent="332" name="you_liang_hui">
       <Position>4</Position>
       <Comment>优量汇</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="770" parent="332" name="fast_hand">
+    <column id="772" parent="332" name="fast_hand">
       <Position>5</Position>
       <Comment>快手</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="771" parent="332" name="gromore">
+    <column id="773" parent="332" name="gromore">
       <Position>6</Position>
       <Comment>穿山甲</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="772" parent="332" name="total_date">
+    <column id="774" parent="332" name="total_date">
       <Position>7</Position>
       <Comment>统计的日期</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="773" parent="332" name="appid">
+    <column id="775" parent="332" name="appid">
       <Position>8</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="774" parent="332" name="proxy_name">
+    <column id="776" parent="332" name="proxy_name">
       <Position>9</Position>
       <Comment>该条记录属于哪个代理的</Comment>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <key id="775" parent="332" name="PRIMARY">
+    <key id="777" parent="332" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>total_advlegends_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="776" parent="333" name="total_ecpm_id">
+    <column id="778" parent="333" name="total_ecpm_id">
       <Position>1</Position>
       <Comment>ecom统计的id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="777" parent="333" name="total_ecpm_encourage">
+    <column id="779" parent="333" name="total_ecpm_encourage">
       <Position>2</Position>
       <Comment>激励</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="778" parent="333" name="total_ecpm_in">
+    <column id="780" parent="333" name="total_ecpm_in">
       <Position>3</Position>
       <Comment>插屏</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="779" parent="333" name="total_ecpm_stream">
+    <column id="781" parent="333" name="total_ecpm_stream">
       <Position>4</Position>
       <Comment>信息流</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="780" parent="333" name="total_ecpm_open">
+    <column id="782" parent="333" name="total_ecpm_open">
       <Position>5</Position>
       <Comment>开屏</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="781" parent="333" name="total_ecpm_row">
+    <column id="783" parent="333" name="total_ecpm_row">
       <Position>6</Position>
       <Comment>横幅</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="782" parent="333" name="withdraw_encourage">
+    <column id="784" parent="333" name="withdraw_encourage">
       <Position>7</Position>
       <Comment>提现激励 </Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="783" parent="333" name="total_ecpm">
+    <column id="785" parent="333" name="total_ecpm">
       <Position>8</Position>
       <Comment>总ecpm</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <DefaultExpression>0.00</DefaultExpression>
     </column>
-    <column id="784" parent="333" name="total_ecpm_date">
+    <column id="786" parent="333" name="total_ecpm_date">
       <Position>9</Position>
       <Comment>该日ecpm统计</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="785" parent="333" name="appid">
+    <column id="787" parent="333" name="appid">
       <Position>10</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="786" parent="333" name="proxy_name">
+    <column id="788" parent="333" name="proxy_name">
       <Position>11</Position>
       <Comment>该条记录属于哪个代理的</Comment>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <key id="787" parent="333" name="PRIMARY">
+    <key id="789" parent="333" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>total_ecpm_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="788" parent="334" name="total_profile_id">
+    <column id="790" parent="334" name="total_profile_id">
       <Position>1</Position>
       <Comment>&#x7f;明细汇总id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="789" parent="334" name="total_profile_date">
+    <column id="791" parent="334" name="total_profile_date">
       <Position>2</Position>
       <Comment>日期</Comment>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="790" parent="334" name="total_red_day_user">
+    <column id="792" parent="334" name="total_red_day_user">
       <Position>3</Position>
       <Comment>当日用户总余额 </Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="791" parent="334" name="total_count_day_rebate">
+    <column id="793" parent="334" name="total_count_day_rebate">
       <Position>4</Position>
       <Comment>当日返现打款 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="792" parent="334" name="total_count_day_judge_rebate">
+    <column id="794" parent="334" name="total_count_day_judge_rebate">
       <Position>5</Position>
       <Comment>当日返现审核 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="793" parent="334" name="total_count_day_cash">
+    <column id="795" parent="334" name="total_count_day_cash">
       <Position>6</Position>
       <Comment>当日提现打款 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="794" parent="334" name="total_count_day_judge_cash">
+    <column id="796" parent="334" name="total_count_day_judge_cash">
       <Position>7</Position>
       <Comment>当日提现审核 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="795" parent="334" name="total_count_day_normal">
+    <column id="797" parent="334" name="total_count_day_normal">
       <Position>8</Position>
       <Comment>当日有服务端回调有奖励 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="796" parent="334" name="total_count_day_no_reward">
+    <column id="798" parent="334" name="total_count_day_no_reward">
       <Position>9</Position>
       <Comment>当日有服务端回调无奖励 总金额&#xd;
 (异常观看激励广告 总金额)</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="797" parent="334" name="total_count_day_no_callback">
+    <column id="799" parent="334" name="total_count_day_no_callback">
       <Position>10</Position>
       <Comment>当日无服务端回调 总金额</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="798" parent="334" name="total_charge_rebate">
+    <column id="800" parent="334" name="total_charge_rebate">
       <Position>11</Position>
       <Comment>当日充值返现 总金额</Comment>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </column>
-    <column id="799" parent="334" name="appid">
+    <column id="801" parent="334" name="appid">
       <Position>12</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="800" parent="334" name="proxy_name">
+    <column id="802" parent="334" name="proxy_name">
       <Position>13</Position>
       <Comment>该条记录属于哪个代理的</Comment>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <key id="801" parent="334" name="PRIMARY">
+    <key id="803" parent="334" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>total_profile_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="804" parent="335" name="withdraw_record_id">
+      <Position>1</Position>
+      <Comment>提现记录id</Comment>
+      <DataType>bigint(20) unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="805" parent="335" name="player_id">
+      <Position>2</Position>
+      <Comment>玩家id</Comment>
+      <DataType>bigint(6) unsigned zerofill|0s</DataType>
+    </column>
+    <column id="806" parent="335" name="wx_nickname">
+      <Position>3</Position>
+      <Comment>&#xd;
+玩家昵称</Comment>
+      <DataType>varchar(125)|0s</DataType>
+    </column>
+    <column id="807" parent="335" name="package_name">
+      <Position>4</Position>
+      <Comment>哪个游戏</Comment>
+      <DataType>varchar(125)|0s</DataType>
+    </column>
+    <column id="808" parent="335" name="withdraw_status">
+      <Position>5</Position>
+      <Comment> 提现状态 0正常通过，1审核,2驳回</Comment>
+      <DataType>char(1)|0s</DataType>
+    </column>
+    <column id="809" parent="335" name="withdraw_money">
+      <Position>6</Position>
+      <Comment>提现金额</Comment>
+      <DataType>decimal(20,2 digit)|0s</DataType>
+    </column>
+    <column id="810" parent="335" name="return_money">
+      <Position>7</Position>
+      <Comment>返现金额</Comment>
+      <DataType>decimal(20,2 digit)|0s</DataType>
+    </column>
+    <column id="811" parent="335" name="withdraw_time">
+      <Position>8</Position>
+      <Comment>提现订单的生成时间</Comment>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="812" parent="335" name="withdraw_percentage_now">
+      <Position>9</Position>
+      <Comment>订单生成时当时提现比例</Comment>
+      <DataType>varchar(8)|0s</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="813" parent="335" name="withdraw_from">
+      <Position>10</Position>
+      <Comment>提现订单的来源(红包提现 ,订单提现)</Comment>
+      <DataType>varchar(20)|0s</DataType>
+    </column>
+    <column id="814" parent="335" name="pay_login_id">
+      <Position>11</Position>
+      <DataType>varchar(64)|0s</DataType>
+    </column>
+    <column id="815" parent="335" name="real_name">
+      <Position>12</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
+    <key id="816" parent="335" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>withdraw_record_id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

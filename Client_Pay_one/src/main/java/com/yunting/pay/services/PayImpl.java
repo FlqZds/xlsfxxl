@@ -101,6 +101,7 @@ public class PayImpl implements PayServices {
         BigDecimal playerInRed = player.getInRed(); //用户当前余额
 
         DayBehaveRecordlist dayRecord = dayBehaveMapper.getDayLastDayBehaveRecordlistByPlayerId(playerId);
+        BigDecimal dayCash = dayRecord.getDayCash();//当日已提现总金额(包含提交审核)
 
         BigDecimal withdrawPercentage = new BigDecimal(st.Withdraw_Percentage());//提现比例
         Integer withdrawCount = st.Daily_Withdraw_Count();//获取该用户的 当日提现次数上限
@@ -143,9 +144,7 @@ public class PayImpl implements PayServices {
             throw new AppException(ResponseEnum.PLAYER_WITHDRAW_MONEY_TOO_SMALL);
         }
 
-        Integer i = transAmount.compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发 该日总的免审核提现金额
-
-
+        Integer i = dayCash.add(transAmount).compareTo(withdrawNojudgeMoney); //-1 0 1  <=>   是否触发 该日总的免审核提现金额
         Integer j = transAmount.compareTo(limitRed); //-1 0 1  <=>   是否触发最低返现
         BigDecimal rebackVal = thisRedBackVal(transAmount, j); //该次提现的返现金额
 
@@ -246,7 +245,7 @@ public class PayImpl implements PayServices {
             rs.hIncrBy("withdrawCount", playerId + "", 1);           //玩家当日提现次数+1
             return new ResultMessage(ResponseEnum.NO_JUDGE_ORDER_SUCCESSFUL, redWithDrew);
         } else {
-            throw new AppException(pay.getCode(), pay.getMessage());
+            throw new AppException(pay.getMessage(), pay.getCode());
         }
     }
 

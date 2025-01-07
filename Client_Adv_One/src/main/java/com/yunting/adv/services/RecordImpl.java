@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static com.yunting.common.utils.FS.*;
 
@@ -314,7 +313,7 @@ public class RecordImpl implements RecordService {
         try {
             String clientTime = LocalDateTime.now().toString();
             adEncourageMapper.changeAdEncourageRecordEnoughReward(advEncourageId, clientTime, trasnId);
-
+            adEncourageMapper.changeAdEncourageRecordCloseEffectiveWhileOne(advEncourageId);
             log.info("玩家:|-" + playerId + "-|达到奖励条件修改激励广告的记录,达到奖励条件 步骤成功");
         } catch (Exception e) {
             SpringRollBackUtil.rollBack();
@@ -411,7 +410,8 @@ public class RecordImpl implements RecordService {
                     Double encourageEcpm = adEncourage.getEncourageEcpm();
                     double rewardMaxVal = st.Reward_Limit();
                     double userAdvPercentage = st.ADV_Percent();
-
+                    rewardCount = this.judgeWard(isClientCall, isServerCall, isSeeEnd, IsCloseEnc);//该advID满足几个条件了
+                    withdrawCount = this.judgeWithDraw(isClientCall, isSeeEnd, IsCloseEnc);
                     try {
                         adEncourageMapper.changeAdEncourageRecordClose(advID, clickCount, exceptionMsg);
 
@@ -423,17 +423,16 @@ public class RecordImpl implements RecordService {
                         log.error("修改激励广告关闭状态失败，请联系管理员");
                         throw new AppException(ResponseEnum.UPDATE_AD_ENCOURAGE_CLOSE_FAILED);
                     }
-                    String isCloseEncourageAdv = adEncourageMapper.isCloseAdEncourage(advID);//是否关闭广告
-                    rewardCount = this.judgeWard(isClientCall, isServerCall, isSeeEnd, isCloseEncourageAdv);//该advID满足几个条件了
-                    withdrawCount = this.judgeWithDraw(isClientCall, isSeeEnd, isCloseEncourageAdv);
-                    if (encourageEcpm >= rewardMaxVal) {
+
+
+                    if (encourageEcpm > rewardMaxVal) {
                         log.info("激励广告ecpm以达到最大奖励上限,ecpm:" + encourageEcpm);
                         encourageEcpm = rewardMaxVal;  //大于的ecpm都按 最大奖励上限来算
                     }
 
                     // 该次的广告是提现,然后已看激励,需要告知前端跳转去提现
                     String s = rur.get(playerDTO.getPlayerId() + "withdraw");
-                    log.info("广告类型" + s + "满足提现条件:" + withdrawCount + "cl:" + isClientCall + "是否关闭" + isCloseEncourageAdv + "_isSee看完" + isSeeEnd);
+
                     if (s != null && withdrawCount == 3) {
                         // 提现广告默认无奖励的
                         dayBehaveRecordMapper.changeDayBehaveRecordDefaultNoneRewardCount(dayId, 1);
@@ -451,11 +450,18 @@ public class RecordImpl implements RecordService {
                         if (rewardCount == 4) //满足奖励条件了
                         {
                             redValue = BigDecimal.valueOf(encourageEcpm).multiply(BigDecimal.valueOf(userAdvPercentage)).multiply(Percentage).divide(BigDecimal.valueOf(10));
+
 //                        redVal = (encourageEcpm * userAdvPercentage * 0.01) / 10;
                             adEncourageMapper.changeAdEncourageRecordReward(advID, redValue);
 //                        该玩家的当日服务端回调发放奖励次数,红包总数,当日红包总数   <|>    玩家的余额 的更新
                             dayBehaveRecordMapper.changeDayBehaveRecordCallbackRewardCount(dayId, 1, redValue, redValue);
                             playerMapper.updatePlayerInRed(playerDTO.getPlayerId(), redValue);
+
+                            String effective = "1";//是否有效领取奖励
+                            if (isClientCall.equals("0")) {
+                                effective = "0";
+                            }
+                            adEncourageMapper.changeAdEncourageRecordCloseEffective(advID, effective);
 
                             log.info(advID + "激励广告正常关闭，广告奖励值已入库,该玩家行为数据,当前红包余额都已改变");
                             break;
@@ -475,6 +481,7 @@ public class RecordImpl implements RecordService {
                 }
             }
         }
+        log.info("红包值:"+redValue);
         return new ResultMessage(ResponseEnum.SUCCESS, redValue);
     }
 

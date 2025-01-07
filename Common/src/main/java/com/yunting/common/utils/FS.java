@@ -17,16 +17,14 @@ public final class FS {
     //"支付宝订单流水排头"
     public static String Pay_Order_Header = "ythylyxxl";
 
-    public static final String SECRET_KEY_PUBLIC = "PUBLIC_KEY";
-    public static final String SECRET_KEY_PRIVATE = "PRIVATE_KEY";
-
-    //    管理端默认登录头像
-    public final static String DEFAULT_AVATAR = "https://zdsflq.oss-cn-beijing.aliyuncs.com/avatar/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.svg";
 
     //激励广告类型
     public static final String NormalEnc = "正常激励";
     public static final String WithDrawEnc = "提现激励";
     public static final String OrderEnc = "订单激励";
+
+    //标识激励广告已经看完
+    public static final String IsCloseEnc = "0";
 
     //服务端发送心跳的间隔，单位为minus
     public static final int serverHeartBearDuration = 1;

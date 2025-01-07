@@ -30,6 +30,9 @@ public interface AdEncourageMapper {
     //      通过激励广告id 修改该条激励广告记录  (客户端回调时间,transID) (达到奖励条件)
     Integer changeAdEncourageRecordEnoughReward(@Param("adEncourageId") String adEncourageId, @Param("clientTime") String clientTime, @Param("transId") String transId);
 
+    //      通过激励广告id 修改该条激励广告记录 (是否为有效奖励,当effective为"1"的时候) (完成观看)
+    Integer changeAdEncourageRecordCloseEffectiveWhileOne(@Param("targetAdv") String adEncourageId);
+
     //      通过激励广告id 修改该条激励广告记录  (是否完成观看) is_see_end
     Integer changeAdEncourageRecordIsOk(@Param("targetAdv") Long adEncourageId, @Param("changeData") String isSeeEnd);
 
@@ -39,16 +42,19 @@ public interface AdEncourageMapper {
     //      通过激励广告id 修改该条激励广告记录  (点击次数+是否关闭广告+ 违规操作信息) (关闭广告)
     Integer changeAdEncourageRecordClose(@Param("targetAdv") Long adEncourageId, @Param("clickCount") Integer clickCount, @Param("exceptionMsg") String exceptionMsg);
 
+    //      通过激励广告id 修改该条激励广告记录 (是否为有效奖励) (关闭广告)
+    Integer changeAdEncourageRecordCloseEffective(@Param("targetAdv") Long adEncourageId,@Param("effective") String effective);
+
     //      通过激励id获取是否关闭广告
     String isCloseAdEncourage(@Param("targetAdv") Long adEncourageId);
 
     //      通过激励广告id 修改该条激励广告点击量 (补发点击量)
     Integer compensateAdEncourageClickCount(@Param("targetAdv") Long adEncourageId, @Param("clickCount") Integer clickCount, @Param("exceptionMsg") String exceptionMsg);
 
-    //      通过激励广告id 修改该条激励广告记录  (是否颁发奖励) 广告奖励
+    //      通过激励广告id 修改该条激励广告记录  (是否发放奖励)
     Integer changeAdEncourageRecordReward(@Param("targetAdv") Long adEncourageId, @Param("encourageReward") BigDecimal encourageReward);
 
-    //      通过激励广告id 修改该条激励广告记录  (收下奖励) 开红包按压时长
+    //      通过激励广告id 修改该条激励广告记录  开红包按压时长
     Integer changeAdEncourageRecordGetWard(@Param("targetAdv") String adEncourageId, @Param("askPutTimeDate") String askPutTimeDate);
 
 }
