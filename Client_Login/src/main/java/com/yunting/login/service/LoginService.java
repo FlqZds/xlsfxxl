@@ -388,7 +388,7 @@ public class LoginService {
     private RedisUtil_Record rur;
 
     public void generateNewUserDayRecord(PlayerDTO playerDTO) {
-        DayBehaveRecordlist dayRecord = DayBehaveRecordlist.builder().appId(st.APPID())
+        DayBehaveRecordlist dayRecord = DayBehaveRecordlist.builder().appId(st.GameId())
                 .playerId(playerDTO.getPlayerId() + "")
                 .isRetain("0")
                 .build();

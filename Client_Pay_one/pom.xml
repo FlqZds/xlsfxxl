@@ -47,7 +47,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.yunting.pay.PayOneApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

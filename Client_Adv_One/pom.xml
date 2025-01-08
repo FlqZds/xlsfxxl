@@ -21,6 +21,7 @@
             <groupId>com.yunting</groupId>
             <artifactId>Common</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -30,6 +31,21 @@
         </dependency>
     </dependencies>
 
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifestEntries>-->
+<!--                            <Main-Class>com.yunting.adv.AdvOneApplication</Main-Class> &lt;!&ndash; 替换为你的启动类 &ndash;&gt;-->
+<!--                        </manifestEntries>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
     <build>
         <plugins>
             <!--springboot打包插件-->
@@ -38,8 +54,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.yunting.adv.AdvOneApplication</mainClass>
-                    <skip>true</skip>
+                  <mainClass>com.yunting.adv.AdvOneApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

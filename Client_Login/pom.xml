@@ -49,7 +49,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.yunting.login.LoginOneApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

@@ -45,7 +45,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.yunting.Screenshot.FileOneApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

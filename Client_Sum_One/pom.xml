@@ -38,8 +38,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.yunting.wlan.WlanApplicationOne</mainClass>
-                    <skip>true</skip>
+                    <mainClass>com.yunting.sum.SumOneApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

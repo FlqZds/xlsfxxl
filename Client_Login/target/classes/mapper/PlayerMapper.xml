@@ -18,11 +18,11 @@
     </resultMap>
 
     <insert id="insertPlayer">
-        insert into player
+        insert into yunting_app_test.player
         (wx_open_id, game_id, wx_nickname, wx_headimgurl,
         player_creat_time, proxy_name, status,special,mobile_id,in_red)
         values (#{wxOpenId}, #{gameId}, #{wxNickname}, #{wxHeadimgurl},
-        #{playerCreatTime}, #{proxyId},#{status},#{special},
+        #{playerCreatTime}, #{proxyName},#{status},#{special},
         #{mobileId},#{inRed})
         <selectKey resultType="long" keyProperty="playerId" order="AFTER" keyColumn="player_id">
             select @@identity;
